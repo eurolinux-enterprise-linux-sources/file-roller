@@ -18,7 +18,7 @@
 
     <include xmlns="http://www.w3.org/2001/XInclude" href="legal.xml"/>
 
-    <desc>Μάθετε να χρησιμοποιείτε και να διαχειρίζεστε συμπιεσμένα αρχεία.</desc>
+    <desc>Μάθετε να χρησιμοποιείτε και να διαχειρίζεστε συμπιεσμένα αρχεία και φακέλους.</desc>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Δημήτρης Σπίγγος</mal:name>

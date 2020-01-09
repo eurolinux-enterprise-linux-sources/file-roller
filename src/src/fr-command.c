@@ -79,7 +79,7 @@ xfer_data_free (XferData *data)
 	_g_object_list_unref (data->file_list);
 	_g_object_unref (data->base_dir);
 	g_free (data->dest_dir);
-	g_free (data->tmp_dir);
+	_g_object_unref (data->tmp_dir);
 	_g_object_unref (data->cancellable);
 	_g_object_unref (data->result);
 	g_free (data);
@@ -369,7 +369,7 @@ fr_command_handle_process_error (FrCommand     *self,
 		 * 'restart' flag */
 		FR_COMMAND_GET_CLASS (G_OBJECT (self))->handle_error (self, process_error);
 
-	if ((error != NULL) && (process_error->gerror != NULL))
+	if ((error != NULL) && (process_error->gerror != NULL) && (process_error->type != FR_ERROR_NONE))
 		*error = g_error_copy (process_error->gerror);
 	fr_error_free (process_error);
 
@@ -632,6 +632,10 @@ _fr_command_load_complete (XferData *xfer_data,
 		 * original name */
 		if (archive->multi_volume)
 			fr_archive_change_name (archive, FR_COMMAND (archive)->filename);
+
+		/* the header is encrypted if the load is successful and the password is not void */
+		archive->encrypt_header = (xfer_data->password != NULL) && (*xfer_data->password != '\0');
+
 		fr_archive_update_capabilities (archive);
 	}
 	else
@@ -1942,7 +1946,7 @@ compute_base_path (const char *base_dir,
 		return new_path;
 	}
 
-	if (path_len <= base_dir_len)
+	if (path_len < base_dir_len)
 		return NULL;
 
 	base_path = path + base_dir_len;

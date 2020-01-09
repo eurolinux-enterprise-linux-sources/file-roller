@@ -51,7 +51,7 @@ file_selector_destroy_cb (GtkWidget  *widget,
 			  DialogData *data)
 {
 	if (! data->extract_clicked)
-		fr_window_stop_batch (data->window);
+		fr_window_batch_stop (data->window);
 
 	g_object_unref (data->builder);
 	_g_string_list_free (data->selected_files);
@@ -97,7 +97,6 @@ extract_cb (GtkWidget   *w,
 
 			d = _gtk_message_dialog_new (GTK_WINDOW (data->dialog),
 						     GTK_DIALOG_MODAL,
-						     _GTK_ICON_NAME_DIALOG_QUESTION,
 						     msg,
 						     NULL,
 						     _GTK_LABEL_CANCEL, GTK_RESPONSE_CANCEL,
@@ -137,7 +136,6 @@ extract_cb (GtkWidget   *w,
 
 		d = _gtk_message_dialog_new (GTK_WINDOW (window),
 					     GTK_DIALOG_DESTROY_WITH_PARENT,
-					     _GTK_ICON_NAME_DIALOG_WARNING,
 					     _("Extraction not performed"),
 					     NULL,
 					     _GTK_LABEL_CLOSE, GTK_RESPONSE_OK,
@@ -177,7 +175,7 @@ extract_cb (GtkWidget   *w,
 		return FALSE;
 	}
 
-	fr_window_set_extract_default_dir (window, destination, TRUE);
+	fr_window_set_extract_default_dir (window, destination);
 
 	skip_newer = ! gtk_toggle_button_get_inconsistent (GTK_TOGGLE_BUTTON (GET_WIDGET ("keep_newer_checkbutton"))) && gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (GET_WIDGET ("keep_newer_checkbutton")));
 	junk_paths = ! gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (GET_WIDGET ("keep_structure_checkbutton")));
@@ -222,14 +220,13 @@ extract_cb (GtkWidget   *w,
 
 	/* extract ! */
 
-	fr_window_archive_extract (window,
-				   file_list,
-				   destination,
-				   base_dir,
-				   skip_newer,
-				   FR_OVERWRITE_ASK,
-				   junk_paths,
-				   TRUE);
+	fr_window_extract_archive_and_continue (window,
+				       	        file_list,
+						destination,
+						base_dir,
+						skip_newer,
+						FR_OVERWRITE_ASK,
+						junk_paths);
 
 	_g_string_list_free (file_list);
 	g_object_unref (destination);
@@ -279,7 +276,7 @@ dlg_extract__common (FrWindow *window,
 	data->base_dir_for_selection = base_dir_for_selection;
 	data->extract_clicked = FALSE;
 
-	data->dialog = gtk_file_chooser_dialog_new (_("Extract"),
+	data->dialog = gtk_file_chooser_dialog_new (C_("Window title", "Extract"),
 						    GTK_WINDOW (data->window),
 						    GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,
 						    _GTK_LABEL_CANCEL, GTK_RESPONSE_CANCEL,

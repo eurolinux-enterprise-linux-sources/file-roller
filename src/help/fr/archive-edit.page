@@ -76,7 +76,7 @@
     </item>
     <item>
       <title>Supprimer des fichiers</title>
-      <p>Faites un clic droit sur le fichier et choisissez <gui style="menuitem">Supprimer</gui> ou appuyez sur <key>Suppr</key>.</p>
+      <p>Faites un clic droit sur le fichier et choisissez <gui style="menuitem">Supprimer</gui>, ou appuyez sur <key>Suppr</key>.</p>
     </item>
     <item>
     <title>Renommer des fichiers</title>

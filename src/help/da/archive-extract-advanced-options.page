@@ -30,10 +30,7 @@
 
   <title>Avancerede indstillinger for arkivudpakning</title>
 
-  <p><app>Archive Manager</app> offers different options for
-  <link xref="archive-extract">extracting an archive</link>. You can see these
-  options in the <gui>Extract</gui> dialog. At the bottom of this dialog, you
-  can decide if you want to extract:</p>
+  <p><app>Arkivhåndtering</app> giver en række muligheder for <link xref="archive-extract">udpakning af et arkiv</link>. Du kan se disse muligheder i dialogen <gui>Udpak</gui>. Nederst i denne dialog kan du vælge om du vil udpakke:</p>
 
   <terms>
     <item>
@@ -44,16 +41,12 @@
       <title><gui>Valgte filer</gui></title>
       <p><application>Arkivhåndtering</application> udpakker kun de valgte filer.</p>
       <note>
-        <p>You need to select the files that you wish to extract before
-        you click <gui style="button">Extract</gui>. Do this by clicking on
-        the file name. Use <key>Ctrl</key> and <key>Shift</key> keys, to select
-        more than one file.</p>
+        <p>Du skal vælge hvilke filer du vil pakke ud, før du klikker på <gui style="button">Udpak</gui>. Gør dette ved at klikke på filnavnet. Brug tasterne <key>Ctrl</key> og <key>Skift</key> til at vælge mere end en fil.</p>
       </note>
     </item>
     <item>
       <title><gui>Filer</gui></title>
-      <p>You can type in the names of the files that you want to extract.
-      Separate individual files using a semicolon (<key>;</key>).</p>
+      <p>Du kan indtaste navnene på de filer, som du vil udpakke. Adskil de enkelte filer med et semikolon (<key>;</key>).</p>
       <note>
         <p>Filnavnet skal efterfølges af en filendelse. Du kan bruge stjernen (<key>*</key>) som jokertegn. For eksempelvis at vælge alle <file>.txt</file>-filer skal du skrive <file>*.txt</file>.</p>
       </note>

@@ -26,11 +26,6 @@
 #include <gio/gio.h>
 #include <gtk/gtk.h>
 
-#define _GTK_ICON_NAME_DIALOG_ERROR "dialog-error-symbolic"
-#define _GTK_ICON_NAME_DIALOG_INFO "dialog-information-symbolic"
-#define _GTK_ICON_NAME_DIALOG_QUESTION "dialog-question-symbolic"
-#define _GTK_ICON_NAME_DIALOG_WARNING "dialog-warning-symbolic"
-
 #define _GTK_LABEL_ADD _("_Add")
 #define _GTK_LABEL_CANCEL _("_Cancel")
 #define _GTK_LABEL_CLOSE _("_Close")
@@ -48,7 +43,6 @@ typedef struct {
 int           _gtk_tree_selection_count_selected   (GtkTreeSelection *selection);
 GtkWidget *   _gtk_message_dialog_new              (GtkWindow        *parent,
 						    GtkDialogFlags    flags,
-						    const char       *icon_name,
 						    const char       *message,
 						    const char       *secondary_message,
 						    const char       *first_button_text,
@@ -120,5 +114,6 @@ void          _gtk_window_add_accelerator_for_action
 void          _gtk_window_add_accelerators_from_menu
 						   (GtkWindow        *window,
 						    GMenuModel       *menu);
+gboolean      _gtk_settings_get_dialogs_use_header (void);
 
 #endif

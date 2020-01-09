@@ -30,11 +30,8 @@
 
   <title>Åbn et arkiv</title>
 
-  <p>You can open an existing archive with <app>Archive Manager</app> by
-  clicking <guiseq><gui style="menu">Archive
-  Manager</gui><gui style="menuitem">Open…</gui></guiseq></p>
+  <p>Du kan åbne et eksisterende arkiv ved med <app>Arkivhåndtering</app> ved at klikke på <guiseq><gui style="menu">Arkivhåndtering</gui><gui style="menuitem">Åbn…</gui></guiseq></p>
 
-  <p>You can also drag and drop an archive into an open <app>Archive
-  Manager</app> window.</p>
+  <p>Du kan også trække og slippe et arkiv ind i et åbent <app>Arkivhåndtering</app>-vindue.</p>
 
 </page>

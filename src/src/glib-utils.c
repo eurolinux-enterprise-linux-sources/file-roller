@@ -1034,7 +1034,7 @@ _g_path_get_relative_basename (const char *path,
 		return (path[0] == '/') ? path + 1 : path;
 
 	base_dir_len = strlen (base_dir);
-	if (strlen (path) <= base_dir_len)
+	if (strlen (path) < base_dir_len)
 		return NULL;
 
 	base_path = path + base_dir_len;
@@ -1203,7 +1203,10 @@ _g_mime_type_get_from_content (char  *buffer,
 		const char * mime_type;
 
 		mime_type = magic_buffer (magic, buffer, buffer_size);
-		if (mime_type)
+		if ((mime_type != NULL) && (strcmp (mime_type, "application/octet-stream") == 0))
+			return NULL;
+
+		if (mime_type != NULL)
 			return mime_type;
 
 		g_warning ("unable to detect filetype from magic: %s", magic_error (magic));

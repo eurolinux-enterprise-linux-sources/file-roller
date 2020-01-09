@@ -39,7 +39,7 @@
   <p>El <app>Gestor d'arxius</app> és una aplicació per gestionar els fitxers d'arxiu, per exemple, els fitxers <file>.zip</file> o <file>.tar</file>. Està dissenyada perquè sigui fàcil d'utilitzar. El <app>Gestor d'arxius</app> proporciona totes les eines necessàries per la creació, modificació i extracció d'arxius.</p>
 
   <note style="advanced">
-    <p>Un arxiu consisteix en un o més fitxers o carpetes, juntament amb les seves metadades. Es pot encriptar una part o tot sencer. Els fitxers d'arxiu són útils per emmagatzemar dades i transferir-les entre ordinadors gràcies a que permeten agrupar diversos fitxers en un de sol.</p>
+    <p>Un arxiu consisteix en un o més fitxers o carpetes, juntament amb les seves metadades. Es pot encriptar una part o tot sencer. Els fitxers d'arxiu són útils per emmagatzemar dades i transferir-les entre ordinadors gràcies al fet que permeten agrupar diversos fitxers en un de sol.</p>
   </note>
 
   <p>Amb el <app>Gestor d'arxius</app> podeu:</p>

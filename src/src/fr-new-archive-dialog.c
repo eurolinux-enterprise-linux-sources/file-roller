@@ -46,6 +46,7 @@ struct _FrNewArchiveDialogPrivate {
 	gboolean    can_encrypt_header;
 	gboolean    can_create_volumes;
 	GFile      *original_file;
+	GList      *files_to_add;
 };
 
 
@@ -59,6 +60,7 @@ fr_new_archive_dialog_finalize (GObject *object)
 
 	self = FR_NEW_ARCHIVE_DIALOG (object);
 
+	_g_object_list_unref (self->priv->files_to_add);
 	_g_object_unref (self->priv->original_file);
 	g_object_unref (self->priv->settings);
 	g_object_unref (self->priv->builder);
@@ -117,6 +119,7 @@ fr_new_archive_dialog_init (FrNewArchiveDialog *self)
 	self->priv->builder = NULL;
 	self->priv->supported_ext = g_hash_table_new (g_str_hash, g_str_equal);
 	self->priv->original_file = NULL;
+	self->priv->files_to_add = NULL;
 }
 
 
@@ -151,7 +154,6 @@ extension_comboboxtext_changed_cb (GtkComboBox *combo_box,
 {
 	FrNewArchiveDialog *self = user_data;
 	int                 n_format;
-	GdkPixbuf          *icon_pixbuf;
 
 	n_format = get_selected_format (self);
 
@@ -164,14 +166,6 @@ extension_comboboxtext_changed_cb (GtkComboBox *combo_box,
 
 	self->priv->can_create_volumes = mime_type_desc[n_format].capabilities & FR_ARCHIVE_CAN_CREATE_VOLUMES;
 	gtk_widget_set_sensitive (GET_WIDGET ("volume_box"), self->priv->can_create_volumes);
-
-	icon_pixbuf = _g_mime_type_get_icon (mime_type_desc[n_format].mime_type,
-					     ARCHIVE_ICON_SIZE,
-					     gtk_icon_theme_get_for_screen (gtk_widget_get_screen (GTK_WIDGET (self))));
-	if (icon_pixbuf != NULL) {
-		gtk_image_set_from_pixbuf (GTK_IMAGE (GET_WIDGET ("archive_icon")), icon_pixbuf);
-		g_object_unref (icon_pixbuf);
-	}
 
 	_fr_new_archive_dialog_update_sensitivity (self);
 }
@@ -310,10 +304,22 @@ fr_new_archive_dialog_new (const char         *title,
 {
 	FrNewArchiveDialog *self;
 
-	self = g_object_new (FR_TYPE_NEW_ARCHIVE_DIALOG, "title", title, "use-header-bar", TRUE, NULL);
+	self = g_object_new (FR_TYPE_NEW_ARCHIVE_DIALOG,
+			     "title", title,
+			     "use-header-bar", _gtk_settings_get_dialogs_use_header (),
+			     NULL);
 	_fr_new_archive_dialog_construct (self, parent, action, folder, default_name, original_file);
 
 	return (GtkWidget *) self;
+}
+
+
+void
+fr_new_archive_dialog_set_files_to_add (FrNewArchiveDialog  *self,
+					GList               *file_list /* GFile list */)
+{
+	_g_object_list_unref (self->priv->files_to_add);
+	self->priv->files_to_add = _g_object_list_ref (file_list);
 }
 
 
@@ -419,7 +425,8 @@ fr_new_archive_dialog_get_file (FrNewArchiveDialog  *self,
 		return NULL;
 	}
 
-	if (! g_file_info_get_attribute_boolean (parent_info, G_FILE_ATTRIBUTE_ACCESS_CAN_WRITE)) {
+	if (g_file_info_has_attribute (parent_info, G_FILE_ATTRIBUTE_ACCESS_CAN_WRITE) &&
+				       ! g_file_info_get_attribute_boolean (parent_info, G_FILE_ATTRIBUTE_ACCESS_CAN_WRITE)) {
 		dialog = _gtk_error_dialog_new (GTK_WINDOW (self),
 						GTK_DIALOG_MODAL,
 						NULL,
@@ -453,6 +460,30 @@ fr_new_archive_dialog_get_file (FrNewArchiveDialog  *self,
 		return NULL;
 	}
 
+	/* check whether the file is included in the files to add */
+
+	{
+		GList *scan;
+
+		for (scan = self->priv->files_to_add; scan; scan = scan->next) {
+			if (_g_file_cmp_uris (G_FILE (scan->data), file) == 0) {
+				dialog = _gtk_error_dialog_new (GTK_WINDOW (self),
+							        GTK_DIALOG_MODAL,
+								NULL,
+								_("Could not create the archive"),
+								"%s",
+								_("You can't add an archive to itself."));
+				gtk_dialog_run (GTK_DIALOG (dialog));
+
+				gtk_widget_destroy (GTK_WIDGET (dialog));
+				g_object_unref (parent_info);
+				g_object_unref (file);
+
+				return NULL;
+			}
+		}
+	}
+
 	/* overwrite confirmation */
 
 	if (g_file_query_exists (file, NULL)) {
@@ -466,7 +497,6 @@ fr_new_archive_dialog_get_file (FrNewArchiveDialog  *self,
 		secondary_message = g_strdup_printf (_("The file already exists in \"%s\".  Replacing it will overwrite its contents."), g_file_info_get_display_name (parent_info));
 		dialog = _gtk_message_dialog_new (GTK_WINDOW (self),
 						  GTK_DIALOG_MODAL,
-						  _GTK_ICON_NAME_DIALOG_QUESTION,
 						  message,
 						  secondary_message,
 						  _GTK_LABEL_CANCEL, GTK_RESPONSE_CANCEL,

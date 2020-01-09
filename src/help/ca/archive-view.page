@@ -54,7 +54,7 @@
   </terms>
 
   <section id="file-open">
-    <title>Obriu els fitxers del arxiu</title>
+    <title>Obriu els fitxers de l'arxiu</title>
 
     <p>Feu doble clic sobre el nom del fitxer o feu clic amb el botó secundari sobre el nom del fitxer i seleccioneu <gui>Obre</gui>. El <app>Gestor d'arxius</app> obrirà el fitxer amb l'aplicació per defecte per a aquest tipus de fitxer.</p>
 

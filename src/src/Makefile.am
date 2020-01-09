@@ -26,18 +26,12 @@ endif
 AM_CPPFLAGS =						\
 	-I$(top_srcdir)					\
 	-I$(top_builddir)				\
-	-DFR_PREFIX=\"$(prefix)\"           		\
-        -DFR_SYSCONFDIR=\"$(sysconfdir)\"   		\
-        -DFR_DATADIR=\"$(datadir)\"     	    	\
         -DPRIVDATADIR=\"$(privdatadir)\"		\
         -DUI_DIR=\"$(uidir)\"				\
-        -DFR_LIBDIR=\"$(libdir)\"  	         	\
         -DPKG_DATA_DIR=\"$(pkgdatadir)\"                \
-	-DPIXMAPSDIR=\""$(datadir)/pixmaps"\"		\
-	-DGLADEDIR=\""$(gladedir)"\" 			\
 	-DPRIVEXECDIR=\"$(privexecdir)\"		\
 	-DSHDIR=\"$(shdir)\"				\
-	-DAPPLICATIONS_DIR=\"$(applications_dir)\"	\
+	-DLOCALEDIR=\"$(localedir)\" 			\
 	$(DISABLE_DEPRECATED)				\
 	$(FR_CFLAGS)					\
 	$(JSON_GLIB_CFLAGS)				\
@@ -185,7 +179,7 @@ fr-marshal.c: fr-marshal.list $(GLIB_GENMARSHAL)
 
 fr-enum-types.h: typedefs.h 
 	$(AM_V_GEN)( $(GLIB_MKENUMS) \
-		--fhead "#ifndef FR_ENUM__TYPES_H\n#define FR_ENUM_TYPES_H\n\n#include <glib-object.h>\n\nG_BEGIN_DECLS\n" \
+		--fhead "#ifndef FR_ENUM_TYPES_H\n#define FR_ENUM_TYPES_H\n\n#include <glib-object.h>\n\nG_BEGIN_DECLS\n" \
 		--fprod "/* enumerations from \"@filename@\" */\n" \
 		--vhead "GType @enum_name@_get_type (void);\n#define FR_TYPE_@ENUMSHORT@ (@enum_name@_get_type())\n" \
 		--ftail "G_END_DECLS\n\n#endif /* FR_ENUM_TYPES_H */" \

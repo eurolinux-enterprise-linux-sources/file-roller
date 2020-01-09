@@ -97,7 +97,7 @@ process_data_line (char     *line,
         tmfields = g_strsplit(fields[3], "-", 3);
         if (tmfields[2]) {
                 tm.tm_year = atoi (tmfields[0]) - 1900;
-                tm.tm_mon = atoi (tmfields[1]);
+                tm.tm_mon = atoi (tmfields[1]) - 1;
                 tm.tm_mday = atoi (tmfields[2]);
         }
         g_strfreev (tmfields);
@@ -200,7 +200,9 @@ fr_command_dpkg_extract (FrCommand  *comm,
 }
 
 
-const char *dpkg_mime_type[] = { "application/x-deb", NULL };
+const char *dpkg_mime_type[] = { "application/vnd.debian.binary-package",
+				 "application/x-deb",
+				 NULL };
 
 
 static const char **

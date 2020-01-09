@@ -70,7 +70,7 @@
   <terms>
     <item>
       <title><gui>Mantenir l'estructura de directoris</gui></title>
-      <p>Marqueu aquesta opció si voleu mantenir l'estructura del directoris igual com a l'arxiu.</p>
+      <p>Marqueu aquesta opció si voleu mantenir l'estructura dels directoris igual com a l'arxiu.</p>
     </item>
     <item>
       <title><gui>No sobreescriguis els fitxers nous</gui></title>

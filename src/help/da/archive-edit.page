@@ -40,14 +40,11 @@
     </item>
     <item>
       <title>Fjern filer</title>
-      <p>Right-click on the file and chose <gui style="menuitem">Delete</gui>,
-      or press <key>Delete</key>.</p>
+      <p>Højreklik på filen og vælg <gui style="menuitem">Slet</gui>, eller tryk på <key>Delete</key>.</p>
     </item>
     <item>
     <title>Omdøb filer</title>
-      <p>Right-click on the file and chose <gui style="menuitem">Rename…</gui>.
-      Enter the new file name into the dialog which has opened and confirm the
-      new name.</p>
+      <p>Højreklik på filen og vælg <gui style="menuitem">Omdøb…</gui>. Indtast det nye filnavn i dialogen som åbnes, og bekræft det nye navn.</p>
     </item>
   </terms>
 

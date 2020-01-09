@@ -131,7 +131,7 @@ window_progress_cb (FrWindow *window,
 
 	g_dbus_connection_emit_signal (connection,
 				       NULL,
-				       "org/gnome/ArchiveManager1",
+				       "/org/gnome/ArchiveManager1",
 				       "org.gnome.ArchiveManager1",
 				       "Progress",
 				       g_variant_new ("(ds)",
@@ -223,10 +223,10 @@ handle_method_call (GDBusConnection       *connection,
 		g_signal_connect (window, "progress", G_CALLBACK (window_progress_cb), connection);
 		g_signal_connect (window, "ready", G_CALLBACK (window_ready_cb), invocation);
 
-		fr_window_new_batch (FR_WINDOW (window), _("Compress"));
-		fr_window_set_batch__add (FR_WINDOW (window), file, file_list);
-		fr_window_append_batch_action (FR_WINDOW (window), FR_BATCH_ACTION_QUIT, NULL, NULL);
-		fr_window_start_batch (FR_WINDOW (window));
+		fr_window_batch_new (FR_WINDOW (window), _("Compress"));
+		fr_window_batch__add_files (FR_WINDOW (window), file, file_list);
+		fr_window_batch_append_action (FR_WINDOW (window), FR_BATCH_ACTION_QUIT, NULL, NULL);
+		fr_window_batch_start (FR_WINDOW (window));
 
 		g_object_unref (file);
 		_g_object_list_unref (file_list);
@@ -259,10 +259,10 @@ handle_method_call (GDBusConnection       *connection,
 		g_signal_connect (window, "progress", G_CALLBACK (window_progress_cb), connection);
 		g_signal_connect (window, "ready", G_CALLBACK (window_ready_cb), invocation);
 
-		fr_window_new_batch (FR_WINDOW (window), _("Extract archive"));
-		fr_window_set_batch__add (FR_WINDOW (window), NULL, file_list);
-		fr_window_append_batch_action (FR_WINDOW (window), FR_BATCH_ACTION_QUIT, NULL, NULL);
-		fr_window_start_batch (FR_WINDOW (window));
+		fr_window_batch_new (FR_WINDOW (window), _("Compress"));
+		fr_window_batch__add_files (FR_WINDOW (window), NULL, file_list);
+		fr_window_batch_append_action (FR_WINDOW (window), FR_BATCH_ACTION_QUIT, NULL, NULL);
+		fr_window_batch_start (FR_WINDOW (window));
 
 		_g_object_list_unref (file_list);
 		g_object_unref (destination);
@@ -295,10 +295,10 @@ handle_method_call (GDBusConnection       *connection,
 		g_signal_connect (window, "progress", G_CALLBACK (window_progress_cb), connection);
 		g_signal_connect (window, "ready", G_CALLBACK (window_ready_cb), invocation);
 
-		fr_window_new_batch (FR_WINDOW (window), _("Extract archive"));
-		fr_window_set_batch__extract (FR_WINDOW (window), archive, destination);
-		fr_window_append_batch_action (FR_WINDOW (window), FR_BATCH_ACTION_QUIT, NULL, NULL);
-		fr_window_start_batch (FR_WINDOW (window));
+		fr_window_batch_new (FR_WINDOW (window), C_("Window title", "Extract archive"));
+		fr_window_batch__extract (FR_WINDOW (window), archive, destination, use_progress_dialog);
+		fr_window_batch_append_action (FR_WINDOW (window), FR_BATCH_ACTION_QUIT, NULL, NULL);
+		fr_window_batch_start (FR_WINDOW (window));
 
 		g_object_unref (archive);
 		g_object_unref (destination);
@@ -321,10 +321,10 @@ handle_method_call (GDBusConnection       *connection,
 		g_signal_connect (window, "progress", G_CALLBACK (window_progress_cb), connection);
 		g_signal_connect (window, "ready", G_CALLBACK (window_ready_cb), invocation);
 
-		fr_window_new_batch (FR_WINDOW (window), _("Extract archive"));
-		fr_window_set_batch__extract_here (FR_WINDOW (window), archive);
-		fr_window_append_batch_action (FR_WINDOW (window), FR_BATCH_ACTION_QUIT, NULL, NULL);
-		fr_window_start_batch (FR_WINDOW (window));
+		fr_window_batch_new (FR_WINDOW (window), C_("Window title", "Extract archive"));
+		fr_window_batch__extract_here (FR_WINDOW (window), archive, use_progress_dialog);
+		fr_window_batch_append_action (FR_WINDOW (window), FR_BATCH_ACTION_QUIT, NULL, NULL);
+		fr_window_batch_start (FR_WINDOW (window));
 
 		g_object_unref (archive);
 		g_free (uri);
@@ -438,6 +438,7 @@ fr_application_register_archive_manager_service (FrApplication *self)
 
 	g_timeout_add_seconds (SERVICE_TIMEOUT, service_timeout_cb, self);
 
+	_g_object_unref (stream);
 	g_free (buffer);
 }
 
@@ -446,21 +447,29 @@ static void
 fr_application_startup (GApplication *application)
 {
 	GtkSettings	*gtk_settings;
-	gboolean	 show_app_menu;
-	gboolean	 show_menubar;
+	gboolean	 shell_shows_menubar;
 
 	G_APPLICATION_CLASS (fr_application_parent_class)->startup (application);
+
+	g_set_application_name (_("Archive Manager"));
+	gtk_window_set_default_icon_name ("file-roller");
+
+#ifdef ENABLE_NOTIFICATION
+	if (! notify_init (g_get_application_name ()))
+                g_warning ("Cannot initialize notification system.");
+#endif /* ENABLE_NOTIFICATION */
 
 	fr_application_register_archive_manager_service (FR_APPLICATION (application));
 	initialize_data ();
 
+	/* use the menubar only when the shell shows the menu bar */
+
 	gtk_settings = gtk_settings_get_default ();
 	g_object_get (G_OBJECT (gtk_settings),
-		      "gtk-shell-shows-app-menu", &show_app_menu,
-		      "gtk-shell-shows-menubar", &show_menubar,
+		      "gtk-shell-shows-menubar", &shell_shows_menubar,
 		      NULL);
 
-	if (!show_app_menu || show_menubar)
+	if (shell_shows_menubar)
 		initialize_app_menubar (application);
 	else
 		initialize_app_menu (application);
@@ -530,9 +539,11 @@ fr_application_command_line (GApplication            *application,
 		g_critical ("Failed to parse arguments: %s", error->message);
 		g_error_free (error);
 		g_option_context_free (context);
+		g_strfreev (argv);
 
 		return fr_application_command_line_finished (application, EXIT_FAILURE);
 	}
+	g_strfreev (argv);
 	g_option_context_free (context);
 
 	if (remaining_args == NULL) { /* No archive specified. */
@@ -561,19 +572,18 @@ fr_application_command_line (GApplication            *application,
 		if (default_directory != NULL)
 			fr_window_set_default_dir (FR_WINDOW (window), default_directory, TRUE);
 
+		fr_window_set_notify (FR_WINDOW (window), arg_notify);
+
 		file_list = NULL;
 		while ((filename = remaining_args[i++]) != NULL)
 			file_list = g_list_prepend (file_list, g_application_command_line_create_file_for_arg (command_line, filename));
 		file_list = g_list_reverse (file_list);
 
-		fr_window_new_batch (FR_WINDOW (window), _("Compress"));
-		fr_window_set_batch__add (FR_WINDOW (window), add_to_archive, file_list);
-
+		fr_window_batch_new (FR_WINDOW (window), _("Compress"));
+		fr_window_batch__add_files (FR_WINDOW (window), add_to_archive, file_list);
 		if (! arg_notify)
-			fr_window_append_batch_action (FR_WINDOW (window), FR_BATCH_ACTION_QUIT, NULL, NULL);
-		else
-			fr_window_set_notify (FR_WINDOW (window), TRUE);
-		fr_window_start_batch (FR_WINDOW (window));
+			fr_window_batch_append_action (FR_WINDOW (window), FR_BATCH_ACTION_QUIT, NULL, NULL);
+		fr_window_batch_start (FR_WINDOW (window));
 
 		_g_object_list_unref (file_list);
 	}
@@ -590,24 +600,26 @@ fr_application_command_line (GApplication            *application,
 		if (default_directory != NULL)
 			fr_window_set_default_dir (FR_WINDOW (window), default_directory, TRUE);
 
-		fr_window_new_batch (FR_WINDOW (window), _("Extract archive"));
+		fr_window_set_notify (FR_WINDOW (window), arg_notify);
+
+		fr_window_batch_new (FR_WINDOW (window), C_("Window title", "Extract archive"));
 		while ((archive = remaining_args[i++]) != NULL) {
-			GFile *file;
+			GFile    *file;
+			gboolean  last_archive;
 
 			file = g_application_command_line_create_file_for_arg (command_line, archive);
+			last_archive = (remaining_args[i] == NULL);
+
 			if (arg_extract_here == 1)
-				fr_window_set_batch__extract_here (FR_WINDOW (window), file);
+				fr_window_batch__extract_here (FR_WINDOW (window), file, arg_notify && last_archive);
 			else
-				fr_window_set_batch__extract (FR_WINDOW (window), file, extraction_destination);
+				fr_window_batch__extract (FR_WINDOW (window), file, extraction_destination, arg_notify && last_archive);
 
 			g_object_unref (file);
 		}
 		if (! arg_notify)
-			fr_window_append_batch_action (FR_WINDOW (window), FR_BATCH_ACTION_QUIT, NULL, NULL);
-		else
-			fr_window_set_notify (FR_WINDOW (window), TRUE);
-
-		fr_window_start_batch (FR_WINDOW (window));
+			fr_window_batch_append_action (FR_WINDOW (window), FR_BATCH_ACTION_QUIT, NULL, NULL);
+		fr_window_batch_start (FR_WINDOW (window));
 	}
 	else { /* Open each archive in a window */
 		const char *filename = NULL;
@@ -712,16 +724,6 @@ fr_application_class_init (FrApplicationClass *klass)
 static void
 fr_application_init (FrApplication *self)
 {
-	/* set the name and icon */
-
-	g_set_application_name (_("Archive Manager"));
-	gtk_window_set_default_icon_name ("file-roller");
-
-#ifdef ENABLE_NOTIFICATION
-	if (! notify_init (g_get_application_name ()))
-                g_warning ("Cannot initialize notification system.");
-#endif /* ENABLE_NOTIFICATION */
-
 	self->priv = G_TYPE_INSTANCE_GET_PRIVATE (self, FR_TYPE_APPLICATION, FrApplicationPrivate);
 	self->priv->owner_id = 0;
 	self->priv->introspection_data = NULL;

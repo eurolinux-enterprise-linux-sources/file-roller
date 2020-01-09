@@ -255,7 +255,7 @@ fr_file_selector_dialog_realize (GtkWidget *widget)
 	sidebar_size = g_settings_get_int (self->priv->settings, PREF_FILE_SELECTOR_SIDEBAR_SIZE);
 	if (sidebar_size <= 0)
 		sidebar_size = get_font_size (widget) * SIDEBAR_CHARS;
-		gtk_paned_set_position (GTK_PANED (GET_WIDGET ("main_paned")), sidebar_size);
+	gtk_paned_set_position (GTK_PANED (GET_WIDGET ("main_paned")), sidebar_size);
 }
 
 
@@ -715,7 +715,7 @@ fr_file_selector_dialog_new (const char *title,
 	return (GtkWidget *) g_object_new (FR_TYPE_FILE_SELECTOR_DIALOG,
 					   "title", title,
 					   "transient-for", parent,
-					   "use-header-bar", TRUE,
+					   "use-header-bar", _gtk_settings_get_dialogs_use_header (),
 					   NULL);
 }
 
@@ -882,6 +882,7 @@ get_folder_content_done_cb (GError   *error,
 
 	gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (GET_WIDGET ("files_liststore")), sort_column_id, sort_order);
 	set_current_folder (self, load_data->folder);
+	_update_sensitivity (self);
 
 	if (load_data->dialog->priv->current_operation == load_data)
 		load_data->dialog->priv->current_operation = NULL;

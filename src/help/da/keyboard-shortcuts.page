@@ -73,7 +73,7 @@
     </tr>
     <tr>
       <td><p>Afmarkér alle</p></td>
-      <td><p><keyseq><key>Shift</key><key>Ctrl</key><key>A</key></keyseq></p></td>
+      <td><p><keyseq><key>Skift</key><key>Ctrl</key><key>A</key></keyseq></p></td>
     </tr>
     <tr>
       <td><p>Find</p></td>
@@ -84,7 +84,7 @@
       <td><p><key>Delete</key></p></td>
     </tr>
     <tr>
-      <td><p>Vis en trævisning af mapperne i sidepanelet</p></td>
+      <td><p>Vis en trævisning af mapperne i sideruden</p></td>
       <td><p><key>F9</key></p></td>
     </tr>
     <tr>

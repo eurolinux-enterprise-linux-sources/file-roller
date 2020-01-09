@@ -98,7 +98,7 @@ list__process_line (char     *line,
 			strncpy (version, ver_start, ver_len);
 			version[ver_len] = 0;
 
-			if (strcmp (version, "4.55") < 0)
+			if ((strcmp (version, "4.55") < 0) && (ver_len > 1) && (version[1] == '.'))
 				self->old_style = TRUE;
 			else
 				self->old_style = FALSE;
@@ -424,11 +424,7 @@ fr_command_7z_delete (FrCommand  *command,
 			if (g_str_has_prefix (scan->data, "@"))
 				fr_process_add_arg_concat (command->process, "-i!", scan->data, NULL);
 
-	if (archive->encrypt_header
-	    && fr_archive_is_capable_of (archive, FR_ARCHIVE_CAN_ENCRYPT_HEADER))
-	{
-		add_password_arg (command, FR_ARCHIVE (command)->password, FALSE);
-	}
+	add_password_arg (command, FR_ARCHIVE (command)->password, FALSE);
 
 	fr_process_add_arg (command->process, "--");
 	fr_process_add_arg (command->process, command->filename);
@@ -556,7 +552,8 @@ fr_command_7z_handle_error (FrCommand *command,
 	}
 
 	if (error->status <= 1) {
-		error->type = FR_ERROR_NONE;
+		/* ignore warnings */
+		fr_error_clear_gerror (error);
 	}
 	else {
 		GList *scan;
@@ -620,7 +617,10 @@ fr_command_7z_get_capabilities (FrArchive  *archive,
 		if (_g_mime_type_matches (mime_type, "application/x-rar")
 		    || _g_mime_type_matches (mime_type, "application/x-cbr"))
 		{
-			if (! check_command || g_file_test ("/usr/lib/p7zip/Codecs/Rar29.so", G_FILE_TEST_EXISTS))
+			/* give priority to rar and unrar that supports RAR files better. */
+			if (!_g_program_is_available ("rar", check_command)
+			    && !_g_program_is_available ("unrar", check_command)
+			    && (! check_command || g_file_test ("/usr/lib/p7zip/Codecs/Rar29.so", G_FILE_TEST_EXISTS)))
 				capabilities |= FR_ARCHIVE_CAN_READ;
 		}
 		else

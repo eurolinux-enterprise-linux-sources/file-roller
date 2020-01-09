@@ -42,7 +42,7 @@
       <title>Se som en mappe</title>
       <p>Denne visning viser den klassiske mappestruktur. For at bruge denne skal du klikke på <guiseq><gui style="menu">Vis</gui> <gui style="menuitem">Vis som en mappe</gui></guiseq>.</p>
       <note style="tip">
-	<p>Mens du ser på dit arkiv på denne måde, kan du trykke på <key>F9</key> eller klikke på <guiseq><gui style="menu">Vis</gui> <gui style="menuitem">Mapper</gui></guiseq> for at få vist en trævisning af mapperne i sidepanelet. Herved kan du let navigere mellem mapperne.</p>
+	<p>Mens du ser på dit arkiv på denne måde, kan du trykke på <key>F9</key> eller klikke på <guiseq><gui style="menu">Vis</gui> <gui style="menuitem">Mapper</gui></guiseq> for at se en trævisning af mapperne i sideruden. Herved kan du let navigere mellem mapperne.</p>
       </note>
     </item>
   </terms>
@@ -59,7 +59,7 @@
           <p>Højreklik på filen.</p>
         </item>
         <item>
-          <p>Click <gui>Open With…</gui>.</p>
+          <p>Klik på <gui>Åbn med…</gui>.</p>
         </item>
         <item>
           <p>Vælg det program, som du vil bruge, og klik på <gui>Vælg</gui>.</p>

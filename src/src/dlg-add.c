@@ -173,12 +173,16 @@ dlg_add (FrWindow *window)
 	GtkWidget  *options_button;
 	GtkWidget  *options_menu;
 	GtkWidget  *menu_item;
+	gboolean    use_header;
+	GtkWidget  *button;
 
 	data = g_new0 (DialogData, 1);
 	data->settings = g_settings_new (FILE_ROLLER_SCHEMA_ADD);
 	data->window = window;
-	data->dialog = fr_file_selector_dialog_new (_("Add Files"), GTK_WINDOW (data->window));
+	data->dialog = fr_file_selector_dialog_new (C_("Window title", "Add Files"), GTK_WINDOW (data->window));
 	gtk_dialog_set_default_response (GTK_DIALOG (data->dialog), GTK_RESPONSE_OK);
+
+	g_object_get (data->dialog, "use-header-bar", &use_header, NULL);
 
 	data->builder = _gtk_builder_new_from_resource ("add-dialog-options.ui");
 	if (data->builder == NULL)
@@ -190,20 +194,21 @@ dlg_add (FrWindow *window)
 	options_button = gtk_menu_button_new ();
 	gtk_button_set_label (GTK_BUTTON (options_button), _("_Options"));
 	gtk_button_set_use_underline (GTK_BUTTON (options_button), TRUE);
+	gtk_menu_button_set_use_popover (GTK_MENU_BUTTON (options_button), TRUE);
 	gtk_widget_show (options_button);
 
 	options_menu = gtk_menu_new ();
 
 	/* load options */
 
-	menu_item = gtk_menu_item_new_with_label (_("Load Options"));
+	menu_item = gtk_menu_item_new_with_label (C_("Action", "Load Options"));
 	gtk_widget_show (menu_item);
 	g_signal_connect (menu_item, "activate", G_CALLBACK (load_options_activate_cb), data);
 	gtk_menu_shell_append (GTK_MENU_SHELL (options_menu), menu_item);
 
 	/* save options */
 
-	menu_item = gtk_menu_item_new_with_label (_("Save Options"));
+	menu_item = gtk_menu_item_new_with_label (C_("Action", "Save Options"));
 	gtk_widget_show (menu_item);
 	g_signal_connect (menu_item, "activate", G_CALLBACK (save_options_activate_cb), data);
 	gtk_menu_shell_append (GTK_MENU_SHELL (options_menu), menu_item);
@@ -219,14 +224,24 @@ dlg_add (FrWindow *window)
 
 	/* add the buttons */
 
+	if (! use_header)
+		gtk_box_pack_start (GTK_BOX (gtk_dialog_get_action_area (GTK_DIALOG (data->dialog))),
+				    options_button,
+				    FALSE,
+				    FALSE,
+				    0);
+
 	gtk_dialog_add_button (GTK_DIALOG (data->dialog),
 			       _GTK_LABEL_CANCEL,
 			       GTK_RESPONSE_CANCEL);
-	gtk_dialog_add_button (GTK_DIALOG (data->dialog),
-			       _GTK_LABEL_ADD,
-			       GTK_RESPONSE_OK);
-	gtk_header_bar_pack_end (GTK_HEADER_BAR (gtk_dialog_get_header_bar (GTK_DIALOG (data->dialog))),
-				 options_button);
+	button = gtk_dialog_add_button (GTK_DIALOG (data->dialog),
+					_GTK_LABEL_ADD,
+					GTK_RESPONSE_OK);
+	gtk_style_context_add_class (gtk_widget_get_style_context (button), GTK_STYLE_CLASS_SUGGESTED_ACTION);
+
+	if (use_header)
+		gtk_header_bar_pack_end (GTK_HEADER_BAR (gtk_dialog_get_header_bar (GTK_DIALOG (data->dialog))),
+				         options_button);
 
 	/* set data */
 
@@ -443,6 +458,7 @@ dlg_add_folder_load_last_options (DialogData *data)
 	g_free (include_files);
 	g_free (exclude_files);
 	g_free (exclude_folders);
+	g_list_free_full (files, (GDestroyNotify) g_object_unref);
 }
 
 
@@ -719,6 +735,9 @@ aod_remove_cb (GtkWidget             *widget,
 }
 
 
+#define RESPONSE_DELETE_OPTIONS 10
+
+
 static void
 load_options_activate_cb (GtkMenuItem *menu_item,
 			  DialogData  *data)
@@ -741,12 +760,27 @@ load_options_activate_cb (GtkMenuItem *menu_item,
 
 	/* Get the widgets. */
 
-	aod_data->dialog = _gtk_builder_get_widget (aod_data->builder, "add_options_dialog");
+	aod_data->dialog = g_object_new (GTK_TYPE_DIALOG,
+					 "title", C_("Window title", "Load Options"),
+					 "modal", TRUE,
+					 "use-header-bar", _gtk_settings_get_dialogs_use_header (),
+					 NULL);
+	gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (aod_data->dialog))),
+			   _gtk_builder_get_widget (aod_data->builder, "add_options_dialog"));
+
+	gtk_dialog_add_buttons (GTK_DIALOG (aod_data->dialog),
+				_GTK_LABEL_CANCEL, GTK_RESPONSE_CANCEL,
+				_("_Apply"), GTK_RESPONSE_OK,
+				_("_Delete"), RESPONSE_DELETE_OPTIONS,
+				NULL);
+
 	aod_data->aod_treeview = _gtk_builder_get_widget (aod_data->builder, "aod_treeview");
 
-	ok_button = _gtk_builder_get_widget (aod_data->builder, "aod_okbutton");
-	cancel_button = _gtk_builder_get_widget (aod_data->builder, "aod_cancelbutton");
-	remove_button = _gtk_builder_get_widget (aod_data->builder, "aod_remove_button");
+	ok_button = gtk_dialog_get_widget_for_response (GTK_DIALOG (aod_data->dialog), GTK_RESPONSE_OK);
+	gtk_style_context_add_class (gtk_widget_get_style_context (ok_button), GTK_STYLE_CLASS_SUGGESTED_ACTION);
+	cancel_button = gtk_dialog_get_widget_for_response (GTK_DIALOG (aod_data->dialog), GTK_RESPONSE_CANCEL);
+	remove_button = gtk_dialog_get_widget_for_response (GTK_DIALOG (aod_data->dialog), RESPONSE_DELETE_OPTIONS);
+	gtk_style_context_add_class (gtk_widget_get_style_context (remove_button), GTK_STYLE_CLASS_DESTRUCTIVE_ACTION);
 
 	/* Set the signals handlers. */
 
@@ -819,7 +853,7 @@ save_options_activate_cb (GtkMenuItem *menu_item,
 
 	opt_filename = _gtk_request_dialog_run (GTK_WINDOW (data->dialog),
 						GTK_DIALOG_MODAL,
-						_("Save Options"),
+						C_("Window title", "Save Options"),
 						_("_Options Name:"),
 						(data->last_options != NULL) ? data->last_options : "",
 						1024,

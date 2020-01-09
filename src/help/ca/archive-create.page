@@ -34,7 +34,7 @@
     </mal:credit>
   </info>
 
-  <title>Creeu de un arxiu nou</title>
+  <title>Creació d'un arxiu nou</title>
 
   <p>Creeu un arxiu nou amb el <app>Gestor d'arxius</app> seguint aquests passos:</p>
 
@@ -58,7 +58,7 @@
       <gui>+</gui> in the toolbar button. Check the box next to the files and
       folders that you want to add.</p>
       <note style="tip">
-	<p>No tots els formats d'arxiu admeten carpetes — no s'us notificarà que el format que utilitzeu no les permet. En els formats que no les admeten s'afegiran els fitxers dins de les carpetes, però no les carpetes.</p>
+	<p>No tots els formats d'arxiu admeten carpetes — no se us notificarà que el format que utilitzeu no les permet. En els formats que no les admeten s'afegiran els fitxers dins de les carpetes, però no les carpetes.</p>
       </note>
     </item>
     <item>

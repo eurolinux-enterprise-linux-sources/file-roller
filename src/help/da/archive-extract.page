@@ -40,19 +40,16 @@
       <p><link xref="archive-open">Åbn</link> et arkiv.</p>
     </item>
     <item>
-      <p>Click <gui style="button">Extract</gui>.</p>
+      <p>Klik på <gui style="button">Udpak</gui>.</p>
     </item>
     <item>
-      <p>Choose where you want the archive to be extracted to in the file
-      chooser. This will be the destination folder. See
-      <link xref="archive-extract-advanced-options">advanced options for
-      extracting archives</link> for more extraction options.</p>
+      <p>Vælg hvortil arkivet skal udpakkes i filvælgeren. Dette er destinationsmappen. Se <link xref="archive-extract-advanced-options">avancerede muligheder for udpakning af arkiver</link> for yderligere udpakningsmuligheder.</p>
     </item>
     <item>
       <p>Klik på <gui>Udpak</gui>.</p>
     </item>
     <item>
-      <p>Hvis et arkiv er beskyttet af en <link xref="password-protection">adgangskode</link>, vil <app>arkivhåndtering</app> bede om det. Skriv adgangskoden og klik på <gui>O.k.</gui>.</p>
+      <p>Hvis et arkiv er beskyttet af en <link xref="password-protection">adgangskode</link>, vil <app>arkivhåndtering</app> bede om det. Skriv adgangskoden og klik på <gui>OK</gui>.</p>
     </item>
     <item>
       <p>Programmet viser fremgangsmåleren i en ny dialog. Hvis udpakningen afsluttes uden problemer, bliver du spurgt om du vil:</p>

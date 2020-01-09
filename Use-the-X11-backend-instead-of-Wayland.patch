@@ -1,0 +1,31 @@
+From 00d2fbb998de419e514568c79fe0c3d8b9cc1a38 Mon Sep 17 00:00:00 2001
+From: Kalev Lember <klember@redhat.com>
+Date: Wed, 14 Sep 2016 17:52:24 +0200
+Subject: [PATCH] Use the X11 backend instead of Wayland
+
+Force file-roller to use the gtk+ X11 backend even when running under a
+Wayland session. This is currently needed to work around missing support
+for arbitrarily named clipboards.
+
+https://bugzilla.gnome.org/show_bug.cgi?id=770333
+---
+ src/main.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/src/main.c b/src/main.c
+index 043f604..9fcb993 100644
+--- a/src/main.c
++++ b/src/main.c
+@@ -34,6 +34,10 @@ main (int argc, char **argv)
+ 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+ 	textdomain (GETTEXT_PACKAGE);
+ 
++	/* Use the X11 backend instead of Wayland,
++	 * https://bugzilla.gnome.org/show_bug.cgi?id=770333 */
++	gdk_set_allowed_backends ("x11");
++
+ 	app = fr_application_new ();
+ 	status = g_application_run (G_APPLICATION (app), argc, argv);
+ 
+-- 
+2.7.4

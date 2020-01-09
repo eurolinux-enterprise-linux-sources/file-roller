@@ -25,7 +25,7 @@
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
       <mal:name>Enrico Nicoletto</mal:name>
       <mal:email>liverig@gmail.com</mal:email>
-      <mal:years>2013</mal:years>
+      <mal:years>2013, 2015</mal:years>
     </mal:credit>
   
     <mal:credit xmlns:mal="http://projectmallard.org/1.0/" type="translator copyright">
@@ -50,7 +50,7 @@
     </item>
     <item>
     <title>Renomear arquivos</title>
-      <p>Clique com botão direito no arquivo e escolha <gui style="menuitem">Renomear…</gui>. Digite o novo nome de arquivo no diálogo que tiver aberto e confirme o novo nome.</p>
+      <p>Clique com botão direito no arquivo e escolha <gui style="menuitem">Renomear…</gui>. Digite o novo nome de arquivo na janela de diálogo que estiver aberta e confirme o novo nome.</p>
     </item>
   </terms>
 

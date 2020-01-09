@@ -109,6 +109,7 @@ _g_path_get_temp_work_dir (const char *parent_folder)
 
         template = g_strconcat (best_folder, "/.fr-XXXXXX", NULL);
         result = mkdtemp (template);
+        g_free (best_folder);
 
         if ((result == NULL) || (*result == '\0')) {
                 g_free (template);
@@ -410,9 +411,8 @@ _g_file_remove_directory (GFile         *directory,
 		return TRUE;
 
 	enumerator = g_file_enumerate_children (directory,
-					        G_FILE_ATTRIBUTE_STANDARD_NAME ","
-					        G_FILE_ATTRIBUTE_STANDARD_TYPE,
-					        0,
+					        G_FILE_ATTRIBUTE_STANDARD_NAME "," G_FILE_ATTRIBUTE_STANDARD_TYPE,
+						G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS,
 					        cancellable,
 					        error);
 
@@ -573,8 +573,10 @@ _g_file_is_temp_work_dir (GFile *file)
 	int       i;
 
 	path = g_file_get_path (file);
-	if (path[0] != '/')
+	if (path[0] != '/') {
+		g_free (path);
 		return FALSE;
+	}
 
 	for (i = 0; try_folder[i] != NULL; i++) {
 		const char *folder;
@@ -587,6 +589,8 @@ _g_file_is_temp_work_dir (GFile *file)
 			}
 		}
 	}
+
+	g_free (path);
 
 	return result;
 }

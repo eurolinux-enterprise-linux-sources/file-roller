@@ -15,17 +15,13 @@ service_DATA = $(service_in_files:.service.in=.service)
 %.service : %.service.in Makefile
 	$(AM_V_GEN) $(SED) -e "s|\@bindir\@|$(bindir)|" $< > $@
 
-gsettingsschema_in_files = org.gnome.FileRoller.gschema.xml.in
-gsettings_SCHEMAS = $(gsettingsschema_in_files:.xml.in=.xml)
-.PRECIOUS: $(gsettings_SCHEMAS)
+gsettings_SCHEMAS = org.gnome.FileRoller.gschema.xml
 
 appdatadir = $(datadir)/appdata
 appdata_DATA = $(appdata_in_files:.xml.in=.xml)
 appdata_in_files = org.gnome.FileRoller.appdata.xml.in
 
 @INTLTOOL_XML_RULE@
-
-@INTLTOOL_XML_NOMERGE_RULE@
 
 @GSETTINGS_RULES@
 
@@ -55,7 +51,7 @@ EXTRA_DIST = 				\
 	$(desktop_in_in_files)		\
 	$(desktop_in_files)		\
 	$(desktop_DATA)			\
-	$(gsettingsschema_in_files)	\
+	$(gsettings_SCHEMAS)		\
 	$(service_in_files)		\
 	$(NULL)
 
@@ -66,14 +62,9 @@ DISTCLEANFILES =			\
 	$(service_DATA)			\
 	$(NULL)
 
-CLEANFILES = 				\
-        $(gsettings_SCHEMAS)		\
-        $(NULL)
-
 dist-hook:
 if DESKTOP_VALIDATE
 	desktop-file-validate $(desktop_DATA)
 endif
-	cd $(distdir); rm -f $(CLEANFILES)
 
 -include $(top_srcdir)/git.mk

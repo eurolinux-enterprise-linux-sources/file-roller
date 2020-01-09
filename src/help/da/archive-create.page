@@ -34,23 +34,16 @@
 
   <steps>
     <item>
-      <p>Select <guiseq><gui style="menu">Archive
-      Manager</gui><gui style="menuitem">New Archive</gui></guiseq>.</p>
+      <p>Vælg <guiseq><gui style="menu">Arkivhåndtering</gui><gui style="menuitem">Nyt arkiv</gui></guiseq>.</p>
     </item>
     <item>
-      <p>Name your new archive file and choose the location where it will be
-      saved, then click <gui>Create</gui> to continue.</p>
+      <p>Navngiv din nye arkivfil, vælg hvor den skal gemmes, og klik så på <gui>Opret</gui> for at fortsætte.</p>
       <note style="tip">
-	<p>By clicking <gui>Other Options</gui> you can set a password or
-	split your new archive into smaller, individual files by selecting the
-	relevant option and specifying the volume for each part in
-	<gui>MB</gui>.</p>
+	<p>Ved at klikke på <gui>Andre indstillinger</gui> kan du angive en adgangskode eller dele dit nye arkiv i mindre, individuelle filer ved at vælge den relevante indstilling og angive størrelsen på hver del i <gui>MB</gui>.</p>
       </note>
     </item>
     <item>
-      <p>Add the desired files and folders to your archive by pressing
-      <gui>+</gui> in the toolbar button. Check the box next to the files and
-      folders that you want to add.</p>
+      <p>Tilføj de ønskede filer og mapper til dit arkiv ved at trykke på <gui>+</gui> i værktøjsknappen. Sæt mærke i boksen ved siden af de filer og mapper, du vil tilføje.</p>
       <note style="tip">
 	<p>Ikke alle arkivfilformater understøtter mapper - hvis det filformat, som du bruger, ikke gør det, får du ingen advarsel. Hvis det filformat, som du bruger, ikke understøtter mapper, så bliver filerne i mappen tilføjet, medens selve mappen ikke gør det.</p>
       </note>

@@ -1,9 +1,461 @@
-version 3.14.2
+version 3.22.3
 --------------
+
+ Bugs fixed:
+
+  * Fixed crash after extracting a file (#778846)
+
+ New or updated application translations:
+
+  * Danish (Ask Hjorth Larsen )
+  * Polish (Piotr Drąg)
+  * Slovenian (Matej Urbančič)
+
+version 3.22.2
+--------------
+
+ Bugs fixed:
+
+  * file-roller does not respect sort order for folders (Jan Achterhold) (#630543)
+
+ New or updated application translations:
+
+  * Chinese Simplified (Boyuan Yang)
+  * Icelandic (Sveinn í Felli)
+  * Norwegian bokmål (Åka Sikrom)
+  * Türkçe (Muhammet Kara)
+
+version 3.22.1
+--------------
+
+ Bugs fixed:
+
+  * Remove handling of Comic Books archives. Handle Source RPMs (#767244)
+  * fr-new-archive-dialog: Do not fail if access::can-write is not set.
+    (Ondrej Holy) (#688714)
+  * Fix crash when compressing remote files. (Bastien Nocera) (#767577)
+  * window: use gdk_cursor_new_for_display(). (Ernestas Kulik) (#767534)
+  * window: set the paned as the drag destination. (Ernestas Kulik) (#767621)
+  * Dialog title displayed untranslated (#756917)
+
+ New or updated application translations:
+
+  * Arabic (Khaled Hosny)
+  * Basque (dooteo)
+  * Catalan (Gil Forcada)
+  * Chinese (traditional) (Cheng-Chia Tseng)
+  * Croatian (gogo)
+  * Italian (Milo Casagrande)
+
+ New or updated manual translations:
+
+  * Danish (scootergrisen)
+
+version 3.22.0
+---------------
 
  New or updated application translations:
 
   * Dutch (Hannie Dumoleyn)
+  * Ukrainian (Daniel Korostil)
+  * Русский (Stas Solovey)
+
+ New or updated manual translations:
+
+  * French (Alain Lojewski)
+
+version 3.21.91
+---------------
+
+ New features and user visibile changes:
+
+  * Remove nautilus extension. For GNOME 3.22, this functionality is now
+    built directly into nautilus. (Michael Catanzaro) (#770248)
+
+ Bugs fixed:
+
+  * Fix a memory leak in the add files dialog. (David King) (#766271)
+  * Fix a clipboard paste memory leak. (David King) (#766271)
+  * Fix a memory leak when pasting from the clipboard. (David King)
+    (#766271)
+  * Fix a memory leak of the file content type. (David King) (#766271)
+  * Fix a memory leak in the file list. (David King) (#766271)
+  * Fix renaming files in a password-protected archive. (David King)
+    (#766227)
+  * Fix fr_application_local_command_line memory leak. (David King) (#752476)
+
+ New or updated application translations:
+
+  * Brazilian Portuguese (Enrico Nicoletto)
+  * British English (David King)
+  * Bulgarian (Alexander Shopov)
+  * Danish (Ask Hjorth Larsen)
+  * Deutsch (Mario Blättermann)
+  * Español; Castellano (Daniel Mustieles)
+  * French (Erwan GEORGET)
+  * Friulian (Fabio Tomat)
+  * Galician (Fran Dieguez)
+  * Greek, Modern (1453-) (Tom Tryfonidis)
+  * Hungarian (Balázs Úr)
+  * Indonesian (Andika Triwidada)
+  * Kazakh (Baurzhan Muftakhidinov)
+  * Korea (Seong-ho Cho)
+  * Latvian (Rūdolfs Mazurs)
+  * Lietuvių (Moo)
+  * Persian (Arash Mousavi)
+  * Polish (Piotr Drąg)
+  * Português (Tiago Santos)
+  * srpski (Miroslav Nikolić)
+  * suomi (Jiri Grönroos)
+  * Swedish (Anders Jonsson)
+  * Vietnamese (Trần Ngọc Quân)
+  * српски (Мирослав Николић)
+  * עברית (Yosef Or Boczko)
+
+version 3.21.90
+---------------
+
+ New features and user visibile changes:
+
+  * added support for lz4 compressed tar archives (#770016)
+  * added support for lz4 compressed files (#770016)
+
+ Bugs fixed:
+
+  * file-roller can delete the content of local folders upon extraction,
+    if archive contains symbolic links pointing to absolute paths (#698554)
+  * disambiguate translatable strings adding context (#696838)
+
+ New or updated application translations:
+
+  * Chinese (Hong Kong) (tomoe_musashi)
+  * Czech (Marek Černocký)
+  * Español; Castellano (Daniel Mustieles)
+  * Gujarati (વિશાલ ભલાણી)
+  * עברית (Yosef Or Boczko)
+  * Indonesian (Andika Triwidada)
+  * Slovak (Dušan Kazik)
+  * Tot En Òc (Cédric Valmary (totenoc.eu))
+  * Icelandic (Sveinn í Felli)
+
+ New or updated manual translations:
+
+  * Indonesian (Andika Triwidada)
+
+version 3.20.2
+--------------
+
+ Bugs fixed:
+
+  * Extract here: show the 'operation completed' dialog.
+  * Avoid tarbombs when using extract here. (#766071)
+  * Fix extracting files with single-character names. (Ernestas Kulik) (#761582)
+  * Fix Add Files dialog button sensitivity. (David King) (#738177)
+  * Fix GSettings schema validation with recent GLib. (David King) (#756607)
+
+ New or updated application translations:
+
+  * Fòram na Gàidhlig (GunChleoc)
+  * Português (Sérgio Cardeira)
+  * Tot En Òc (Cédric Valmary (totenoc.eu))
+
+version 3.20.1
+--------------
+
+ Bugs fixed:
+
+  * Most of file-roller appears untranslated. (#764342)
+
+ New or updated application translations:
+
+  * Catalan (Gil Forcada)
+  * Chinese Simplified (Jeff Bai)
+  * Friulian (Fabio Tomat)
+  * Persian (Arash Mousavi)
+  * Slovak (Dušan Kazik)
+  * Tot En Òc (Cédric Valmary (totenoc.eu))
+  * Vietnamese (Trần Ngọc Quân)
+
+version 3.20.0
+--------------
+
+ New or updated application translations:
+
+  * Basque (Inaki Larranaga Murgoitio)
+  * Danish (Ask Hjorth Larsen)
+  * Japanese (Jiro Matsuzawa)
+  * Korea (Changwoo Ryu)
+  * Serbian (Марко Костић)
+
+version 3.19.91
+---------------
+
+ New or updated application translations:
+
+  * Galician (Fran Dieguez)
+  * Greek, Modern (1453-) (Efstathios Iosifidis)
+  * Italian (Milo Casagrande)
+  * Kazakh (Baurzhan Muftakhidinov)
+  * Ukrainian (Daniel Korostil)
+  * Polish (Piotr Drąg)
+  * Serbian (Мирослав Николић)
+  * Serbian (Miroslav Nikolić)
+  * Swedish (Anders Jonsson)
+  * Tot En Òc (Cédric Valmary (totenoc.eu))
+  * Русский (Stas Solovey)
+
+ New or updated manual translations:
+
+  * Greek, Modern (Efstathios Iosifidis)
+  * Korea (Seong-ho Cho)
+
+version 3.19.90
+--------------
+
+ New or updated application translations:
+
+  * Bulgarian (Alexander Shopov)
+  * Chinese (traditional) (Chao-Hsiung Liao)
+  * Danish (Kenneth Nielsen)
+  * French (Erwan GEORGET)
+  * Hungarian (Meskó Balázs)
+  * Latvian (Rūdolfs Mazurs)
+  * Polish (Piotr Drąg)
+  * Slovak (Dušan Kazik)
+  * Slovenian (Matej Urbančič)
+
+ New or updated manual translations:
+
+  * Hungarian (Gabor Kelemen)
+  * Swedish (Anders Jonsson)
+
+version 3.19.1
+--------------
+
+ New features and user visible changes:
+
+  * Added support for .click packages (#752133)
+  * Use a message dialog to show the result of an extraction (#748428)
+  * Modernized the 'update files' dialog.
+  * Removed the quit button from the confirmation dialog.
+  * Make Nauitlus select the extracted file.
+
+ Bugs fixed:
+
+  * Only show the menubar when the shell shows the menubar (#730291)
+  * Fixed memory leaks (David King) (#752476, #752476, #752476, #752476, #752476, #752476, #752476, #752476)
+  * libarchive: correctly extract sparse files (#747091)
+  * Updated MimeType in org.gnome.FileRoller.desktop (#747639)
+  * Fix documentation typos (Anders Jonsson) (#758814)
+  * Error extracting files using file-roller with unar with the
+    character [ (#755580)
+  * Stop mis-treating p7zip 15.09 as pre-4.55 (Sebastian Pipping) (#757793)
+  * Add a configure environment variable to select the cpio path (Jasper Lievisse Adriaanse)
+  * Appdata: added kudos
+  * Removed deprecated widgets from .ui files
+  * Added support for the official debian package mime type
+  * Fixed message dialog showing a (null) string
+
+ New or updated application translations:
+
+  * Arabic (Khaled Hosny)
+  * Aragonés (Daniel)
+  * Brazilian Portuguese (Enrico Nicoletto)
+  * Czech (Marek Černocký)
+  * Deutsch (Mario Blättermann)
+  * Español; Castellano (Daniel Mustieles)
+  * Fòram na Gàidhlig (GunChleoc)
+  * Lietuvių (Aurimas Černius)
+  * Norwegian bokmål (Kjartan Maraas)
+  * Persian (Arash Mousavi)
+  * Slovak (Dušan Kazik)
+  * suomi (Jiri Grönroos)
+  * Türkçe (Muhammet Kara)
+
+ New or updated manual translations:
+
+  * Brazilian Portuguese (Enrico Nicoletto)
+  * Czech (Marek Černocký)
+  * Deutsch (Christian Kirbach)
+  * Español; Castellano (Daniel Mustieles)
+
+version 3.16.4
+--------------
+
+ Bugs fixed:
+
+  * Better rar support when unar is installed.
+  * Crashes on drag'n'drop. (#746236)
+  * Fixed possible crash. (Matthias Clasen) (#753951)
+  * Mac OS X compilation fixes.
+
+ New or updated application translations:
+
+  * Chinese (traditional) (Chao-Hsiung Liao)
+  * Friulian (Fabio Tomat)
+  * Polish (Piotr Drąg)
+
+version 3.16.3
+--------------
+
+ Bugs fixed:
+
+  * Fixed multi volume rar archives not working even when rar or unrar are
+    installed (#747141)
+  * Fixed build on OpenBSD (Antoine Jacoutot) (#748791)
+  * trivial: Fix a wrong header guard in src/fr-enum-types.h (Ting-Wei
+    Lan) (#750485)
+
+ New or updated application translations:
+
+  * Catalan (Gil Forcada)
+  * Italian (Milo Casagrande)
+  * Portuguese (Pedro Albuquerque)
+  * Romanian (Daniel Șerbănescu)
+  * Tot en òc (totenoc.eu) (Cédric Valmary (Tot en òc))
+
+ New or updated manual translations:
+
+  * Catalan (Manel Vidal)
+
+version 3.16.2
+--------------
+
+ Bugs fixed:
+
+  * Fixed memory leak
+
+ New or updated application translations:
+
+  * Chinese Simplified (osfans)
+  * Esperanto (Kristjan SCHMIDT)
+
+version 3.16.1
+--------------
+
+ Bugs fixed:
+
+  * Untranslated entries in Nautilus menus (#747318)
+  * don't merge translations into gschema file (#747304)
+  * gtk-utils: fix missing string format argument (Tim Lunn) (#747065)
+  * icon: provide a symbolic variant of the app icon. since gnome 3.16
+    used for the high contrast theme (Jakub Steiner) (#747019)
+
+ New or updated application translations:
+
+  * Estonian (Mattias Põldaru)
+  * Icelandic (Sveinn í Felli)
+  * Japanese (Hajime Taira)
+  * Latvian (Rūdolfs Mazurs)
+  * Punjabi/Panjabi (A S Alam)
+
+version 3.16.0
+--------------
+
+ New or updated application translations:
+
+  * Aragonés (Daniel Martinez)
+  * Basque (Iñaki Larrañaga Murgoitio)
+  * Deutsch (Benjamin Steinwender)
+  * Indonesian (Andika Triwidada)
+
+version 3.15.92
+---------------
+
+ New or updated application translations:
+
+  * Bosnian (Samir Ribic)
+  * Bulgarian (Alexander Shopov)
+  * Danish (Kenneth Nielsen)
+  * Korea (Changwoo Ryu)
+  * Polish (Paweł Żołnowski)
+  * Serbian (Мирослав Николић)
+  * Serbian (Miroslav Nikolić)
+  * suomi (Jiri Grönroos)
+  * Swedish (Sebastian Rasmussen)
+  * Tajik (Victor Ibragimov)
+  * Vietnamese (Trần Ngọc Quân)
+
+version 3.15.91
+---------------
+
+ Bugs fixed:
+
+  * fixed Compress command visible for trash and
+    disk drive on desktop (#744448)
+
+ New or updated application translations:
+
+  * Brazilian Portuguese (Rafael Ferreira)
+  * Czech (Marek Černocký)
+  * Chinese (traditional) (Chao-Hsiung Liao)
+  * Español; Castellano (Daniel Mustieles)
+  * French (Erwan GEORGET)
+  * Galician (Fran Dieguez)
+  * Greek, Modern (1453-) (Efstathios Iosifidis)
+  * Icelandic (Sveinn í Felli)
+  * Italian (Milo Casagrande)
+  * Kazakh (Baurzhan Muftakhidinov)
+  * Lietuvių (Aurimas Černius)
+  * Slovak (Dušan Kazik)
+  * Turkish (Muhammet Kara)
+  * Ukrainian (Daniel Korostil)
+  * עברית (Yosef Or Boczko)
+
+version 3.15.90
+---------------
+
+ New features and user visible changes:
+
+  * Use the header-bar for the progress dialog.
+  * Use libarchive to read/write tar.lrz, tar.lzo, zip,
+    and to read deb, rar and rpm. (Balló György)
+
+ Bugs fixed:
+
+  * Cannot delete files from password protected 7zip archives. (#618909)
+  * file-roller delete file in certain circumstances. (#536834)
+  * Extracting (by drag & drop) causes an error when the mouse is
+    hovering Chromium. (#735857)
+  * Make dialogs respect gtk-dialogs-use-header setting. (Iain Lane) (#741925)
+  * Deleting all files does not work. (#738178)
+  * Dragging a file to desktop doesn't work. (#479351)
+
+ New or updated application translations:
+
+  * Esperanto (Kristjan SCHMIDT)
+  * Hungarian (Balázs Úr)
+  * Norwegian bokmål (Kjartan Maraas)
+  * Slovenian (Matej Urbančič)
+  * Русский (Stas Solovey)
+
+version 3.15.2
+--------------
+
+ New or updated application translations:
+
+  * Aragonés (Daniel Martinez)
+  * Dutch (Hannie Dumoleyn)
+  * Romanian (Daniel Șerbănescu)
+  * suomi (Jiri Grönroos)
+  * Vietnamese (Trần Ngọc Quân)
+
+ New or updated manual translations:
+
+  * Catalan (Manel Vidal)
+
+version 3.15.1
+--------------
+
+ Bugs fixed:
+
+  * file-selector-dialog: Use symbolic icon for the go up button (Yosef
+    Or Boczko) (#735438)
+  * request-dialog: Remove the unneeded image (Yosef Or Boczko)
+    (#735438)
+  * Make the error dialogs more modern. Make it a real
+    GtkMessageDialog. Also, remove the icon, we not needs it
+    anymore. (Yosef Or Boczko) (#735438)
 
 version 3.14.1
 --------------

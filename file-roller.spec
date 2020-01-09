@@ -1,90 +1,99 @@
-Summary:        Tool for viewing and creating archives
 Name:           file-roller
-Version:        3.14.2
-Release:        7%{?dist}
+Version:        3.22.3
+Release:        1%{?dist}
+Summary:        Tool for viewing and creating archives
+
 License:        GPLv2+
-Group:          Applications/Archiving
-URL:            http://download.gnome.org/sources/file-roller/
-#VCS: git:git://git.gnome.org/file-roller
-Source:         http://download.gnome.org/sources/file-roller/3.14/file-roller-%{version}.tar.xz
+URL:            https://wiki.gnome.org/Apps/FileRoller
+Source0:        https://download.gnome.org/sources/%{name}/3.22/%{name}-%{version}.tar.xz
+
 # Fix a crash when the progress dialog is shown.
 # https://bugzilla.redhat.com/show_bug.cgi?id=1186481
 Patch0:         file-roller-3.14.2-fix-extraction-progress-dialog-crash.patch
 
-BuildRequires: glib2-devel
-BuildRequires: pango-devel
-BuildRequires: gtk3-devel
-BuildRequires: nautilus-devel
-BuildRequires: libtool
-BuildRequires: gettext
-BuildRequires: desktop-file-utils
-BuildRequires: intltool
-BuildRequires: itstool
-BuildRequires: file-devel
-BuildRequires: libarchive-devel
-BuildRequires: json-glib-devel
-BuildRequires: libnotify-devel
+# Use the X11 backend instead of Wayland
+# https://bugzilla.gnome.org/show_bug.cgi?id=770333
+Patch1:         Use-the-X11-backend-instead-of-Wayland.patch
 
+# Add back the file-roller nautilus extension
+# https://bugzilla.gnome.org/show_bug.cgi?id=772765
+Patch2:         0001-Revert-Remove-nautilus-extension.patch
+
+BuildRequires:  pkgconfig(gio-unix-2.0)
+BuildRequires:  pkgconfig(gtk+-3.0)
+BuildRequires:  pkgconfig(json-glib-1.0)
+BuildRequires:  pkgconfig(libarchive)
+BuildRequires:  pkgconfig(libnautilus-extension)
+BuildRequires:  pkgconfig(libnotify)
+BuildRequires:  file-devel
+BuildRequires:  gettext
+BuildRequires:  desktop-file-utils
+BuildRequires:  intltool
+BuildRequires:  itstool
+BuildRequires:  /usr/bin/appstream-util
+# For patch2
+BuildRequires:  autoconf automake libtool
+BuildRequires:  gnome-common
+
+%if 0%{?rhel}
 # Explicitly depend on various archivers to avoid problems when installing
 # new archiver support on demand.
 # https://bugzilla.redhat.com/show_bug.cgi?id=837608
-Requires:      /usr/bin/ar
-Requires:      /usr/bin/bzip2
-Requires:      /usr/bin/compress
-Requires:      /usr/bin/cpio
-Requires:      /usr/bin/gzip
-Requires:      /usr/bin/isoinfo
-Requires:      /usr/bin/lzop
-Requires:      /usr/bin/tar
-Requires:      /usr/bin/unzip
-Requires:      /usr/bin/xz
-Requires:      /usr/bin/zip
+Requires: /usr/bin/ar
+Requires: /usr/bin/bzip2
+Requires: /usr/bin/compress
+Requires: /usr/bin/cpio
+Requires: /usr/bin/gzip
+Requires: /usr/bin/isoinfo
+Requires: /usr/bin/lzop
+Requires: /usr/bin/tar
+Requires: /usr/bin/unzip
+Requires: /usr/bin/xz
+Requires: /usr/bin/zip
+%endif
 
 %description
 File Roller is an application for creating and viewing archives files,
 such as tar or zip files.
 
-
 %package nautilus
 Summary: File Roller extension for nautilus
-Group: User Interface/Desktops
 Requires: %{name}%{_isa} = %{version}-%{release}
 
 %description nautilus
-This package contains the file-roller extension for the nautilus file manger.
+This package contains the file-roller extension for the nautilus file manager.
 It adds an item to the nautilus context menu that lets you compress files
 or directories.
 
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
+# For patch2
+autoreconf -fi
+
 %configure                                      \
                 --disable-static                \
                 --enable-nautilus-actions       \
                 --enable-packagekit
 
-export tagname=CC
-make V=1 LIBTOOL=/usr/bin/libtool
+make V=1 %{?_smp_mflags}
 
 %install
-export tagname=CC
-make install DESTDIR=$RPM_BUILD_ROOT
+%make_install
 
-rm -rf $RPM_BUILD_ROOT/var/scrollkeeper
-rm -f $RPM_BUILD_ROOT%{_libdir}/nautilus/extensions-3.0/*.{a,la}
-rm -f $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/icon-theme.cache
+find $RPM_BUILD_ROOT -name '*.la' -delete
 
 %find_lang %{name} --with-gnome
 
+
+%check
+appstream-util validate-relax --nonet $RPM_BUILD_ROOT%{_datadir}/appdata/org.gnome.FileRoller.appdata.xml
 desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/org.gnome.FileRoller.desktop
 
-# for backward compatibility with user defined file associations
-cp $RPM_BUILD_ROOT%{_datadir}/applications/org.gnome.FileRoller.desktop $RPM_BUILD_ROOT%{_datadir}/applications/file-roller.desktop
-echo NoDisplay=true >> $RPM_BUILD_ROOT%{_datadir}/applications/file-roller.desktop
-sed -i -e 's/X-GNOME-UsesNotifications=true/X-GNOME-UsesNotifications=false/' $RPM_BUILD_ROOT%{_datadir}/applications/file-roller.desktop
-echo X-RHEL-AliasOf=org.gnome.FileRoller >> $RPM_BUILD_ROOT%{_datadir}/applications/file-roller.desktop
 
 %post
 update-desktop-database &> /dev/null || :
@@ -103,23 +112,43 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 
 %files -f %{name}.lang
-%doc README COPYING NEWS AUTHORS
+%doc README NEWS AUTHORS
+%license COPYING
 %{_bindir}/file-roller
 %{_datadir}/file-roller
 %{_datadir}/appdata/org.gnome.FileRoller.appdata.xml
-%{_datadir}/applications/*.desktop
+%{_datadir}/applications/org.gnome.FileRoller.desktop
 %{_libexecdir}/file-roller
 %{_datadir}/dbus-1/services/org.gnome.FileRoller.ArchiveManager1.service
 %{_datadir}/dbus-1/services/org.gnome.FileRoller.service
 %{_datadir}/icons/hicolor/*/apps/file-roller.png
+%{_datadir}/icons/hicolor/scalable/apps/file-roller-symbolic.svg
 %{_datadir}/glib-2.0/schemas/org.gnome.FileRoller.gschema.xml
 %{_datadir}/GConf/gsettings/file-roller.convert
 
 %files nautilus
 %{_libdir}/nautilus/extensions-3.0/libnautilus-fileroller.so
 
-
 %changelog
+* Mon Feb 27 2017 Kalev Lember <klember@redhat.com> - 3.22.3-1
+- Update to 3.22.3
+- Add back the file-roller nautilus extension
+- Resolves: #1386857
+
+* Fri Feb 24 2017 Matthias Clasen <mclasen@redhat.com> - 3.22.2-1.el7
+- Rebase to 3.22.2
+- Drop upstreamed patches
+  Resolves: rhbz#1386857
+
+* Tue May 10 2016 David King <dking@redhat.com> - 3.14.2-10
+- Fix renaming files in a password-protected archive (#1233853)
+
+* Wed May 04 2016 David King <dking@redhat.com> - 3.14.2-9
+- Fix add button sensitivity (#1222955)
+
+* Tue May 03 2016 David King <dking@redhat.com> - 3.14.2-8
+- Fix delete all files (#1228645)
+
 * Wed Sep 23 2015 Ray Strode <rstrode@redhat.com> 3.14.2-7
 - Remove duplicate X-GNOME-UsesNotifications key
   Related: #1259292
