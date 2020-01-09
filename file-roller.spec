@@ -1,7 +1,7 @@
 Summary:        Tool for viewing and creating archives
 Name:           file-roller
 Version:        3.14.2
-Release:        10%{?dist}
+Release:        7%{?dist}
 License:        GPLv2+
 Group:          Applications/Archiving
 URL:            http://download.gnome.org/sources/file-roller/
@@ -10,12 +10,6 @@ Source:         http://download.gnome.org/sources/file-roller/3.14/file-roller-%
 # Fix a crash when the progress dialog is shown.
 # https://bugzilla.redhat.com/show_bug.cgi?id=1186481
 Patch0:         file-roller-3.14.2-fix-extraction-progress-dialog-crash.patch
-# https://bugzilla.redhat.com/show_bug.cgi?id=1228645
-Patch1:         file-roller-3.14.2-fix-delete-all.patch
-# https://bugzilla.redhat.com/show_bug.cgi?id=1222955
-Patch2:         file-roller-3.14.2-fix-add-button-sensitivity.patch
-# https://bugzilla.redhat.com/show_bug.cgi?id=1233853
-Patch3:         file-roller-3.14.2-fix-password-protected-rename.patch
 
 BuildRequires: glib2-devel
 BuildRequires: pango-devel
@@ -64,9 +58,6 @@ or directories.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 %build
 %configure                                      \
@@ -129,15 +120,6 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 
 
 %changelog
-* Tue May 10 2016 David King <dking@redhat.com> - 3.14.2-10
-- Fix renaming files in a password-protected archive (#1233853)
-
-* Wed May 04 2016 David King <dking@redhat.com> - 3.14.2-9
-- Fix add button sensitivity (#1222955)
-
-* Tue May 03 2016 David King <dking@redhat.com> - 3.14.2-8
-- Fix delete all files (#1228645)
-
 * Wed Sep 23 2015 Ray Strode <rstrode@redhat.com> 3.14.2-7
 - Remove duplicate X-GNOME-UsesNotifications key
   Related: #1259292
