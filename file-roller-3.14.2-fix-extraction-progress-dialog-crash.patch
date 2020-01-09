@@ -1,0 +1,33 @@
+From c459db8619b9eafdad9d5078838ef46afb7a9f41 Mon Sep 17 00:00:00 2001
+From: David King <dking@redhat.com>
+Date: Thu, 16 Jul 2015 14:53:03 +0100
+Subject: [PATCH] Avoid a crash when extracting from the commandline
+
+If calling --extract on the the commandline, the main window is
+destroyed before the progress dialog has emitted the response signal.
+The callbacks for the response signal depend on the existence of the
+main window, so take a reference to the main window in the progress
+dialog, to ensure that it exists for the lifetime of the dialog.
+
+https://bugzilla.gnome.org/show_bug.cgi?id=752478
+https://bugzilla.redhat.com/show_bug.cgi?id=1186481
+---
+ src/fr-window.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/src/fr-window.c b/src/fr-window.c
+index be7a0de..8781439 100644
+--- a/src/fr-window.c
++++ b/src/fr-window.c
+@@ -2478,6 +2478,8 @@ create_the_progress_dialog (FrWindow *window)
+ 			  "delete_event",
+ 			  G_CALLBACK (progress_dialog_delete_event),
+ 			  window);
++
++	g_object_ref (window);
+ }
+ 
+ 
+-- 
+2.4.6
+
