@@ -1,11 +1,11 @@
 Name:           file-roller
-Version:        3.22.3
-Release:        1%{?dist}
+Version:        3.28.1
+Release:        2%{?dist}
 Summary:        Tool for viewing and creating archives
 
 License:        GPLv2+
 URL:            https://wiki.gnome.org/Apps/FileRoller
-Source0:        https://download.gnome.org/sources/%{name}/3.22/%{name}-%{version}.tar.xz
+Source0:        https://download.gnome.org/sources/%{name}/3.28/%{name}-%{version}.tar.xz
 
 # Fix a crash when the progress dialog is shown.
 # https://bugzilla.redhat.com/show_bug.cgi?id=1186481
@@ -15,9 +15,11 @@ Patch0:         file-roller-3.14.2-fix-extraction-progress-dialog-crash.patch
 # https://bugzilla.gnome.org/show_bug.cgi?id=770333
 Patch1:         Use-the-X11-backend-instead-of-Wayland.patch
 
-# Add back the file-roller nautilus extension
-# https://bugzilla.gnome.org/show_bug.cgi?id=772765
-Patch2:         0001-Revert-Remove-nautilus-extension.patch
+# No py3 in RHEL 7
+Patch2:         no-python3.patch
+
+# Add back the file-roller compress support
+Patch3:         revert-remove-compress-support.patch
 
 BuildRequires:  pkgconfig(gio-unix-2.0)
 BuildRequires:  pkgconfig(gtk+-3.0)
@@ -28,12 +30,9 @@ BuildRequires:  pkgconfig(libnotify)
 BuildRequires:  file-devel
 BuildRequires:  gettext
 BuildRequires:  desktop-file-utils
-BuildRequires:  intltool
 BuildRequires:  itstool
+BuildRequires:  meson
 BuildRequires:  /usr/bin/appstream-util
-# For patch2
-BuildRequires:  autoconf automake libtool
-BuildRequires:  gnome-common
 
 %if 0%{?rhel}
 # Explicitly depend on various archivers to avoid problems when installing
@@ -70,28 +69,20 @@ or directories.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
-# For patch2
-autoreconf -fi
-
-%configure                                      \
-                --disable-static                \
-                --enable-nautilus-actions       \
-                --enable-packagekit
-
-make V=1 %{?_smp_mflags}
+%meson
+%meson_build
 
 %install
-%make_install
-
-find $RPM_BUILD_ROOT -name '*.la' -delete
+%meson_install
 
 %find_lang %{name} --with-gnome
 
 
 %check
-appstream-util validate-relax --nonet $RPM_BUILD_ROOT%{_datadir}/appdata/org.gnome.FileRoller.appdata.xml
+appstream-util validate-relax --nonet $RPM_BUILD_ROOT%{_datadir}/metainfo/org.gnome.FileRoller.appdata.xml
 desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/org.gnome.FileRoller.desktop
 
 
@@ -116,7 +107,6 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %license COPYING
 %{_bindir}/file-roller
 %{_datadir}/file-roller
-%{_datadir}/appdata/org.gnome.FileRoller.appdata.xml
 %{_datadir}/applications/org.gnome.FileRoller.desktop
 %{_libexecdir}/file-roller
 %{_datadir}/dbus-1/services/org.gnome.FileRoller.ArchiveManager1.service
@@ -124,12 +114,23 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %{_datadir}/icons/hicolor/*/apps/file-roller.png
 %{_datadir}/icons/hicolor/scalable/apps/file-roller-symbolic.svg
 %{_datadir}/glib-2.0/schemas/org.gnome.FileRoller.gschema.xml
-%{_datadir}/GConf/gsettings/file-roller.convert
+%{_datadir}/metainfo/org.gnome.FileRoller.appdata.xml
 
 %files nautilus
 %{_libdir}/nautilus/extensions-3.0/libnautilus-fileroller.so
 
 %changelog
+* Thu Aug 23 2018 Carlos Soriano <csoriano@redhat.com> - 3.28.1-2
+- Put back the nautilus compress support
+
+* Wed Jul 25 2018 Kalev Lember <klember@redhat.com> - 3.28.1-1
+- Update to 3.28.1
+- Resolves: #1567187
+
+* Wed Jun 06 2018 Richard Hughes <rhughes@redhat.com> - 3.28.0-1
+- Update to 3.28.0
+- Resolves: #1567187
+
 * Mon Feb 27 2017 Kalev Lember <klember@redhat.com> - 3.22.3-1
 - Update to 3.22.3
 - Add back the file-roller nautilus extension

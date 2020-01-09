@@ -1,0 +1,111 @@
+From a5e3f2407589a232edd6bcf498d13529cedcd599 Mon Sep 17 00:00:00 2001
+From: Carlos Soriano <csoriano@redhat.com>
+Date: Wed, 29 Aug 2018 16:20:14 +0200
+Subject: [PATCH] Revert "nautilus-fileroller: remove compress support"
+
+This reverts commit fad2372ccbbfd40013b4225002f4a737d67928bc.
+---
+ nautilus/nautilus-fileroller.c | 66 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 66 insertions(+)
+
+diff --git a/nautilus/nautilus-fileroller.c b/nautilus/nautilus-fileroller.c
+index 441356bf..196f0282 100644
+--- a/nautilus/nautilus-fileroller.c
++++ b/nautilus/nautilus-fileroller.c
+@@ -105,6 +105,44 @@ extract_here_callback (NautilusMenuItem *item,
+ 	g_string_free (cmd, TRUE);
+ }
+ 
++
++static void
++add_callback (NautilusMenuItem *item,
++	      gpointer          user_data)
++{
++	GList            *files, *scan;
++	NautilusFileInfo *file;
++	char             *uri, *dir;
++	GString          *cmd;
++
++	files = g_object_get_data (G_OBJECT (item), "files");
++	file = files->data;
++
++	uri = nautilus_file_info_get_uri (file);
++	dir = g_path_get_dirname (uri);
++
++	cmd = g_string_new ("file-roller");
++	g_string_append (cmd, " --notify");
++	g_string_append_printf (cmd," --default-dir=%s", g_shell_quote (dir));
++	g_string_append (cmd," --add");
++
++	g_free (dir);
++	g_free (uri);
++
++	for (scan = files; scan; scan = scan->next) {
++		NautilusFileInfo *file = scan->data;
++
++		uri = nautilus_file_info_get_uri (file);
++		g_string_append_printf (cmd, " %s", g_shell_quote (uri));
++		g_free (uri);
++	}
++
++	g_spawn_command_line_async (cmd->str, NULL);
++
++	g_string_free (cmd, TRUE);
++}
++
++
+ static struct {
+ 	char     *mime_type;
+ 	gboolean  is_compressed;
+@@ -218,6 +256,10 @@ nautilus_fr_get_file_items (NautilusMenuProvider *provider,
+ 	GList    *items = NULL;
+ 	GList    *scan;
+ 	gboolean  can_write = TRUE;
++	gboolean  one_item;
++	gboolean  one_archive = FALSE;
++	gboolean  one_derived_archive = FALSE;
++	gboolean  one_compressed_archive = FALSE;
+ 	gboolean  all_archives = TRUE;
+ 	gboolean  all_archives_derived = TRUE;
+ 	gboolean  all_archives_compressed = TRUE;
+@@ -254,6 +296,11 @@ nautilus_fr_get_file_items (NautilusMenuProvider *provider,
+ 
+ 	/**/
+ 
++	one_item = (files != NULL) && (files->next == NULL);
++	one_archive = one_item && all_archives;
++	one_derived_archive = one_archive && all_archives_derived;
++	one_compressed_archive = one_archive && all_archives_compressed;
++
+ 	if (all_archives && can_write) {
+ 		NautilusMenuItem *item;
+ 
+@@ -293,6 +340,25 @@ nautilus_fr_get_file_items (NautilusMenuProvider *provider,
+ 
+ 	}
+ 
++	if (! one_compressed_archive || one_derived_archive) {
++		NautilusMenuItem *item;
++
++		item = nautilus_menu_item_new ("NautilusFr::add",
++					       g_dgettext ("file-roller", "Compress..."),
++					       g_dgettext ("file-roller", "Create a compressed archive with the selected objects"),
++					       "gnome-mime-application-x-archive");
++		g_signal_connect (item,
++				  "activate",
++				  G_CALLBACK (add_callback),
++				  provider);
++		g_object_set_data_full (G_OBJECT (item),
++					"files",
++					nautilus_file_info_list_copy (files),
++					(GDestroyNotify) nautilus_file_info_list_free);
++
++		items = g_list_append (items, item);
++	}
++
+ 	return items;
+ }
+ 
+-- 
+2.17.1
+

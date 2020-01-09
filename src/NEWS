@@ -1,3 +1,218 @@
+version 3.28.1
+--------------
+
+ Bugs fixed:
+
+  * Keep "create" button disabled until a file name is entered (#789766)
+
+ New or updated application translations:
+
+  * Catalan (Gil Forcada)
+  * Chinese (China) (Dingzhong Chen)
+  * Chinese (traditional) (Cheng-Chia Tseng)
+  * Polish (Piotr Drąg)
+  * Afrikaans (Pieter Schalk Schoeman)
+  * Русский (Stas Solovey)
+
+ New or updated manual translations:
+
+  * Galician (marcos)
+
+version 3.28.0
+--------------
+
+ New or updated application translations:
+
+  * British English (Bruce Cowan)
+  * Croatian (gogo)
+  * Danish (Ask Hjorth Larsen)
+  * Romanian (Daniel Șerbănescu)
+  * srpski (Marko M. Kostić)
+  * Ελληνικά (Efstathios Iosifidis)
+
+version 3.27.91
+---------------
+
+ New or updated application translations:
+
+  * Chinese (traditional) (Cheng-Chia Tseng)
+  * Croatian (gogo)
+  * Dutch (Nathan Follens)
+  * French (Guillaume Bernard)
+  * Fòram na Gàidhlig (GunChleoc)
+  * Galician (Fran Dieguez)
+  * Italian (Milo Casagrande)
+  * Kazakh (Baurzhan Muftakhidinov)
+  * Korea (강영선)
+  * Latvian (Rūdolfs Mazurs)
+  * Lietuvių ()
+  * Slovak (Dušan Kazik)
+  * Vietnamese (Trần Ngọc Quân)
+
+version 3.27.90
+--------------
+
+ Bugs fixed:
+
+  * meson: fix executable bit (Jeremy Bicha) (#793313)
+  * file roller installs dbus service files to wrong location (#793248)
+
+ New or updated application translations:
+
+  * Brazilian Portuguese (Enrico Nicoletto)
+  * Türkçe (Emin Tufan Çetin)
+
+version 3.27.1
+--------------
+
+ New features and user visibile changes:
+
+  * Ported to meson.
+
+ Bugs fixed:
+
+  * unarchiver: check that XADFileSize is set before reading it. Lsar
+    does not set XADFileSize for directories, so we would output a
+    critical when encountering one. (Mike Gorse) (#791505)
+  * nautilus-fileroller: Avoid the use of g_dgettext.
+    nautilus-fileroller is using g_dgettext which may cause problems
+    when extracting strings on some systems. This patch replaces
+    g_dgettext for g_dcgettext, which has the same behaviour when the
+    category is LC_MESSAGES. (Iñigo Martínez) (#790569)
+  * rar archives: wrong file date when using rar 5.30 or higher. adapt
+    to the new format. (#758121)
+  * Support squashfs filesystems and .snap files (Robert Ancell)
+    (#662519)
+
+ New or updated application translations:
+
+  * Catalan (Xavi Ivars)
+  * Chinese Simplified (Mingcong Bai)
+  * Deutsch (Mario Blättermann)
+  * es (Daniel Mustieles)
+  * Friulian (Fabio Tomat)
+  * Hungarian (Balázs Úr)
+  * Icelandic (Sveinn í Felli)
+  * Indonesian (Kukuh Syafaat)
+  * Norwegian bokmål (Åka Sikrom)
+  * Polish (Piotr Drąg)
+  * Slovenian (Matej Urbančič)
+  * suomi (Jiri Grönroos)
+  * Swedish (Anders Jonsson)
+  * čeština (Marek Černocký)
+  * српски (Марко М. Костић)
+
+ New or updated manual translations:
+
+  * Polish (Piotr Drąg)
+
+version 3.26.1
+--------------
+
+ New or updated application translations:
+
+  * Esperanto (Kristjan SCHMIDT)
+  * Greek, Modern (Efstathios Iosifidis)
+  * Icelandic (Sveinn í Felli)
+  * Persian (Arash Mousavi)
+  * Русский (Stas Solovey)
+
+version 3.26.0
+--------------
+
+ New or updated application translations:
+
+  * Basque (Iñaki Larrañaga Murgoitio)
+  * Bulgarian (Alexander Shopov)
+  * Catalan (Gil Forcada)
+  * Danish (Ask Hjorth Larsen)
+  * Dutch (Nathan Follens)
+  * Punjabi (A S Alam)
+  * Türkçe (Emin Tufan Çetin)
+
+version 3.25.91
+---------------
+
+ New or updated application translations:
+
+  * Belarusian (Yuras Shumovich)
+  * Brazilian Portuguese (Rafael Fontenelle)
+  * Chinese (traditional) (Cheng-Chia Tseng)
+  * Croatian (gogo)
+  * Deutsch (Mario Blättermann)
+  * Galician (marcos)
+  * Hungarian (Meskó Balázs)
+  * Indonesian (Kukuh Syafaat)
+  * Italian (Milo Casagrande)
+  * Korea (Junyoul Lim)
+  * Latvian (Rūdolfs Mazurs)
+  * Lietuvių (Aurimas Černius)
+  * Polish (Piotr Drąg)
+  * Romanian (Daniel Șerbănescu)
+  * Slovak (Dušan Kazik)
+  * srpski (Miroslav Nikolić)
+  * suomi (Jiri Grönroos)
+  * Turkish (Muhammet Kara)
+  * српски (Мирослав Николић)
+
+ New or updated manual translations:
+
+  * Finnish (Jiri Grönroos)
+
+version 3.25.1
+--------------
+
+ New features and user visibile changes:
+
+  * Filter: match any filename that contains the string, not just filenames
+    that begin with the string.
+  * Use Unicode in translatable strings (Piotr Drąg) (#774008)
+
+ Bugs fixed:
+
+  * Never tries WINDOWS-1252 encoding (#785081)
+  * Do not activate 'file delete' when pressing Delete in the filter entry.
+
+version 3.24.1
+--------------
+
+ Bugs fixed:
+
+  * Cannot browse archive, extract or open files when running on Wayland. (#772850)
+
+ New or updated application translations:
+
+  * Belarusian (Yuras Shumovich)
+
+version 3.24.0
+--------------
+
+ New or updated application translations:
+
+  * Japanese (sujiniku)
+  * Latvian (Rūdolfs Mazurs)
+
+version 3.23.92
+---------------
+
+ Bugs fixed:
+
+  * nautilus-fileroller: remove compress support. (Carlos Soriano) (#779706)
+
+ New or updated application translations:
+
+  * Fòram na Gàidhlig (GunChleoc)
+
+version 3.23.91
+--------------
+
+ New features and user visibile changes:
+  * Restore Nautilus extension for the format types not supported by Nautilus (Carlos Soriano) (#772765)
+
+ New or updated application translations:
+
+  * Polish (Piotr Drąg)
+
 version 3.22.3
 --------------
 

@@ -126,6 +126,7 @@ fr_new_archive_dialog_init (FrNewArchiveDialog *self)
 static void
 _fr_new_archive_dialog_update_sensitivity (FrNewArchiveDialog *self)
 {
+	gtk_widget_set_sensitive (gtk_dialog_get_widget_for_response (GTK_DIALOG (self), GTK_RESPONSE_OK), ! _g_utf8_all_spaces (gtk_entry_get_text (GTK_ENTRY (GET_WIDGET ("filename_entry")))));
 	gtk_toggle_button_set_inconsistent (GTK_TOGGLE_BUTTON (GET_WIDGET ("encrypt_header_checkbutton")), ! self->priv->can_encrypt_header);
 	gtk_widget_set_sensitive (GET_WIDGET ("encrypt_header_checkbutton"), self->priv->can_encrypt_header);
 	gtk_widget_set_sensitive (GET_WIDGET ("volume_spinbutton"), ! self->priv->can_create_volumes || gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (GET_WIDGET ("volume_checkbutton"))));
@@ -133,8 +134,8 @@ _fr_new_archive_dialog_update_sensitivity (FrNewArchiveDialog *self)
 
 
 static void
-password_entry_changed_cb (GtkEditable *editable,
-			   gpointer     user_data)
+entry_changed_cb (GtkEditable *editable,
+		  gpointer     user_data)
 {
 	_fr_new_archive_dialog_update_sensitivity (FR_NEW_ARCHIVE_DIALOG (user_data));
 }
@@ -279,9 +280,13 @@ _fr_new_archive_dialog_construct (FrNewArchiveDialog *self,
 
 	/* Set the signals handlers. */
 
+	g_signal_connect (GET_WIDGET ("filename_entry"),
+			  "changed",
+			  G_CALLBACK (entry_changed_cb),
+			  self);
 	g_signal_connect (GET_WIDGET ("password_entry"),
 			  "changed",
-			  G_CALLBACK (password_entry_changed_cb),
+			  G_CALLBACK (entry_changed_cb),
 			  self);
 	g_signal_connect (GET_WIDGET ("volume_checkbutton"),
 			  "toggled",
@@ -432,7 +437,7 @@ fr_new_archive_dialog_get_file (FrNewArchiveDialog  *self,
 						NULL,
 						_("Could not create the archive"),
 						"%s",
-						_("You don't have permission to create an archive in this folder"));
+						_("You don’t have permission to create an archive in this folder"));
 		gtk_dialog_run (GTK_DIALOG (dialog));
 
 		gtk_widget_destroy (GTK_WIDGET (dialog));
@@ -472,7 +477,7 @@ fr_new_archive_dialog_get_file (FrNewArchiveDialog  *self,
 								NULL,
 								_("Could not create the archive"),
 								"%s",
-								_("You can't add an archive to itself."));
+								_("You can’t add an archive to itself."));
 				gtk_dialog_run (GTK_DIALOG (dialog));
 
 				gtk_widget_destroy (GTK_WIDGET (dialog));
@@ -493,8 +498,8 @@ fr_new_archive_dialog_get_file (FrNewArchiveDialog  *self,
 		gboolean  overwrite;
 
 		filename = _g_file_get_display_basename (file);
-		message = g_strdup_printf (_("A file named \"%s\" already exists.  Do you want to replace it?"), filename);
-		secondary_message = g_strdup_printf (_("The file already exists in \"%s\".  Replacing it will overwrite its contents."), g_file_info_get_display_name (parent_info));
+		message = g_strdup_printf (_("A file named “%s” already exists.  Do you want to replace it?"), filename);
+		secondary_message = g_strdup_printf (_("The file already exists in “%s”.  Replacing it will overwrite its contents."), g_file_info_get_display_name (parent_info));
 		dialog = _gtk_message_dialog_new (GTK_WINDOW (self),
 						  GTK_DIALOG_MODAL,
 						  message,

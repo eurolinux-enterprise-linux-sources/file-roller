@@ -26,6 +26,9 @@
 #include <gio/gio.h>
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
+#ifdef GDK_WINDOWING_X11
+# include <gdk/gdkx.h>
+#endif
 #include <gdk/gdkkeysyms.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #ifdef ENABLE_NOTIFICATION
@@ -408,6 +411,17 @@ fr_window_free_batch_data (FrWindow *window)
 }
 
 
+static GdkAtom
+_fr_window_get_clipboard_name (FrWindow *window)
+{
+#ifdef GDK_WINDOWING_X11
+	if (GDK_IS_X11_DISPLAY (gtk_widget_get_display (GTK_WIDGET (window))))
+		return FR_CLIPBOARD;
+#endif
+	return GDK_SELECTION_CLIPBOARD;
+}
+
+
 static void
 fr_window_clipboard_remove_file_list (FrWindow *window,
 				      GList    *file_list)
@@ -445,7 +459,7 @@ fr_window_clipboard_remove_file_list (FrWindow *window,
 	if (window->priv->copy_data->files == NULL) {
 		fr_clipboard_data_unref (window->priv->copy_data);
 		window->priv->copy_data = NULL;
-		gtk_clipboard_clear (gtk_widget_get_clipboard (GTK_WIDGET (window), FR_CLIPBOARD));
+		gtk_clipboard_clear (gtk_widget_get_clipboard (GTK_WIDGET (window), _fr_window_get_clipboard_name (window)));
 	}
 }
 
@@ -726,7 +740,7 @@ fr_window_update_paste_command_sensitivity (FrWindow     *window,
 		return;
 
 	if (clipboard == NULL)
-		clipboard = gtk_widget_get_clipboard (GTK_WIDGET (window), FR_CLIPBOARD);
+		clipboard = gtk_widget_get_clipboard (GTK_WIDGET (window), _fr_window_get_clipboard_name (window));
 	running    = window->priv->activity_ref > 0;
 	no_archive = (window->archive == NULL) || ! window->priv->archive_present;
 	ro         = ! no_archive && window->archive->read_only;
@@ -777,7 +791,7 @@ fr_window_realize (GtkWidget *widget)
 	gth_icon_cache_set_fallback (window->priv->tree_icon_cache, icon);
 	g_object_unref (icon);
 
-	clipboard = gtk_widget_get_clipboard (widget, FR_CLIPBOARD);
+	clipboard = gtk_widget_get_clipboard (widget, _fr_window_get_clipboard_name (window));
 	g_signal_connect (clipboard,
 			  "owner_change",
 			  G_CALLBACK (clipboard_owner_change_cb),
@@ -804,7 +818,7 @@ fr_window_unrealize (GtkWidget *widget)
 	gth_icon_cache_free (window->priv->tree_icon_cache);
 	window->priv->tree_icon_cache = NULL;
 
-	clipboard = gtk_widget_get_clipboard (widget, FR_CLIPBOARD);
+	clipboard = gtk_widget_get_clipboard (widget, _fr_window_get_clipboard_name (window));
 	g_signal_handlers_disconnect_by_func (clipboard,
 					      G_CALLBACK (clipboard_owner_change_cb),
 					      window);
@@ -1285,23 +1299,22 @@ get_dir_size (FrWindow   *window,
 
 static gboolean
 file_data_respects_filter (FrWindow *window,
+			   GRegex   *filter,
 			   FileData *fdata)
 {
-	const char *filter;
-
-	filter = gtk_entry_get_text (GTK_ENTRY (window->priv->filter_entry));
-	if ((fdata == NULL) || (filter == NULL) || (*filter == '\0'))
+	if ((fdata == NULL) || (filter == NULL))
 		return TRUE;
 
 	if (fdata->dir || (fdata->name == NULL))
 		return FALSE;
 
-	return strncasecmp (fdata->name, filter, strlen (filter)) == 0;
+	return g_regex_match (filter, fdata->name, 0, NULL);
 }
 
 
 static gboolean
 compute_file_list_name (FrWindow   *window,
+			GRegex     *filter,
 			FileData   *fdata,
 			const char *current_dir,
 			int         current_dir_len,
@@ -1312,7 +1325,7 @@ compute_file_list_name (FrWindow   *window,
 
 	*different_name = FALSE;
 
-	if (! file_data_respects_filter (window, fdata))
+	if (! file_data_respects_filter (window, filter, fdata))
 		return FALSE;
 
 	if (window->priv->list_mode == FR_WINDOW_LIST_MODE_FLAT) {
@@ -1360,6 +1373,30 @@ compute_file_list_name (FrWindow   *window,
 }
 
 
+static GRegex *
+_fr_window_create_filter (FrWindow *window)
+{
+	GRegex     *filter;
+	const char *filter_str;
+
+	filter = NULL;
+	filter_str = gtk_entry_get_text (GTK_ENTRY (window->priv->filter_entry));
+	if ((filter_str != NULL) && (*filter_str != '\0')) {
+		char *escaped;
+		char *pattern;
+
+		escaped = g_regex_escape_string (filter_str, -1);
+		pattern = g_strdup_printf (".*%s.*", escaped);
+		filter = g_regex_new (pattern, G_REGEX_CASELESS | G_REGEX_OPTIMIZE, G_REGEX_MATCH_NOTEMPTY, NULL);
+
+		g_free (pattern);
+		g_free (escaped);
+	}
+
+	return filter;
+}
+
+
 static void
 fr_window_compute_list_names (FrWindow  *window,
 			      GPtrArray *files)
@@ -1367,6 +1404,7 @@ fr_window_compute_list_names (FrWindow  *window,
 	const char *current_dir;
 	int         current_dir_len;
 	GHashTable *names_hash;
+	GRegex     *filter;
 	int         i;
 	gboolean    visible_list_started = FALSE;
 	gboolean    visible_list_completed = FALSE;
@@ -1376,6 +1414,7 @@ fr_window_compute_list_names (FrWindow  *window,
 	current_dir_len = strlen (current_dir);
 	names_hash = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
 
+	filter = _fr_window_create_filter (window);
 	for (i = 0; i < files->len; i++) {
 		FileData *fdata = g_ptr_array_index (files, i);
 
@@ -1390,13 +1429,15 @@ fr_window_compute_list_names (FrWindow  *window,
 		if (visible_list_completed)
 			continue;
 
-		if (compute_file_list_name (window, fdata, current_dir, current_dir_len, names_hash, &different_name)) {
+		if (compute_file_list_name (window, filter, fdata, current_dir, current_dir_len, names_hash, &different_name)) {
 			visible_list_started = TRUE;
 		}
 		else if (visible_list_started && different_name)
 			visible_list_completed = TRUE;
 	}
 
+	if (filter != NULL)
+		g_regex_unref (filter);
 	g_hash_table_destroy (names_hash);
 }
 
@@ -1746,6 +1787,7 @@ static void
 fr_window_update_dir_tree (FrWindow *window)
 {
 	GPtrArray  *dirs;
+	GRegex     *filter;
 	GHashTable *dir_cache;
 	int         i;
 	GdkPixbuf  *icon;
@@ -1776,15 +1818,14 @@ fr_window_update_dir_tree (FrWindow *window)
 
 	dirs = g_ptr_array_sized_new (128);
 
+	filter = _fr_window_create_filter (window);
 	dir_cache = g_hash_table_new_full (g_str_hash, g_str_equal, NULL, NULL);
 	for (i = 0; i < window->archive->files->len; i++) {
 		FileData *fdata = g_ptr_array_index (window->archive->files, i);
 		char     *dir;
 
-		if (gtk_entry_get_text (GTK_ENTRY (window->priv->filter_entry)) != NULL) {
-			if (! file_data_respects_filter (window, fdata))
-				continue;
-		}
+		if (! file_data_respects_filter (window, filter, fdata))
+			continue;
 
 		if (fdata->dir)
 			dir = _g_path_remove_ending_separator (fdata->full_path);
@@ -1807,6 +1848,8 @@ fr_window_update_dir_tree (FrWindow *window)
 		g_free (dir);
 	}
 	g_hash_table_destroy (dir_cache);
+	if (filter != NULL)
+		g_regex_unref (filter);
 
 	g_ptr_array_sort (dirs, path_compare);
 	dir_cache = g_hash_table_new_full (g_str_hash, g_str_equal, NULL, (GDestroyNotify) gtk_tree_path_free);
@@ -2119,7 +2162,7 @@ show_folder (GtkWindow *parent_window,
 		char      *message;
 
 		utf8_name = _g_file_get_display_basename (folder);
-		message = g_strdup_printf (_("Could not display the folder \"%s\""), utf8_name);
+		message = g_strdup_printf (_("Could not display the folder “%s”"), utf8_name);
 		g_free (utf8_name);
 
 		d = _gtk_error_dialog_new (parent_window,
@@ -2292,61 +2335,61 @@ get_action_description (FrWindow *window,
 	switch (action) {
 	case FR_ACTION_CREATING_NEW_ARCHIVE:
 		/* Translators: %s is a filename */
-		message = g_strdup_printf (_("Creating \"%s\""), basename);
+		message = g_strdup_printf (_("Creating “%s”"), basename);
 		break;
 	case FR_ACTION_LOADING_ARCHIVE:
 		/* Translators: %s is a filename */
-		message = g_strdup_printf (_("Loading \"%s\""), basename);
+		message = g_strdup_printf (_("Loading “%s”"), basename);
 		break;
 	case FR_ACTION_LISTING_CONTENT:
 		/* Translators: %s is a filename */
-		message = g_strdup_printf (_("Reading \"%s\""), basename);
+		message = g_strdup_printf (_("Reading “%s”"), basename);
 		break;
 	case FR_ACTION_DELETING_FILES:
 		/* Translators: %s is a filename */
-		message = g_strdup_printf (_("Deleting the files from \"%s\""), basename);
+		message = g_strdup_printf (_("Deleting the files from “%s”"), basename);
 		break;
 	case FR_ACTION_TESTING_ARCHIVE:
 		/* Translators: %s is a filename */
-		message = g_strdup_printf (_("Testing \"%s\""), basename);
+		message = g_strdup_printf (_("Testing “%s”"), basename);
 		break;
 	case FR_ACTION_GETTING_FILE_LIST:
 		message = g_strdup (_("Getting the file list"));
 		break;
 	case FR_ACTION_COPYING_FILES_FROM_REMOTE:
 		/* Translators: %s is a filename */
-		message = g_strdup_printf (_("Copying the files to add to \"%s\""), basename);
+		message = g_strdup_printf (_("Copying the files to add to “%s”"), basename);
 		break;
 	case FR_ACTION_ADDING_FILES:
 		/* Translators: %s is a filename */
-		message = g_strdup_printf (_("Adding the files to \"%s\""), basename);
+		message = g_strdup_printf (_("Adding the files to “%s”"), basename);
 		break;
 	case FR_ACTION_EXTRACTING_FILES:
 		/* Translators: %s is a filename */
-		message = g_strdup_printf (_("Extracting the files from \"%s\""), basename);
+		message = g_strdup_printf (_("Extracting the files from “%s”"), basename);
 		break;
 	case FR_ACTION_COPYING_FILES_TO_REMOTE:
 		message = g_strdup (_("Copying the extracted files to the destination"));
 		break;
 	case FR_ACTION_CREATING_ARCHIVE:
 		/* Translators: %s is a filename */
-		message = g_strdup_printf (_("Creating \"%s\""), basename);
+		message = g_strdup_printf (_("Creating “%s”"), basename);
 		break;
 	case FR_ACTION_SAVING_REMOTE_ARCHIVE:
 	case FR_ACTION_ENCRYPTING_ARCHIVE:
 		/* Translators: %s is a filename */
-		message = g_strdup_printf (_("Saving \"%s\""), basename);
+		message = g_strdup_printf (_("Saving “%s”"), basename);
 		break;
 	case FR_ACTION_PASTING_FILES:
 		message = g_strdup (window->priv->custom_action_message);
 		break;
 	case FR_ACTION_RENAMING_FILES:
 		/* Translators: %s is a filename */
-		message = g_strdup_printf (_("Renaming the files in \"%s\""), basename);
+		message = g_strdup_printf (_("Renaming the files in “%s”"), basename);
 		break;
 	case FR_ACTION_UPDATING_FILES:
 		/* Translators: %s is a filename */
-		message = g_strdup_printf (_("Updating the files in \"%s\""), basename);
+		message = g_strdup_printf (_("Updating the files in “%s”"), basename);
 		break;
 	case FR_ACTION_NONE:
 		break;
@@ -2777,7 +2820,7 @@ fr_window_show_confirmation_dialog_with_open_archive (FrWindow *window)
 
 	basename = _g_file_get_display_basename (window->priv->saving_file);
 	/* Translators: %s is a filename */
-	message = g_strdup_printf (_("\"%s\" created successfully"), basename);
+	message = g_strdup_printf (_("“%s” created successfully"), basename);
 
 	dialog = _gtk_message_dialog_new (GTK_WINDOW (window),
 					  GTK_DIALOG_MODAL,
@@ -2997,7 +3040,7 @@ _handle_archive_operation_error (FrWindow  *window,
 		case FR_ACTION_LOADING_ARCHIVE:
 			dialog_parent = window->priv->load_error_parent_window;
 			utf8_name = _g_file_get_display_basename (window->priv->archive_file);
-			msg = g_strdup_printf (_("Could not open \"%s\""), utf8_name);
+			msg = g_strdup_printf (_("Could not open “%s”"), utf8_name);
 			g_free (utf8_name);
 			break;
 
@@ -4601,7 +4644,7 @@ fr_window_folder_tree_drag_data_get (GtkWidget        *widget,
 		char *display_name;
 
 		display_name = _g_file_get_display_basename (destination_folder);
-		window->priv->drag_error = g_error_new (FR_ERROR, 0, _("You don't have the right permissions to extract archives in the folder \"%s\""), display_name);
+		window->priv->drag_error = g_error_new (FR_ERROR, 0, _("You don’t have the right permissions to extract archives in the folder “%s”"), display_name);
 
 		g_free (display_name);
 	}
@@ -4703,7 +4746,7 @@ fr_window_file_list_drag_data_get (FrWindow         *window,
 		char *display_name;
 
 		display_name = _g_file_get_display_basename (destination_folder);
-		window->priv->drag_error = g_error_new (FR_ERROR, 0, _("You don't have the right permissions to extract archives in the folder \"%s\""), display_name);
+		window->priv->drag_error = g_error_new (FR_ERROR, 0, _("You don’t have the right permissions to extract archives in the folder “%s”"), display_name);
 
 		g_free (display_name);
 	}
@@ -4841,6 +4884,13 @@ key_press_cb (GtkWidget   *widget,
 	case GDK_KEY_KP_Home:
 		if (alt) {
 			fr_window_go_to_location (window, "/", FALSE);
+			retval = TRUE;
+		}
+		break;
+
+	case GDK_KEY_Delete:
+		if (! gtk_widget_has_focus (window->priv->filter_entry)) {
+			fr_window_activate_delete (NULL, NULL, window);
 			retval = TRUE;
 		}
 		break;
@@ -5375,7 +5425,7 @@ fr_window_activate_filter (FrWindow *window)
 
 static void
 filter_entry_search_changed_cb (GtkEntry *entry,
-			  FrWindow *window)
+				FrWindow *window)
 {
 	fr_window_activate_filter (window);
 }
@@ -5477,7 +5527,6 @@ fr_window_construct (FrWindow *window)
 	GtkWidget          *tree_scrolled_window;
 	GtkWidget          *button;
 	GtkTreeSelection   *selection;
-	GtkSizeGroup       *toolbar_size_group;
 	GtkSizeGroup       *header_bar_size_group;
 
 	/* Create the settings objects */
@@ -5889,13 +5938,6 @@ fr_window_construct (FrWindow *window)
 
 	/**/
 
-	toolbar_size_group = gtk_size_group_new (GTK_SIZE_GROUP_VERTICAL);
-	gtk_size_group_add_widget (toolbar_size_group, window->priv->location_bar);
-	gtk_size_group_add_widget (toolbar_size_group, window->priv->filter_bar);
-	g_object_unref (toolbar_size_group);
-
-	/**/
-
 	fr_window_update_title (window);
 	fr_window_update_sensitivity (window);
 	fr_window_update_current_location (window);
@@ -6221,7 +6263,7 @@ _fr_window_notify_creation_complete (FrWindow *window)
 
 	basename = _g_file_get_display_basename (window->priv->saving_file);
 	/* Translators: %s is a filename */
-	message = g_strdup_printf (_("\"%s\" created successfully"), basename);
+	message = g_strdup_printf (_("“%s” created successfully"), basename);
 	notification = notify_notification_new (window->priv->batch_title, message, "file-roller");
 	notify_notification_set_hint_string (notification, "desktop-entry", "file-roller");
 
@@ -6702,10 +6744,10 @@ query_info_ready_for_overwrite_dialog_cb (GObject      *source_object,
 		char      *details;
 		GtkWidget *d;
 
-		msg = g_strdup_printf (_("Replace file \"%s\"?"), g_file_info_get_display_name (info));
+		msg = g_strdup_printf (_("Replace file “%s”?"), g_file_info_get_display_name (info));
 		parent = g_file_get_parent (destination);
 		parent_name = g_file_get_parse_name (parent);
-		details = g_strdup_printf (_("Another file with the same name already exists in \"%s\"."), parent_name);
+		details = g_strdup_printf (_("Another file with the same name already exists in “%s”."), parent_name);
 		d = _gtk_message_dialog_new (GTK_WINDOW (odata->window),
 					     GTK_DIALOG_MODAL,
 					     msg,
@@ -6864,7 +6906,7 @@ _fr_window_archive_extract_from_edata_maybe (FrWindow    *window,
 			char      *msg;
 
 			folder_name = _g_file_get_display_basename (edata->destination);
-			msg = g_strdup_printf (_("Destination folder \"%s\" does not exist.\n\nDo you want to create it?"), folder_name);
+			msg = g_strdup_printf (_("Destination folder “%s” does not exist.\n\nDo you want to create it?"), folder_name);
 			g_free (folder_name);
 
 			d = _gtk_message_dialog_new (GTK_WINDOW (window),
@@ -7587,7 +7629,7 @@ fr_window_archive_save_as (FrWindow   *window,
 		char      *message;
 
 		utf8_name = _g_file_get_display_basename (file);
-		message = g_strdup_printf (_("Could not save the archive \"%s\""), utf8_name);
+		message = g_strdup_printf (_("Could not save the archive “%s”"), utf8_name);
 		g_free (utf8_name);
 
 		d = _gtk_error_dialog_new (GTK_WINDOW (window),
@@ -7944,7 +7986,7 @@ fr_window_archive_encrypt (FrWindow   *window,
 		char      *message;
 
 		utf8_name = _g_file_get_display_basename (temp_new_file);
-		message = g_strdup_printf (_("Could not save the archive \"%s\""), utf8_name);
+		message = g_strdup_printf (_("Could not save the archive “%s”"), utf8_name);
 		g_free (utf8_name);
 
 		d = _gtk_error_dialog_new (GTK_WINDOW (window),
@@ -8271,7 +8313,7 @@ valid_name (const char  *new_name,
 	}
 	else if (_g_strchrs (new_name, BAD_CHARS)) {
 		/* Translators: the %s references to a filename.  This message can appear when renaming a file. */
-		*reason = g_strdup_printf (_("Name \"%s\" is not valid because it contains at least one of the following characters: %s, please type other name."), utf8_new_name, BAD_CHARS);
+		*reason = g_strdup_printf (_("Name “%s” is not valid because it contains at least one of the following characters: %s, please type other name."), utf8_new_name, BAD_CHARS);
 		retval = FALSE;
 	}
 
@@ -8307,9 +8349,9 @@ name_is_present (FrWindow    *window,
 			char *utf8_name = g_filename_display_name (new_name);
 
 			if (filename[new_filename_l] == G_DIR_SEPARATOR)
-				*reason = g_strdup_printf (_("A folder named \"%s\" already exists.\n\n%s"), utf8_name, _("Please use a different name."));
+				*reason = g_strdup_printf (_("A folder named “%s” already exists.\n\n%s"), utf8_name, _("Please use a different name."));
 			else
-				*reason = g_strdup_printf (_("A file named \"%s\" already exists.\n\n%s"), utf8_name, _("Please use a different name."));
+				*reason = g_strdup_printf (_("A file named “%s” already exists.\n\n%s"), utf8_name, _("Please use a different name."));
 
 			retval = TRUE;
 			break;
@@ -8545,7 +8587,7 @@ fr_window_copy_or_cut_selection (FrWindow      *window,
 	window->priv->copy_data->op = op;
 	window->priv->copy_data->base_dir = base_dir;
 
-	clipboard = gtk_clipboard_get (FR_CLIPBOARD);
+	clipboard = gtk_clipboard_get (_fr_window_get_clipboard_name (window));
 	gtk_clipboard_set_with_owner (clipboard,
 				      clipboard_targets,
 				      G_N_ELEMENTS (clipboard_targets),
@@ -8857,10 +8899,10 @@ fr_window_paste_from_clipboard_data (FrWindow        *window,
 	to_archive = _g_file_get_display_basename (window->priv->archive_file);
 	if (data->op == FR_CLIPBOARD_OP_CUT)
 		/* Translators: %s are archive filenames */
-		window->priv->custom_action_message = g_strdup_printf (_("Moving the files from \"%s\" to \"%s\""), from_archive, to_archive);
+		window->priv->custom_action_message = g_strdup_printf (_("Moving the files from “%s” to “%s”"), from_archive, to_archive);
 	else
 		/* Translators: %s are archive filenames */
-		window->priv->custom_action_message = g_strdup_printf (_("Copying the files from \"%s\" to \"%s\""), from_archive, to_archive);
+		window->priv->custom_action_message = g_strdup_printf (_("Copying the files from “%s” to “%s”"), from_archive, to_archive);
 	_archive_operation_started (window, FR_ACTION_PASTING_FILES);
 
 	_window_started_loading_file (window, data->file);
@@ -8882,7 +8924,7 @@ fr_window_paste_selection_to (FrWindow   *window,
 	GtkSelectionData *selection_data;
 	FrClipboardData  *paste_data;
 
-	clipboard = gtk_clipboard_get (FR_CLIPBOARD);
+	clipboard = gtk_clipboard_get (_fr_window_get_clipboard_name (window));
 	selection_data = gtk_clipboard_wait_for_contents (clipboard, FR_SPECIAL_URI_LIST);
 	if (selection_data == NULL)
 		return;
