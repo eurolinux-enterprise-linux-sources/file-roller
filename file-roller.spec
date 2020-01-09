@@ -11,7 +11,7 @@
 Summary:	Tool for viewing and creating archives
 Name:		file-roller
 Version:	2.28.2
-Release: 	6%{?dist}
+Release: 	7%{?dist}
 License:	GPLv2+
 Group:		Applications/Archiving
 URL:		http://download.gnome.org/sources/file-roller/
@@ -61,6 +61,9 @@ Patch3: file-roller-2.28.2-gvfs-fuse.patch
 # https://bugzilla.redhat.com/show_bug.cgi?id=589550
 Patch4: file-roller-fix7z.patch
 
+# upstream fix
+Patch5: 0001-g_list_items_async-fixed-uri-decoding.patch
+
 %description
 File Roller is an application for creating and viewing archives files,
 such as tar or zip files.
@@ -72,6 +75,7 @@ such as tar or zip files.
 %patch2 -p2 -b .translations2
 %patch3 -p1 -b .gvfs-fuse
 %patch4 -p1 -b .fix7z
+%patch5 -p1 -b .uri-decoding
 
 %build
 %configure --disable-scrollkeeper --disable-static
@@ -148,6 +152,10 @@ fi
 %{_datadir}/icons/hicolor/scalable/apps/file-roller.svg
 
 %changelog
+* Fri May 30 2014 Matthias Clasen <mclasen@redhat.com> 2.28.2-7
+- Fix URI decoding
+Resolves: #718338
+
 * Thu Aug  5 2010 Matthias Clasen <mclasen@redhat.com> 2.28.2-6
 - Update translations
 Resolves: #552194
