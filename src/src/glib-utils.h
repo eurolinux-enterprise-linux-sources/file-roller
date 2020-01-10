@@ -33,7 +33,6 @@
 #define DEBUG_INFO __FILE__, __LINE__, __FUNCTION__
 #define MIME_TYPE_DIRECTORY "folder"
 #define MIME_TYPE_ARCHIVE "application/x-archive"
-#define DEF_ACTION_CALLBACK(x) void x (GSimpleAction *action, GVariant *parameter, gpointer user_data);
 
 #define get_home_relative_path(x)        \
 	g_strconcat (g_get_home_dir (), \
@@ -90,10 +89,6 @@ const char *        _g_str_get_last_field          (const char          *line,
 						    int                  last_field);
 const char *        _g_str_get_static              (const char          *s);
 
-/* utf8 */
-
-gboolean            _g_utf8_all_spaces             (const char          *text);
-
 /* string vector */
 
 char **             _g_strv_prepend                (char               **str_array,
@@ -145,7 +140,6 @@ char *              _g_path_get_dir_name           (const char          *path);
 char *              _g_path_remove_level           (const char          *path);
 char *              _g_path_remove_ending_separator(const char          *path);
 char *              _g_path_remove_extension       (const char          *path);
-char *		    _g_path_remove_first_extension (const gchar		*path);
 gboolean            _g_path_is_parent_of           (const char          *dirname,
 						    const char          *filename);
 const char *        _g_path_get_relative_basename  (const char          *path,
@@ -186,11 +180,6 @@ GList *             _g_key_file_get_string_list    (GKeyFile            *key_fil
 						    const char          *group_name,
 						    const char          *key,
 						    GError             **error);
-
-/* GSettings utils */
-
-GSettings *         _g_settings_new_if_schema_installed
-						   (const char          *schema_id);
 
 /* functions used to parse a command output lines. */
 

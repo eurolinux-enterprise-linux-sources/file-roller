@@ -98,7 +98,7 @@ list__process_line (char     *line,
 			strncpy (version, ver_start, ver_len);
 			version[ver_len] = 0;
 
-			if ((strcmp (version, "4.55") < 0) && (ver_len > 1) && (version[1] == '.'))
+			if (strcmp (version, "4.55") < 0)
 				self->old_style = TRUE;
 			else
 				self->old_style = FALSE;
@@ -294,7 +294,7 @@ process_line__add (char     *line,
 	}
 
 	if (fr_archive_progress_get_total_files (archive) > 0)
-		parse_progress_line (archive, "Compressing  ", _("Adding “%s”"), line);
+		parse_progress_line (archive, "Compressing  ", _("Adding \"%s\""), line);
 }
 
 
@@ -321,8 +321,10 @@ fr_command_7z_add (FrCommand  *command,
 	else
 		fr_process_add_arg (command->process, "a");
 
-	if (base_dir != NULL)
+	if (base_dir != NULL) {
 		fr_process_set_working_dir (command->process, base_dir);
+		fr_process_add_arg_concat (command->process, "-w", base_dir, NULL);
+	}
 
 	if (_g_mime_type_matches (archive->mime_type, "application/zip")
 	    || _g_mime_type_matches (archive->mime_type, "application/x-cbz"))
@@ -375,20 +377,11 @@ fr_command_7z_add (FrCommand  *command,
 	if (from_file != NULL)
 		fr_process_add_arg_concat (command->process, "-i@", from_file, NULL);
 
-	if (from_file == NULL)
-		for (scan = file_list; scan; scan = scan->next)
-			/* Files prefixed with '@' need to be handled specially */
-			if (g_str_has_prefix (scan->data, "@"))
-				fr_process_add_arg_concat (command->process, "-i!", scan->data, NULL);
-
 	fr_process_add_arg (command->process, "--");
 	fr_process_add_arg (command->process, command->filename);
-
 	if (from_file == NULL)
 		for (scan = file_list; scan; scan = scan->next)
-			/* Skip files prefixed with '@', already added */
-			if (!g_str_has_prefix (scan->data, "@"))
-				fr_process_add_arg (command->process, scan->data);
+			fr_process_add_arg (command->process, scan->data);
 
 	fr_process_end_command (command->process);
 }
@@ -399,8 +392,7 @@ fr_command_7z_delete (FrCommand  *command,
 		      const char *from_file,
 		      GList      *file_list)
 {
-	FrArchive *archive = FR_ARCHIVE (command);
-	GList     *scan;
+	GList *scan;
 
 	fr_command_7z_begin_command (command);
 	fr_process_add_arg (command->process, "d");
@@ -409,31 +401,14 @@ fr_command_7z_delete (FrCommand  *command,
 	if (_g_mime_type_matches (FR_ARCHIVE (command)->mime_type, "application/x-ms-dos-executable"))
 		fr_process_add_arg (command->process, "-sfx");
 
-	if (_g_mime_type_matches (archive->mime_type, "application/zip")
-	    || _g_mime_type_matches (archive->mime_type, "application/x-cbz"))
-	{
-		fr_process_add_arg (command->process, "-tzip");
-	}
-
 	if (from_file != NULL)
 		fr_process_add_arg_concat (command->process, "-i@", from_file, NULL);
 
-	if (from_file == NULL)
-		for (scan = file_list; scan; scan = scan->next)
-			/* Files prefixed with '@' need to be handled specially */
-			if (g_str_has_prefix (scan->data, "@"))
-				fr_process_add_arg_concat (command->process, "-i!", scan->data, NULL);
-
-	add_password_arg (command, FR_ARCHIVE (command)->password, FALSE);
-
 	fr_process_add_arg (command->process, "--");
 	fr_process_add_arg (command->process, command->filename);
-
 	if (from_file == NULL)
 		for (scan = file_list; scan; scan = scan->next)
-			/* Skip files prefixed with '@', already added */
-			if (!g_str_has_prefix (scan->data, "@"))
-				fr_process_add_arg (command->process, scan->data);
+			fr_process_add_arg (command->process, scan->data);
 
 	fr_process_end_command (command->process);
 }
@@ -446,7 +421,7 @@ process_line__extract (char     *line,
 	FrArchive *archive = FR_ARCHIVE (data);
 
 	if (fr_archive_progress_get_total_files (archive) > 0)
-		parse_progress_line (archive, "Extracting  ", _("Extracting “%s”"), line);
+		parse_progress_line (archive, "Extracting  ", _("Extracting \"%s\""), line);
 }
 
 
@@ -483,21 +458,11 @@ fr_command_7z_extract (FrCommand  *command,
 	if (from_file != NULL)
 		fr_process_add_arg_concat (command->process, "-i@", from_file, NULL);
 
-	if (from_file == NULL)
-		for (scan = file_list; scan; scan = scan->next)
-			/* Files prefixed with '@' need to be handled specially */
-			if (g_str_has_prefix (scan->data, "@"))
-				fr_process_add_arg_concat (command->process, "-i!", scan->data, NULL);
-
-
 	fr_process_add_arg (command->process, "--");
 	fr_process_add_arg (command->process, command->filename);
-
 	if (from_file == NULL)
 		for (scan = file_list; scan; scan = scan->next)
-			/* Skip files prefixed with '@', already added */
-			if (!g_str_has_prefix (scan->data, "@"))
-				fr_process_add_arg (command->process, scan->data);
+			fr_process_add_arg (command->process, scan->data);
 
 	fr_process_end_command (command->process);
 }
@@ -552,8 +517,7 @@ fr_command_7z_handle_error (FrCommand *command,
 	}
 
 	if (error->status <= 1) {
-		/* ignore warnings */
-		fr_error_clear_gerror (error);
+		error->type = FR_ERROR_NONE;
 	}
 	else {
 		GList *scan;
@@ -617,10 +581,7 @@ fr_command_7z_get_capabilities (FrArchive  *archive,
 		if (_g_mime_type_matches (mime_type, "application/x-rar")
 		    || _g_mime_type_matches (mime_type, "application/x-cbr"))
 		{
-			/* give priority to rar and unrar that supports RAR files better. */
-			if (!_g_program_is_available ("rar", check_command)
-			    && !_g_program_is_available ("unrar", check_command)
-			    && (! check_command || g_file_test ("/usr/lib/p7zip/Codecs/Rar29.so", G_FILE_TEST_EXISTS)))
+			if (! check_command || g_file_test ("/usr/lib/p7zip/Codecs/Rar29.so", G_FILE_TEST_EXISTS))
 				capabilities |= FR_ARCHIVE_CAN_READ;
 		}
 		else
@@ -713,7 +674,6 @@ fr_command_7z_init (FrCommand7z *self)
 	base->propAddCanReplace            = TRUE;
 	base->propAddCanStoreFolders       = TRUE;
 	base->propAddCanStoreLinks         = TRUE;
-	base->propAddCanFollowDirectoryLinksWithoutDereferencing = FALSE;
 	base->propExtractCanAvoidOverwrite = FALSE;
 	base->propExtractCanSkipOlder      = FALSE;
 	base->propExtractCanJunkPaths      = TRUE;

@@ -26,23 +26,10 @@
 #include <gio/gio.h>
 #include <gtk/gtk.h>
 
-#define _GTK_LABEL_ADD _("_Add")
-#define _GTK_LABEL_CANCEL _("_Cancel")
-#define _GTK_LABEL_CLOSE _("_Close")
-#define _GTK_LABEL_CREATE_ARCHIVE _("C_reate")
-#define _GTK_LABEL_EXTRACT _("_Extract")
-#define _GTK_LABEL_OPEN _("_Open")
-#define _GTK_LABEL_SAVE _("_Save")
-
-
-typedef struct {
-	const char *action_name;
-	const char *accelerator;
-} FrAccelerator;
-
 int           _gtk_tree_selection_count_selected   (GtkTreeSelection *selection);
 GtkWidget *   _gtk_message_dialog_new              (GtkWindow        *parent,
 						    GtkDialogFlags    flags,
+						    const char       *stock_id,
 						    const char       *message,
 						    const char       *secondary_message,
 						    const char       *first_button_text,
@@ -92,28 +79,5 @@ GtkWidget *   _gtk_builder_get_widget              (GtkBuilder       *builder,
 						    const char       *name);
 int           _gtk_widget_lookup_for_size          (GtkWidget        *widget,
 						    GtkIconSize       icon_size);
-void          _gtk_entry_use_as_password_entry     (GtkEntry         *entry);
-GtkWidget *   _gtk_menu_button_new_for_header_bar  (void);
-GtkWidget *   _gtk_image_button_new_for_header_bar (const char       *icon_name);
-GtkWidget *   _gtk_header_bar_create_text_button   (const char       *icon_name,
-						    const char       *tooltip,
-						    const char       *action_name);
-GtkWidget *   _gtk_header_bar_create_image_button  (const char       *icon_name,
-						    const char       *tooltip,
-						    const char       *action_name);
-GtkWidget *   _gtk_header_bar_create_image_toggle_button
-						   (const char       *icon_name,
-						    const char       *tooltip,
-						    const char       *action_name);
-void          _gtk_window_add_accelerator_for_action
-						   (GtkWindow	     *window,
-						    GtkAccelGroup    *accel_group,
-						    const char       *action_name,
-						    const char       *accel,
-						    GVariant         *target);
-void          _gtk_window_add_accelerators_from_menu
-						   (GtkWindow        *window,
-						    GMenuModel       *menu);
-gboolean      _gtk_settings_get_dialogs_use_header (void);
 
 #endif

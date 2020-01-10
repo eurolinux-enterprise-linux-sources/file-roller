@@ -19,12 +19,13 @@
  * Library General Public License for more details.
  *
  * You should have received a copy of the GNU Library General Public
- * License along with this library; if not, see <http://www.gnu.org/licenses/>.
+ * License along with this library; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA.
  */
 
 
 #include <string.h>
-#include <math.h>
 #include <gtk/gtk.h>
 #include "eggtreemultidnd.h"
 
@@ -41,10 +42,10 @@ typedef struct
   gint    x;
   gint    y;
   guint   motion_notify_handler;
+  guint   button_release_handler;
   guint   drag_data_get_handler;
   GSList *event_list;
   gboolean pending_event;
-  gboolean button_released;
 } EggTreeMultiDndData;
 
 
@@ -162,6 +163,10 @@ stop_drag_check (GtkWidget *widget)
     g_signal_handler_disconnect (widget, priv_data->motion_notify_handler);
     priv_data->motion_notify_handler = 0;
   }
+  if (priv_data->button_release_handler) {
+    g_signal_handler_disconnect (widget, priv_data->button_release_handler);
+    priv_data->button_release_handler = 0;
+  }
 }
 
 
@@ -174,10 +179,6 @@ egg_tree_multi_drag_button_release_event (GtkWidget      *widget,
   GSList *l;
 
   priv_data = g_object_get_data (G_OBJECT (widget), EGG_TREE_MULTI_DND_STRING);
-  if (priv_data == NULL)
-    return FALSE;
-
-  priv_data->button_released = TRUE;
 
   for (l = priv_data->event_list; l != NULL; l = l->next)
     gtk_propagate_event (widget, l->data);
@@ -265,47 +266,6 @@ egg_tree_multi_drag_drag_data_get (GtkWidget        *widget,
 
 
 static gboolean
-_gtk_cairo_surface_extents (cairo_surface_t *surface,
-                            GdkRectangle *extents)
-{
-  double x1, x2, y1, y2;
-  cairo_t *cr;
-
-  g_return_val_if_fail (surface != NULL, FALSE);
-  g_return_val_if_fail (extents != NULL, FALSE);
-
-  cr = cairo_create (surface);
-  cairo_clip_extents (cr, &x1, &y1, &x2, &y2);
-
-  x1 = floor (x1);
-  y1 = floor (y1);
-  x2 = ceil (x2);
-  y2 = ceil (y2);
-  x2 -= x1;
-  y2 -= y1;
-
-  if (x1 < G_MININT || x1 > G_MAXINT ||
-      y1 < G_MININT || y1 > G_MAXINT ||
-      x2 > G_MAXINT || y2 > G_MAXINT)
-    {
-      extents->x = extents->y = extents->width = extents->height = 0;
-      return FALSE;
-    }
-
-  extents->x = x1;
-  extents->y = y1;
-  extents->width = x2;
-  extents->height = y2;
-
-  return TRUE;
-}
-
-
-#define DRAG_ICON_MAX_ROWS 3
-#define DRAG_ICON_OFFSET 5
-
-
-static gboolean
 egg_tree_multi_drag_motion_event (GtkWidget      *widget,
 				  GdkEventMotion *event,
 				  gpointer        data)
@@ -313,9 +273,6 @@ egg_tree_multi_drag_motion_event (GtkWidget      *widget,
   EggTreeMultiDndData *priv_data;
 
   priv_data = g_object_get_data (G_OBJECT (widget), EGG_TREE_MULTI_DND_STRING);
-
-  if (! priv_data->pending_event)
-    return FALSE;
 
   if (gtk_drag_check_threshold (widget,
 				priv_data->x,
@@ -346,13 +303,11 @@ egg_tree_multi_drag_motion_event (GtkWidget      *widget,
 	  int            cell_y;
 
 	  target_list = gtk_target_list_new (target_table, G_N_ELEMENTS (target_table));
-	  context = gtk_drag_begin_with_coordinates (widget,
-			  	  	  	     target_list,
-			  	  	  	     GDK_ACTION_COPY,
-			  	  	  	     priv_data->pressed_button,
-			  	  	  	     (GdkEvent*) event,
-			  	  	  	     event->x,
-			  	  	  	     event->y);
+	  context = gtk_drag_begin (widget,
+				    target_list,
+				    GDK_ACTION_COPY,
+				    priv_data->pressed_button,
+				    (GdkEvent*)event);
 	  set_context_data (context, path_list);
 
 	  if (gtk_tree_view_get_path_at_pos (GTK_TREE_VIEW (widget),
@@ -366,50 +321,8 @@ egg_tree_multi_drag_motion_event (GtkWidget      *widget,
 		  cairo_surface_t *drag_icon;
 
 		  drag_icon = gtk_tree_view_create_row_drag_icon (GTK_TREE_VIEW (widget), tree_path);
-
-		  if (path_list->next != NULL) {
-
-			  /* create a multi row drag icon */
-
-			  const int        icon_offset = DRAG_ICON_OFFSET;
-			  GdkRectangle     icon_extents;
-			  cairo_surface_t *multi_drag_icon;
-			  cairo_t         *cr;
-			  int              n_icons, i, offset;
-
-			  n_icons = MIN (DRAG_ICON_MAX_ROWS, g_list_length (path_list));
-			  _gtk_cairo_surface_extents (drag_icon, &icon_extents);
-
-			  multi_drag_icon = gdk_window_create_similar_surface (gtk_tree_view_get_bin_window (GTK_TREE_VIEW (widget)),
-									       CAIRO_CONTENT_COLOR_ALPHA,
-									       icon_extents.width + (icon_offset * (n_icons - 1)),
-									       icon_extents.height + (icon_offset * (n_icons - 1)));
-
-			  cr = cairo_create (multi_drag_icon);
-
-			  cairo_set_source_rgba (cr, 0.0, 0.0, 0.0, 0.0);
-			  cairo_rectangle(cr, 0, 0, icon_extents.width + icon_offset, icon_extents.height + icon_offset);
-			  cairo_fill (cr);
-
-			  offset = icon_offset * (n_icons - 1);
-			  for (i = 0; i < n_icons; i++) {
-				  cairo_set_source_surface (cr, drag_icon, -icon_extents.x + offset, -icon_extents.y + offset);
-				  cairo_rectangle (cr, offset, offset, icon_extents.width, icon_extents.height);
-				  cairo_fill (cr);
-				  offset -= icon_offset;
-			  }
-
-			  cairo_destroy (cr);
-
-			  cairo_surface_set_device_offset (multi_drag_icon, - (cell_x + 1), - (cell_y + 1));
-			  gtk_drag_set_icon_surface (context, multi_drag_icon);
-
-			  cairo_surface_destroy (multi_drag_icon);
-		  }
-		  else {
-			  cairo_surface_set_device_offset (drag_icon, - (cell_x + 1), - (cell_y + 1));
-			  gtk_drag_set_icon_surface (context, drag_icon);
-		  }
+		  cairo_surface_set_device_offset (drag_icon, -cell_x, -cell_y);
+		  gtk_drag_set_icon_surface (context, drag_icon);
 
 		  cairo_surface_destroy (drag_icon);
 		  gtk_tree_path_free (tree_path);
@@ -485,12 +398,10 @@ egg_tree_multi_drag_button_press_event (GtkWidget      *widget,
 			      !gtk_tree_selection_path_is_selected (selection, path) ||
 			      event->button != 1);
 
-      /* calling the parent the button_release event could be emitted */
-      priv_data->button_released = FALSE;
       if (call_parent)
 	(GTK_WIDGET_GET_CLASS (tree_view))->button_press_event (widget, event);
 
-      if (! priv_data->button_released && gtk_tree_selection_path_is_selected (selection, path))
+      if (gtk_tree_selection_path_is_selected (selection, path))
     {
       priv_data->pressed_button = event->button;
       priv_data->x = event->x;
@@ -510,6 +421,15 @@ egg_tree_multi_drag_button_press_event (GtkWidget      *widget,
 			      NULL);
         }
 
+      if (priv_data->button_release_handler == 0)
+        {
+          priv_data->button_release_handler =
+	    g_signal_connect (G_OBJECT (tree_view),
+	 		      "button_release_event",
+			      G_CALLBACK (egg_tree_multi_drag_button_release_event),
+			      NULL);
+        }
+
       if (priv_data->drag_data_get_handler == 0)
 	{
 	  priv_data->drag_data_get_handler =
@@ -520,7 +440,6 @@ egg_tree_multi_drag_button_press_event (GtkWidget      *widget,
 	}
     }
 
-      priv_data->button_released = FALSE;
       gtk_tree_path_free (path);
       /* We called the default handler so we don't let the default handler run */
       return TRUE;
@@ -538,8 +457,5 @@ egg_tree_multi_drag_add_drag_support (GtkTreeView *tree_view)
 		    "button_press_event",
 		    G_CALLBACK (egg_tree_multi_drag_button_press_event),
 		    NULL);
-  g_signal_connect (G_OBJECT (tree_view),
-		    "button_release_event",
-		    G_CALLBACK (egg_tree_multi_drag_button_release_event),
-		    NULL);
 }
+

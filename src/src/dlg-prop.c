@@ -49,9 +49,8 @@ void
 dlg_prop (FrWindow *window)
 {
 	DialogData *data;
-	GtkWidget  *content_area;
+	GtkWidget  *ok_button;
 	GtkWidget  *label;
-	GtkWidget  *table;
 	GFile      *parent;
 	char       *uri;
 	char       *markup;
@@ -70,19 +69,9 @@ dlg_prop (FrWindow *window)
 	}
 
 	/* Get the widgets. */
-	table = _gtk_builder_get_widget (data->builder, "content");
 
-
-	/* Make the dialog */
-
-	data->dialog = gtk_widget_new (GTK_TYPE_DIALOG,
-				       "transient-for", GTK_WINDOW (window),
-				       "modal", TRUE,
-				       "use-header-bar", _gtk_settings_get_dialogs_use_header (),
-				       NULL);
-
-	content_area = gtk_dialog_get_content_area (GTK_DIALOG (data->dialog));
-	gtk_container_add (GTK_CONTAINER (content_area), table);
+	data->dialog = _gtk_builder_get_widget (data->builder, "prop_dialog");
+	ok_button = _gtk_builder_get_widget (data->builder, "p_ok_button");
 
 	/* Set widgets data. */
 
@@ -172,7 +161,16 @@ dlg_prop (FrWindow *window)
 			  "destroy",
 			  G_CALLBACK (destroy_cb),
 			  data);
+	g_signal_connect_swapped (G_OBJECT (ok_button),
+				  "clicked",
+				  G_CALLBACK (gtk_widget_destroy),
+				  G_OBJECT (data->dialog));
 
 	/* Run dialog. */
+
+	gtk_window_set_transient_for (GTK_WINDOW (data->dialog),
+				      GTK_WINDOW (window));
+	gtk_window_set_modal (GTK_WINDOW (data->dialog), TRUE);
+
 	gtk_widget_show (data->dialog);
 }

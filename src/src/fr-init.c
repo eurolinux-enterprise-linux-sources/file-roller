@@ -46,13 +46,13 @@
 #if HAVE_JSON_GLIB
   #include "fr-command-unarchiver.h"
 #endif
-#include "fr-command-unsquashfs.h"
 #include "fr-command-unstuff.h"
 #include "fr-command-zip.h"
 #include "fr-command-zoo.h"
 #include "fr-command-7z.h"
 #include "fr-init.h"
 #include "fr-process.h"
+#include "fr-stock.h"
 #include "fr-window.h"
 #include "typedefs.h"
 #include "preferences.h"
@@ -79,10 +79,6 @@ FrMimeTypeDescription mime_type_desc[] = {
 	{ "application/x-compressed-tar",       ".tar.gz",   0 },
 	{ "application/x-cpio",                 ".cpio",     0 },
 	{ "application/x-deb",                  ".deb",      0 },
-	{ "application/x-debian-package",	".deb",      0 },
-	{ "application/vnd.debian.binary-package",	".deb",      0 },
-	{ "application/vnd.snap",		".snap",     0 },
-	{ "application/vnd.squashfs",		".sqsh",     0 },
 	{ "application/x-ear",                  ".ear",      0 },
 	{ "application/x-ms-dos-executable",    ".exe",      0 },
 	{ "application/x-gzip",                 ".gz",       0 },
@@ -90,8 +86,6 @@ FrMimeTypeDescription mime_type_desc[] = {
 	{ "application/x-lha",                  ".lzh",      0 },
 	{ "application/x-lrzip",                ".lrz",      0 },
 	{ "application/x-lrzip-compressed-tar", ".tar.lrz",  0 },
-	{ "application/x-lz4",                  ".lz4",      0 },
-	{ "application/x-lz4-compressed-tar",   ".tar.lz4",  0 },
 	{ "application/x-lzip",                 ".lz",       0 },
 	{ "application/x-lzip-compressed-tar",  ".tar.lz",   0 },
 	{ "application/x-lzma",                 ".lzma",     0 },
@@ -102,7 +96,6 @@ FrMimeTypeDescription mime_type_desc[] = {
 	{ "application/x-rar",                  ".rar",      0 },
 	{ "application/x-rpm",                  ".rpm",      0 },
 	{ "application/x-rzip",                 ".rz",       0 },
-	{ "application/x-rzip-compressed-tar",  ".tar.rz",   0 },
 	{ "application/x-tar",                  ".tar",      0 },
 	{ "application/x-tarz",                 ".tar.Z",    0 },
 	{ "application/x-stuffit",              ".sit",      0 },
@@ -127,7 +120,6 @@ FrExtensionType file_ext_type[] = {
 	{ ".cab", "application/vnd.ms-cab-compressed" },
 	{ ".cbr", "application/x-cbr" },
 	{ ".cbz", "application/x-cbz" },
-	{ ".click", "application/x-deb" },
 	{ ".cpio", "application/x-cpio" },
 	{ ".deb", "application/x-deb" },
 	{ ".ear", "application/x-ear" },
@@ -139,15 +131,12 @@ FrExtensionType file_ext_type[] = {
 	{ ".lrz", "application/x-lrzip" },
 	{ ".lzh", "application/x-lha" },
 	{ ".lz", "application/x-lzip" },
-	{ ".lz4", "application/x-lz4" },
 	{ ".lzma", "application/x-lzma" },
 	{ ".lzo", "application/x-lzop" },
 	{ ".rar", "application/x-rar" },
 	{ ".rpm", "application/x-rpm" },
 	{ ".rz", "application/x-rzip" },
 	{ ".sit", "application/x-stuffit" },
-	{ ".snap", "application/vnd.snap" },
-	{ ".sqsh", "application/vnd.squashfs" },
 	{ ".swm", "application/x-ms-wim" },
 	{ ".tar", "application/x-tar" },
 	{ ".tar.bz", "application/x-bzip-compressed-tar" },
@@ -155,11 +144,9 @@ FrExtensionType file_ext_type[] = {
 	{ ".tar.gz", "application/x-compressed-tar" },
 	{ ".tar.lrz", "application/x-lrzip-compressed-tar" },
 	{ ".tar.lz", "application/x-lzip-compressed-tar" },
-	{ ".tar.lz4", "application/x-lz4-compressed-tar" },
 	{ ".tar.lzma", "application/x-lzma-compressed-tar" },
 	{ ".tar.lzo", "application/x-lzop-compressed-tar" },
 	{ ".tar.7z", "application/x-7z-compressed-tar" },
-	{ ".tar.rz", "application/x-rzip-compressed-tar" },
 	{ ".tar.xz", "application/x-xz-compressed-tar" },
 	{ ".tar.Z", "application/x-tarz" },
 	{ ".taz", "application/x-tarz" },
@@ -168,7 +155,6 @@ FrExtensionType file_ext_type[] = {
 	{ ".tgz", "application/x-compressed-tar" },
 	{ ".txz", "application/x-xz-compressed-tar" },
 	{ ".tlz", "application/x-lzip-compressed-tar" },
-	{ ".tlz4", "application/x-lz4-compressed-tar" },
 	{ ".tzma", "application/x-lzma-compressed-tar" },
 	{ ".tzo", "application/x-lzop-compressed-tar" },
 	{ ".war", "application/x-war" },
@@ -377,7 +363,6 @@ register_archives (void)
 	register_archive (FR_TYPE_COMMAND_LHA);
 	register_archive (FR_TYPE_COMMAND_RAR);
 	register_archive (FR_TYPE_COMMAND_RPM);
-	register_archive (FR_TYPE_COMMAND_UNSQUASHFS);
 	register_archive (FR_TYPE_COMMAND_UNSTUFF);
 	register_archive (FR_TYPE_COMMAND_ZIP);
 	register_archive (FR_TYPE_COMMAND_LRZIP);
@@ -638,11 +623,12 @@ initialize_data (void)
 					       NULL);
 
 	gtk_icon_theme_append_search_path (gtk_icon_theme_get_default (),
-					   PRIVDATADIR G_DIR_SEPARATOR_S "icons");
+					   PKG_DATA_DIR G_DIR_SEPARATOR_S "icons");
 
 	migrate_options_directory ();
 	register_archives ();
 	compute_supported_archive_types ();
+	fr_stock_init ();
 }
 
 

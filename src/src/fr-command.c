@@ -79,7 +79,7 @@ xfer_data_free (XferData *data)
 	_g_object_list_unref (data->file_list);
 	_g_object_unref (data->base_dir);
 	g_free (data->dest_dir);
-	_g_object_unref (data->tmp_dir);
+	g_free (data->tmp_dir);
 	_g_object_unref (data->cancellable);
 	_g_object_unref (data->result);
 	g_free (data);
@@ -369,7 +369,7 @@ fr_command_handle_process_error (FrCommand     *self,
 		 * 'restart' flag */
 		FR_COMMAND_GET_CLASS (G_OBJECT (self))->handle_error (self, process_error);
 
-	if ((error != NULL) && (process_error->gerror != NULL) && (process_error->type != FR_ERROR_NONE))
+	if ((error != NULL) && (process_error->gerror != NULL))
 		*error = g_error_copy (process_error->gerror);
 	fr_error_free (process_error);
 
@@ -632,10 +632,6 @@ _fr_command_load_complete (XferData *xfer_data,
 		 * original name */
 		if (archive->multi_volume)
 			fr_archive_change_name (archive, FR_COMMAND (archive)->filename);
-
-		/* the header is encrypted if the load is successful and the password is not void */
-		archive->encrypt_header = (xfer_data->password != NULL) && (*xfer_data->password != '\0');
-
 		fr_archive_update_capabilities (archive);
 	}
 	else
@@ -725,7 +721,7 @@ create_tmp_base_dir (GFile      *base_dir,
 
 	temp_dir = _g_file_get_temp_work_dir (NULL);
 	destination_parent = _g_path_remove_level (destination);
-	parent_dir = _g_file_append_path (temp_dir, destination_parent, NULL);
+	parent_dir =  _g_file_append_path (temp_dir, destination_parent, NULL);
 
 	debug (DEBUG_INFO, "mkdir %s\n", g_file_get_path (parent_dir));
 	_g_file_make_directory_tree (parent_dir, 0700, NULL);
@@ -954,11 +950,6 @@ _fr_command_add (FrCommand      *self,
 		tmp_base_dir = g_object_ref (base_dir);
 		new_file_list = _g_string_list_dup (file_list);
 	}
-
-	/* see fr-archive.h for an explanation of the following code */
-
-	if (base_dir_created && ! archive->propAddCanFollowDirectoryLinksWithoutDereferencing)
-		follow_links = TRUE;
 
 	/* if the command cannot update,  get the list of files that are
 	 * newer than the ones in the archive. */
@@ -1946,7 +1937,7 @@ compute_base_path (const char *base_dir,
 		return new_path;
 	}
 
-	if (path_len < base_dir_len)
+	if (path_len <= base_dir_len)
 		return NULL;
 
 	base_path = path + base_dir_len;

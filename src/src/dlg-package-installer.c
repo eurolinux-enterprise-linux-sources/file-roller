@@ -22,9 +22,7 @@
 #include <config.h>
 #include <string.h>
 #include <glib/gi18n.h>
-#ifdef ENABLE_PACKAGEKIT
 #include <gdk/gdkx.h>
-#endif
 #include <gtk/gtk.h>
 #include "dlg-package-installer.h"
 #include "gio-utils.h"
@@ -65,7 +63,7 @@ package_installer_terminated (InstallerData *idata,
 		gdk_window_set_cursor (window, NULL);
 
 	if (error_type != FR_ERROR_NONE) {
-		fr_window_batch_stop_with_error (idata->window,
+		fr_window_stop_batch_with_error (idata->window,
 						 idata->action,
 						 error_type,
 						 error_message);
@@ -73,9 +71,9 @@ package_installer_terminated (InstallerData *idata,
 	else {
 		update_registered_archives_capabilities ();
 		if (fr_window_is_batch_mode (idata->window))
-			fr_window_batch_resume (idata->window);
+			fr_window_resume_batch (idata->window);
 		else
-			fr_window_restart_current_action (idata->window);
+			fr_window_restart_current_batch_action (idata->window);
 	}
 
 	installer_data_free (idata);
@@ -246,7 +244,7 @@ confirm_search_dialog_response_cb (GtkDialog *dialog,
 		install_packages (idata);
 	}
 	else {
-		fr_window_batch_stop (idata->window);
+		fr_window_stop_batch (idata->window);
 		installer_data_free (idata);
 	}
 }
@@ -316,9 +314,10 @@ file_buffer_ready_cb (GObject      *source_object,
 						  g_content_type_get_description (mime_type));
 		dialog = _gtk_message_dialog_new (GTK_WINDOW (idata->window),
 						  GTK_DIALOG_MODAL,
+						  GTK_STOCK_DIALOG_ERROR,
 						  _("Could not open this file type"),
 						  secondary_text,
-						  _GTK_LABEL_CANCEL, GTK_RESPONSE_NO,
+						  GTK_STOCK_CANCEL, GTK_RESPONSE_NO,
 						  _("_Search Command"), GTK_RESPONSE_YES,
 						  NULL);
 		g_signal_connect (dialog, "response", G_CALLBACK (confirm_search_dialog_response_cb), idata);

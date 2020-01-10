@@ -19,7 +19,6 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <config.h>
 #include <ctype.h>
 #include <string.h>
 #include <stdio.h>
@@ -28,9 +27,6 @@
 #include <glib/gprintf.h>
 #include <glib-object.h>
 #include "glib-utils.h"
-#if ENABLE_MAGIC
-#  include <magic.h>
-#endif
 
 
 #define MAX_PATTERNS 128
@@ -390,27 +386,6 @@ _g_str_get_static (const char *s)
 }
 
 
-/* utf8 */
-
-
-gboolean
-_g_utf8_all_spaces (const char *text)
-{
-	const char *scan;
-
-	if (text == NULL)
-		return TRUE;
-
-	for (scan = text; *scan != 0; scan = g_utf8_next_char (scan)) {
-		gunichar c = g_utf8_get_char (scan);
-		if (! g_unichar_isspace (c))
-			return FALSE;
-	}
-
-	return TRUE;
-}
-
-
 /* string vector */
 
 
@@ -686,7 +661,7 @@ g_utf8_strchug (char *string)
 		c = g_utf8_get_char (scan);
 	}
 
-	memmove (string, scan, strlen (scan) + 1);
+	g_memmove (string, scan, strlen (scan) + 1);
 
 	return string;
 }
@@ -944,12 +919,6 @@ _g_path_remove_level (const gchar *path)
 	if (p < 0)
 		return NULL;
 
-	/* ignore the first slash if it's the last character,
-	 * this way /a/b/ is treated as /a/b */
-
-	if ((ptr[p] == '/') && (p > 0))
-		p--;
-
 	while ((p > 0) && (ptr[p] != '/'))
 		p--;
 	if ((p == 0) && (ptr[p] == '/'))
@@ -981,26 +950,7 @@ _g_path_remove_extension (const gchar *path)
 {
 	const char *ext;
 
-	if (path == NULL)
-		return NULL;
-
 	ext = _g_filename_get_extension (path);
-	if (ext == NULL)
-		return g_strdup (path);
-	else
-		return g_strndup (path, strlen (path) - strlen (ext));
-}
-
-
-char *
-_g_path_remove_first_extension (const gchar *path)
-{
-	const char *ext;
-
-	if (path == NULL)
-		return NULL;
-
-	ext = strrchr (path, '.');
 	if (ext == NULL)
 		return g_strdup (path);
 	else
@@ -1055,7 +1005,7 @@ _g_path_get_relative_basename (const char *path,
 		return (path[0] == '/') ? path + 1 : path;
 
 	base_dir_len = strlen (base_dir);
-	if (strlen (path) < base_dir_len)
+	if (strlen (path) <= base_dir_len)
 		return NULL;
 
 	base_path = path + base_dir_len;
@@ -1075,9 +1025,6 @@ sanitize_filename (const char *file_name)
 {
 	size_t      prefix_len;
 	char const *p;
-
-	if (file_name == NULL)
-		return NULL;
 
 	prefix_len = 0;
 	for (p = file_name; *p; ) {
@@ -1144,8 +1091,7 @@ _g_filename_get_extension (const char *filename)
 	ext = filename + p;
 	if (ext - 4 > filename) {
 		const char *test = ext - 4;
-		/* .tar.rz cannot be uncompressed in one step */
-		if ((strncmp (test, ".tar", 4) == 0) && (strncmp (ext, ".rz", 2) != 0))
+		if (strncmp (test, ".tar", 4) == 0)
 			ext = ext - 4;
 	}
 	return ext;
@@ -1224,10 +1170,7 @@ _g_mime_type_get_from_content (char  *buffer,
 		const char * mime_type;
 
 		mime_type = magic_buffer (magic, buffer, buffer_size);
-		if ((mime_type != NULL) && (strcmp (mime_type, "application/octet-stream") == 0))
-			return NULL;
-
-		if (mime_type != NULL)
+		if (mime_type)
 			return mime_type;
 
 		g_warning ("unable to detect filetype from magic: %s", magic_error (magic));
@@ -1443,26 +1386,6 @@ _g_key_file_get_string_list (GKeyFile    *key_file,
 	g_free (strv);
 
 	return g_list_reverse (list);
-}
-
-
-/* GSettings utils */
-
-
-GSettings *
-_g_settings_new_if_schema_installed (const char *schema_id)
-{
-	GSettingsSchema *schema;
-
-	schema = g_settings_schema_source_lookup (g_settings_schema_source_get_default (),
-						  schema_id,
-						  TRUE);
-	if (schema == NULL)
-		return NULL;
-
-	g_settings_schema_unref (schema);
-
-	return g_settings_new (schema_id);
 }
 
 

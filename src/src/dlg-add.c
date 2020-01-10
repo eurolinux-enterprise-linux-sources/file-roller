@@ -28,8 +28,10 @@
 #include "dlg-add.h"
 #include "file-utils.h"
 #include "fr-file-selector-dialog.h"
+#include "fr-stock.h"
 #include "fr-window.h"
 #include "glib-utils.h"
+#include "gth-menu-button.h"
 #include "gtk-utils.h"
 #include "preferences.h"
 
@@ -54,6 +56,24 @@ file_selector_destroy_cb (GtkWidget  *widget,
 	g_object_unref (data->settings);
 	g_free (data->last_options);
 	g_free (data);
+}
+
+
+static gboolean
+utf8_only_spaces (const char *text)
+{
+	const char *scan;
+
+	if (text == NULL)
+		return TRUE;
+
+	for (scan = text; *scan != 0; scan = g_utf8_next_char (scan)) {
+		gunichar c = g_utf8_get_char (scan);
+		if (! g_unichar_isspace (c))
+			return FALSE;
+	}
+
+	return TRUE;
 }
 
 
@@ -94,7 +114,7 @@ file_selector_response_cb (GtkWidget    *widget,
 					   GTK_DIALOG_MODAL,
 					   NULL,
 					   _("Could not add the files to the archive"),
-					   _("You don’t have the right permissions to read files from folder “%s”"),
+					   _("You don't have the right permissions to read files from folder \"%s\""),
 					   utf8_path);
 		gtk_dialog_run (GTK_DIALOG (d));
 		gtk_widget_destroy (GTK_WIDGET (d));
@@ -109,15 +129,15 @@ file_selector_response_cb (GtkWidget    *widget,
 	follow_links = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (GET_WIDGET ("follow_links_checkbutton")));
 
 	include_files = gtk_entry_get_text (GTK_ENTRY (GET_WIDGET ("include_files_entry")));
-	if (_g_utf8_all_spaces (include_files))
+	if (utf8_only_spaces (include_files))
 		include_files = "*";
 
 	exclude_files = gtk_entry_get_text (GTK_ENTRY (GET_WIDGET ("exclude_files_entry")));
-	if (_g_utf8_all_spaces (exclude_files))
+	if (utf8_only_spaces (exclude_files))
 		exclude_files = NULL;
 
 	exclude_folders = gtk_entry_get_text (GTK_ENTRY (GET_WIDGET ("exclude_folders_entry")));
-	if (_g_utf8_all_spaces (exclude_folders))
+	if (utf8_only_spaces (exclude_folders))
 		exclude_folders = NULL;
 
 	files = fr_file_selector_dialog_get_selected_files (FR_FILE_SELECTOR_DIALOG (data->dialog));
@@ -155,16 +175,12 @@ dlg_add (FrWindow *window)
 	GtkWidget  *options_button;
 	GtkWidget  *options_menu;
 	GtkWidget  *menu_item;
-	gboolean    use_header;
-	GtkWidget  *button;
 
 	data = g_new0 (DialogData, 1);
 	data->settings = g_settings_new (FILE_ROLLER_SCHEMA_ADD);
 	data->window = window;
-	data->dialog = fr_file_selector_dialog_new (C_("Window title", "Add Files"), GTK_WINDOW (data->window));
+	data->dialog = fr_file_selector_dialog_new (_("Add Files"), GTK_WINDOW (data->window));
 	gtk_dialog_set_default_response (GTK_DIALOG (data->dialog), GTK_RESPONSE_OK);
-
-	g_object_get (data->dialog, "use-header-bar", &use_header, NULL);
 
 	data->builder = _gtk_builder_new_from_resource ("add-dialog-options.ui");
 	if (data->builder == NULL)
@@ -173,24 +189,24 @@ dlg_add (FrWindow *window)
 
 	/* options menu button */
 
-	options_button = gtk_menu_button_new ();
-	gtk_button_set_label (GTK_BUTTON (options_button), _("_Options"));
-	gtk_button_set_use_underline (GTK_BUTTON (options_button), TRUE);
-	gtk_menu_button_set_use_popover (GTK_MENU_BUTTON (options_button), TRUE);
+	options_button = gth_menu_button_new ();
+	gth_menu_button_set_label (GTH_MENU_BUTTON (options_button), _("_Options"));
+	gth_menu_button_set_use_underline (GTH_MENU_BUTTON (options_button), TRUE);
 	gtk_widget_show (options_button);
 
 	options_menu = gtk_menu_new ();
+	gth_menu_button_set_menu (GTH_MENU_BUTTON (options_button), options_menu);
 
 	/* load options */
 
-	menu_item = gtk_menu_item_new_with_label (C_("Action", "Load Options"));
+	menu_item = gtk_menu_item_new_with_label (_("Load Options"));
 	gtk_widget_show (menu_item);
 	g_signal_connect (menu_item, "activate", G_CALLBACK (load_options_activate_cb), data);
 	gtk_menu_shell_append (GTK_MENU_SHELL (options_menu), menu_item);
 
 	/* save options */
 
-	menu_item = gtk_menu_item_new_with_label (C_("Action", "Save Options"));
+	menu_item = gtk_menu_item_new_with_label (_("Save Options"));
 	gtk_widget_show (menu_item);
 	g_signal_connect (menu_item, "activate", G_CALLBACK (save_options_activate_cb), data);
 	gtk_menu_shell_append (GTK_MENU_SHELL (options_menu), menu_item);
@@ -202,28 +218,19 @@ dlg_add (FrWindow *window)
 	g_signal_connect (menu_item, "activate", G_CALLBACK (clear_options_activate_cb), data);
 	gtk_menu_shell_append (GTK_MENU_SHELL (options_menu), menu_item);
 
-	gtk_menu_button_set_popup (GTK_MENU_BUTTON (options_button), options_menu);
-
 	/* add the buttons */
 
-	if (! use_header)
-		gtk_box_pack_start (GTK_BOX (gtk_dialog_get_action_area (GTK_DIALOG (data->dialog))),
-				    options_button,
-				    FALSE,
-				    FALSE,
-				    0);
-
+	gtk_box_pack_start (GTK_BOX (gtk_dialog_get_action_area (GTK_DIALOG (data->dialog))),
+			    options_button,
+			    FALSE,
+			    FALSE,
+			    0);
 	gtk_dialog_add_button (GTK_DIALOG (data->dialog),
-			       _GTK_LABEL_CANCEL,
+			       GTK_STOCK_CANCEL,
 			       GTK_RESPONSE_CANCEL);
-	button = gtk_dialog_add_button (GTK_DIALOG (data->dialog),
-					_GTK_LABEL_ADD,
-					GTK_RESPONSE_OK);
-	gtk_style_context_add_class (gtk_widget_get_style_context (button), GTK_STYLE_CLASS_SUGGESTED_ACTION);
-
-	if (use_header)
-		gtk_header_bar_pack_end (GTK_HEADER_BAR (gtk_dialog_get_header_bar (GTK_DIALOG (data->dialog))),
-				         options_button);
+	gtk_dialog_add_button (GTK_DIALOG (data->dialog),
+			       FR_STOCK_ADD_FOLDER,
+			       GTK_RESPONSE_OK);
 
 	/* set data */
 
@@ -440,7 +447,6 @@ dlg_add_folder_load_last_options (DialogData *data)
 	g_free (include_files);
 	g_free (exclude_files);
 	g_free (exclude_folders);
-	g_list_free_full (files, (GDestroyNotify) g_object_unref);
 }
 
 
@@ -473,15 +479,15 @@ get_options_from_widgets (DialogData   *data,
 	*no_symlinks = ! gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (GET_WIDGET ("follow_links_checkbutton")));
 
 	*include_files = gtk_entry_get_text (GTK_ENTRY (GET_WIDGET ("include_files_entry")));
-	if (_g_utf8_all_spaces (*include_files))
+	if (utf8_only_spaces (*include_files))
 		*include_files = "";
 
 	*exclude_files = gtk_entry_get_text (GTK_ENTRY (GET_WIDGET ("exclude_files_entry")));
-	if (_g_utf8_all_spaces (*exclude_files))
+	if (utf8_only_spaces (*exclude_files))
 		*exclude_files = "";
 
 	*exclude_folders = gtk_entry_get_text (GTK_ENTRY (GET_WIDGET ("exclude_folders_entry")));
-	if (_g_utf8_all_spaces (*exclude_folders))
+	if (utf8_only_spaces (*exclude_folders))
 		*exclude_folders = "";
 }
 
@@ -717,9 +723,6 @@ aod_remove_cb (GtkWidget             *widget,
 }
 
 
-#define RESPONSE_DELETE_OPTIONS 10
-
-
 static void
 load_options_activate_cb (GtkMenuItem *menu_item,
 			  DialogData  *data)
@@ -742,27 +745,12 @@ load_options_activate_cb (GtkMenuItem *menu_item,
 
 	/* Get the widgets. */
 
-	aod_data->dialog = g_object_new (GTK_TYPE_DIALOG,
-					 "title", C_("Window title", "Load Options"),
-					 "modal", TRUE,
-					 "use-header-bar", _gtk_settings_get_dialogs_use_header (),
-					 NULL);
-	gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (aod_data->dialog))),
-			   _gtk_builder_get_widget (aod_data->builder, "add_options_dialog"));
-
-	gtk_dialog_add_buttons (GTK_DIALOG (aod_data->dialog),
-				_GTK_LABEL_CANCEL, GTK_RESPONSE_CANCEL,
-				_("_Apply"), GTK_RESPONSE_OK,
-				_("_Delete"), RESPONSE_DELETE_OPTIONS,
-				NULL);
-
+	aod_data->dialog = _gtk_builder_get_widget (aod_data->builder, "add_options_dialog");
 	aod_data->aod_treeview = _gtk_builder_get_widget (aod_data->builder, "aod_treeview");
 
-	ok_button = gtk_dialog_get_widget_for_response (GTK_DIALOG (aod_data->dialog), GTK_RESPONSE_OK);
-	gtk_style_context_add_class (gtk_widget_get_style_context (ok_button), GTK_STYLE_CLASS_SUGGESTED_ACTION);
-	cancel_button = gtk_dialog_get_widget_for_response (GTK_DIALOG (aod_data->dialog), GTK_RESPONSE_CANCEL);
-	remove_button = gtk_dialog_get_widget_for_response (GTK_DIALOG (aod_data->dialog), RESPONSE_DELETE_OPTIONS);
-	gtk_style_context_add_class (gtk_widget_get_style_context (remove_button), GTK_STYLE_CLASS_DESTRUCTIVE_ACTION);
+	ok_button = _gtk_builder_get_widget (aod_data->builder, "aod_okbutton");
+	cancel_button = _gtk_builder_get_widget (aod_data->builder, "aod_cancelbutton");
+	remove_button = _gtk_builder_get_widget (aod_data->builder, "aod_remove_button");
 
 	/* Set the signals handlers. */
 
@@ -833,14 +821,15 @@ save_options_activate_cb (GtkMenuItem *menu_item,
 	options_dir = _g_file_new_user_config_subdir (ADD_FOLDER_OPTIONS_DIR, TRUE);
 	_g_file_make_directory_tree (options_dir, 0700, NULL);
 
-	opt_filename = _gtk_request_dialog_run (GTK_WINDOW (data->dialog),
-						GTK_DIALOG_MODAL,
-						C_("Window title", "Save Options"),
-						_("_Options Name:"),
-						(data->last_options != NULL) ? data->last_options : "",
-						1024,
-						_GTK_LABEL_CANCEL,
-						_GTK_LABEL_SAVE);
+	opt_filename = _gtk_request_dialog_run (
+				GTK_WINDOW (data->dialog),
+				GTK_DIALOG_MODAL,
+				_("Save Options"),
+				_("_Options Name:"),
+				(data->last_options != NULL) ? data->last_options : "",
+				1024,
+				GTK_STOCK_CANCEL,
+				GTK_STOCK_SAVE);
 	if (opt_filename == NULL)
 		return;
 

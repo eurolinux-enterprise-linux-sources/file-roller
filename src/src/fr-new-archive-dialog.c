@@ -27,6 +27,7 @@
 #include "file-utils.h"
 #include "fr-init.h"
 #include "fr-new-archive-dialog.h"
+#include "fr-stock.h"
 #include "glib-utils.h"
 #include "gtk-utils.h"
 #include "preferences.h"
@@ -46,7 +47,6 @@ struct _FrNewArchiveDialogPrivate {
 	gboolean    can_encrypt_header;
 	gboolean    can_create_volumes;
 	GFile      *original_file;
-	GList      *files_to_add;
 };
 
 
@@ -60,7 +60,6 @@ fr_new_archive_dialog_finalize (GObject *object)
 
 	self = FR_NEW_ARCHIVE_DIALOG (object);
 
-	_g_object_list_unref (self->priv->files_to_add);
 	_g_object_unref (self->priv->original_file);
 	g_object_unref (self->priv->settings);
 	g_object_unref (self->priv->builder);
@@ -119,14 +118,12 @@ fr_new_archive_dialog_init (FrNewArchiveDialog *self)
 	self->priv->builder = NULL;
 	self->priv->supported_ext = g_hash_table_new (g_str_hash, g_str_equal);
 	self->priv->original_file = NULL;
-	self->priv->files_to_add = NULL;
 }
 
 
 static void
 _fr_new_archive_dialog_update_sensitivity (FrNewArchiveDialog *self)
 {
-	gtk_widget_set_sensitive (gtk_dialog_get_widget_for_response (GTK_DIALOG (self), GTK_RESPONSE_OK), ! _g_utf8_all_spaces (gtk_entry_get_text (GTK_ENTRY (GET_WIDGET ("filename_entry")))));
 	gtk_toggle_button_set_inconsistent (GTK_TOGGLE_BUTTON (GET_WIDGET ("encrypt_header_checkbutton")), ! self->priv->can_encrypt_header);
 	gtk_widget_set_sensitive (GET_WIDGET ("encrypt_header_checkbutton"), self->priv->can_encrypt_header);
 	gtk_widget_set_sensitive (GET_WIDGET ("volume_spinbutton"), ! self->priv->can_create_volumes || gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (GET_WIDGET ("volume_checkbutton"))));
@@ -134,8 +131,8 @@ _fr_new_archive_dialog_update_sensitivity (FrNewArchiveDialog *self)
 
 
 static void
-entry_changed_cb (GtkEditable *editable,
-		  gpointer     user_data)
+password_entry_changed_cb (GtkEditable *editable,
+			   gpointer     user_data)
 {
 	_fr_new_archive_dialog_update_sensitivity (FR_NEW_ARCHIVE_DIALOG (user_data));
 }
@@ -155,6 +152,7 @@ extension_comboboxtext_changed_cb (GtkComboBox *combo_box,
 {
 	FrNewArchiveDialog *self = user_data;
 	int                 n_format;
+	GdkPixbuf          *icon_pixbuf;
 
 	n_format = get_selected_format (self);
 
@@ -167,6 +165,14 @@ extension_comboboxtext_changed_cb (GtkComboBox *combo_box,
 
 	self->priv->can_create_volumes = mime_type_desc[n_format].capabilities & FR_ARCHIVE_CAN_CREATE_VOLUMES;
 	gtk_widget_set_sensitive (GET_WIDGET ("volume_box"), self->priv->can_create_volumes);
+
+	icon_pixbuf = _g_mime_type_get_icon (mime_type_desc[n_format].mime_type,
+					     ARCHIVE_ICON_SIZE,
+					     gtk_icon_theme_get_for_screen (gtk_widget_get_screen (GTK_WIDGET (self))));
+	if (icon_pixbuf != NULL) {
+		gtk_image_set_from_pixbuf (GTK_IMAGE (GET_WIDGET ("archive_icon")), icon_pixbuf);
+		g_object_unref (icon_pixbuf);
+	}
 
 	_fr_new_archive_dialog_update_sensitivity (self);
 }
@@ -216,19 +222,19 @@ _fr_new_archive_dialog_construct (FrNewArchiveDialog *self,
 
 	gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (self))), GET_WIDGET ("content"));
 
-	gtk_dialog_add_button (GTK_DIALOG (self), _GTK_LABEL_CANCEL, GTK_RESPONSE_CANCEL);
+	gtk_dialog_add_button (GTK_DIALOG (self), GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL);
 	switch (action) {
 	case FR_NEW_ARCHIVE_ACTION_NEW_MANY_FILES:
 		self->priv->supported_types = create_type;
-		gtk_dialog_add_button (GTK_DIALOG (self), _GTK_LABEL_CREATE_ARCHIVE, GTK_RESPONSE_OK);
+		gtk_dialog_add_button (GTK_DIALOG (self), FR_STOCK_CREATE_ARCHIVE, GTK_RESPONSE_OK);
 		break;
 	case FR_NEW_ARCHIVE_ACTION_NEW_SINGLE_FILE:
 		self->priv->supported_types = single_file_save_type;
-		gtk_dialog_add_button (GTK_DIALOG (self), _GTK_LABEL_CREATE_ARCHIVE, GTK_RESPONSE_OK);
+		gtk_dialog_add_button (GTK_DIALOG (self), FR_STOCK_CREATE_ARCHIVE, GTK_RESPONSE_OK);
 		break;
 	case FR_NEW_ARCHIVE_ACTION_SAVE_AS:
 		self->priv->supported_types = save_type;
-		gtk_dialog_add_button (GTK_DIALOG (self), _GTK_LABEL_SAVE, GTK_RESPONSE_OK);
+		gtk_dialog_add_button (GTK_DIALOG (self), GTK_STOCK_SAVE, GTK_RESPONSE_OK);
 		break;
 	}
 	gtk_dialog_set_default_response (GTK_DIALOG (self), GTK_RESPONSE_OK);
@@ -276,17 +282,11 @@ _fr_new_archive_dialog_construct (FrNewArchiveDialog *self,
 	_fr_new_archive_dialog_update_sensitivity (self);
 	extension_comboboxtext_changed_cb (GTK_COMBO_BOX (GET_WIDGET ("extension_comboboxtext")), self);
 
-	_gtk_entry_use_as_password_entry (GTK_ENTRY (GET_WIDGET ("password_entry")));
-
 	/* Set the signals handlers. */
 
-	g_signal_connect (GET_WIDGET ("filename_entry"),
-			  "changed",
-			  G_CALLBACK (entry_changed_cb),
-			  self);
 	g_signal_connect (GET_WIDGET ("password_entry"),
 			  "changed",
-			  G_CALLBACK (entry_changed_cb),
+			  G_CALLBACK (password_entry_changed_cb),
 			  self);
 	g_signal_connect (GET_WIDGET ("volume_checkbutton"),
 			  "toggled",
@@ -309,22 +309,10 @@ fr_new_archive_dialog_new (const char         *title,
 {
 	FrNewArchiveDialog *self;
 
-	self = g_object_new (FR_TYPE_NEW_ARCHIVE_DIALOG,
-			     "title", title,
-			     "use-header-bar", _gtk_settings_get_dialogs_use_header (),
-			     NULL);
+	self = g_object_new (FR_TYPE_NEW_ARCHIVE_DIALOG, "title", title, NULL);
 	_fr_new_archive_dialog_construct (self, parent, action, folder, default_name, original_file);
 
 	return (GtkWidget *) self;
-}
-
-
-void
-fr_new_archive_dialog_set_files_to_add (FrNewArchiveDialog  *self,
-					GList               *file_list /* GFile list */)
-{
-	_g_object_list_unref (self->priv->files_to_add);
-	self->priv->files_to_add = _g_object_list_ref (file_list);
 }
 
 
@@ -430,14 +418,13 @@ fr_new_archive_dialog_get_file (FrNewArchiveDialog  *self,
 		return NULL;
 	}
 
-	if (g_file_info_has_attribute (parent_info, G_FILE_ATTRIBUTE_ACCESS_CAN_WRITE) &&
-				       ! g_file_info_get_attribute_boolean (parent_info, G_FILE_ATTRIBUTE_ACCESS_CAN_WRITE)) {
+	if (! g_file_info_get_attribute_boolean (parent_info, G_FILE_ATTRIBUTE_ACCESS_CAN_WRITE)) {
 		dialog = _gtk_error_dialog_new (GTK_WINDOW (self),
 						GTK_DIALOG_MODAL,
 						NULL,
 						_("Could not create the archive"),
 						"%s",
-						_("You don’t have permission to create an archive in this folder"));
+						_("You don't have permission to create an archive in this folder"));
 		gtk_dialog_run (GTK_DIALOG (dialog));
 
 		gtk_widget_destroy (GTK_WIDGET (dialog));
@@ -465,30 +452,6 @@ fr_new_archive_dialog_get_file (FrNewArchiveDialog  *self,
 		return NULL;
 	}
 
-	/* check whether the file is included in the files to add */
-
-	{
-		GList *scan;
-
-		for (scan = self->priv->files_to_add; scan; scan = scan->next) {
-			if (_g_file_cmp_uris (G_FILE (scan->data), file) == 0) {
-				dialog = _gtk_error_dialog_new (GTK_WINDOW (self),
-							        GTK_DIALOG_MODAL,
-								NULL,
-								_("Could not create the archive"),
-								"%s",
-								_("You can’t add an archive to itself."));
-				gtk_dialog_run (GTK_DIALOG (dialog));
-
-				gtk_widget_destroy (GTK_WIDGET (dialog));
-				g_object_unref (parent_info);
-				g_object_unref (file);
-
-				return NULL;
-			}
-		}
-	}
-
 	/* overwrite confirmation */
 
 	if (g_file_query_exists (file, NULL)) {
@@ -498,13 +461,14 @@ fr_new_archive_dialog_get_file (FrNewArchiveDialog  *self,
 		gboolean  overwrite;
 
 		filename = _g_file_get_display_basename (file);
-		message = g_strdup_printf (_("A file named “%s” already exists.  Do you want to replace it?"), filename);
-		secondary_message = g_strdup_printf (_("The file already exists in “%s”.  Replacing it will overwrite its contents."), g_file_info_get_display_name (parent_info));
+		message = g_strdup_printf (_("A file named \"%s\" already exists.  Do you want to replace it?"), filename);
+		secondary_message = g_strdup_printf (_("The file already exists in \"%s\".  Replacing it will overwrite its contents."), g_file_info_get_display_name (parent_info));
 		dialog = _gtk_message_dialog_new (GTK_WINDOW (self),
 						  GTK_DIALOG_MODAL,
+						  GTK_STOCK_DIALOG_QUESTION,
 						  message,
 						  secondary_message,
-						  _GTK_LABEL_CANCEL, GTK_RESPONSE_CANCEL,
+						  GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 						  _("_Replace"), GTK_RESPONSE_OK,
 						  NULL);
 		overwrite = gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK;

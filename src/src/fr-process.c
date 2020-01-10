@@ -242,7 +242,7 @@ enum {
 
 
 static guint       fr_process_signals[LAST_SIGNAL] = { 0 };
-static const char *try_charsets[] = { "UTF-8", "ISO-8859-1", "WINDOWS-1252" };
+static const char *try_charsets[] = { "UTF-8", "ISO-8859-1", "WINDOW-1252" };
 static int         n_charsets = G_N_ELEMENTS (try_charsets);
 
 
@@ -951,7 +951,7 @@ execute_current_command (ExecuteData *exec_data)
 	char          **argv;
 	int             out_fd, err_fd;
 	int             i = 0;
-	GError         *error = NULL;
+	GError         *error;
 
 	debug (DEBUG_INFO, "%d/%d) ", process->priv->current_command, process->priv->n_comm);
 

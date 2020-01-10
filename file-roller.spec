@@ -1,94 +1,80 @@
-Name:           file-roller
-Version:        3.28.1
-Release:        2%{?dist}
 Summary:        Tool for viewing and creating archives
-
+Name:           file-roller
+Version:        3.8.3
+Release:        3%{?dist}
 License:        GPLv2+
-URL:            https://wiki.gnome.org/Apps/FileRoller
-Source0:        https://download.gnome.org/sources/%{name}/3.28/%{name}-%{version}.tar.xz
+Group:          Applications/Archiving
+URL:            http://download.gnome.org/sources/file-roller/
+#VCS: git:git://git.gnome.org/file-roller
+Source:         http://download.gnome.org/sources/file-roller/3.8/file-roller-%{version}.tar.xz
 
-# Fix a crash when the progress dialog is shown.
-# https://bugzilla.redhat.com/show_bug.cgi?id=1186481
-Patch0:         file-roller-3.14.2-fix-extraction-progress-dialog-crash.patch
+BuildRequires: glib2-devel
+BuildRequires: pango-devel
+BuildRequires: gtk3-devel >= 2.99.3
+BuildRequires: nautilus-devel
+BuildRequires: libtool
+BuildRequires: gettext
+BuildRequires: libSM-devel
+BuildRequires: desktop-file-utils
+BuildRequires: intltool
+BuildRequires: itstool
+BuildRequires: GConf2-devel
+BuildRequires: file-devel
+BuildRequires: libarchive-devel
+BuildRequires: json-glib-devel
 
-# Use the X11 backend instead of Wayland
-# https://bugzilla.gnome.org/show_bug.cgi?id=770333
-Patch1:         Use-the-X11-backend-instead-of-Wayland.patch
-
-# No py3 in RHEL 7
-Patch2:         no-python3.patch
-
-# Add back the file-roller compress support
-Patch3:         revert-remove-compress-support.patch
-
-BuildRequires:  pkgconfig(gio-unix-2.0)
-BuildRequires:  pkgconfig(gtk+-3.0)
-BuildRequires:  pkgconfig(json-glib-1.0)
-BuildRequires:  pkgconfig(libarchive)
-BuildRequires:  pkgconfig(libnautilus-extension)
-BuildRequires:  pkgconfig(libnotify)
-BuildRequires:  file-devel
-BuildRequires:  gettext
-BuildRequires:  desktop-file-utils
-BuildRequires:  itstool
-BuildRequires:  meson
-BuildRequires:  /usr/bin/appstream-util
-
-%if 0%{?rhel}
-# Explicitly depend on various archivers to avoid problems when installing
-# new archiver support on demand.
-# https://bugzilla.redhat.com/show_bug.cgi?id=837608
-Requires: /usr/bin/ar
-Requires: /usr/bin/bzip2
-Requires: /usr/bin/compress
-Requires: /usr/bin/cpio
-Requires: /usr/bin/gzip
-Requires: /usr/bin/isoinfo
-Requires: /usr/bin/lzop
-Requires: /usr/bin/tar
-Requires: /usr/bin/unzip
-Requires: /usr/bin/xz
-Requires: /usr/bin/zip
-%endif
+Requires(pre): GConf2
 
 %description
 File Roller is an application for creating and viewing archives files,
 such as tar or zip files.
 
+
 %package nautilus
 Summary: File Roller extension for nautilus
-Requires: %{name}%{_isa} = %{version}-%{release}
+Group: User Interface/Desktops
+Requires: %{name} = %{version}-%{release}
 
 %description nautilus
-This package contains the file-roller extension for the nautilus file manager.
-It adds an item to the nautilus context menu that lets you compress files
+This package contains the file-roller extension for the nautilus file manger.
+It adds an item to the nautilus contexst menu that lets you compress files
 or directories.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 %build
-%meson
-%meson_build
+if %configure                                      \
+                --disable-static                \
+                --enable-nautilus-actions       \
+                --enable-packagekit ; \
+then
+ :
+else
+  cat config.log
+fi
+
+export tagname=CC
+make LIBTOOL=/usr/bin/libtool
 
 %install
-%meson_install
+export tagname=CC
+make install DESTDIR=$RPM_BUILD_ROOT
+
+rm -rf $RPM_BUILD_ROOT/var/scrollkeeper
+rm -f $RPM_BUILD_ROOT%{_libdir}/nautilus/extensions-3.0/*.{a,la}
+rm -f $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/icon-theme.cache
 
 %find_lang %{name} --with-gnome
 
-
-%check
-appstream-util validate-relax --nonet $RPM_BUILD_ROOT%{_datadir}/metainfo/org.gnome.FileRoller.appdata.xml
-desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/org.gnome.FileRoller.desktop
-
+desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/file-roller.desktop
 
 %post
 update-desktop-database &> /dev/null || :
 touch --no-create %{_datadir}/icons/hicolor &> /dev/null || :
+
+%pre
+%gconf_schema_obsolete file-roller
 
 %postun
 update-desktop-database &> /dev/null || :
@@ -103,79 +89,21 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 
 %files -f %{name}.lang
-%doc README NEWS AUTHORS
-%license COPYING
+%doc README COPYING NEWS AUTHORS
 %{_bindir}/file-roller
 %{_datadir}/file-roller
-%{_datadir}/applications/org.gnome.FileRoller.desktop
+%{_datadir}/applications/file-roller.desktop
 %{_libexecdir}/file-roller
-%{_datadir}/dbus-1/services/org.gnome.FileRoller.ArchiveManager1.service
 %{_datadir}/dbus-1/services/org.gnome.FileRoller.service
 %{_datadir}/icons/hicolor/*/apps/file-roller.png
-%{_datadir}/icons/hicolor/scalable/apps/file-roller-symbolic.svg
 %{_datadir}/glib-2.0/schemas/org.gnome.FileRoller.gschema.xml
-%{_datadir}/metainfo/org.gnome.FileRoller.appdata.xml
+%{_datadir}/GConf/gsettings/file-roller.convert
 
 %files nautilus
 %{_libdir}/nautilus/extensions-3.0/libnautilus-fileroller.so
 
+
 %changelog
-* Thu Aug 23 2018 Carlos Soriano <csoriano@redhat.com> - 3.28.1-2
-- Put back the nautilus compress support
-
-* Wed Jul 25 2018 Kalev Lember <klember@redhat.com> - 3.28.1-1
-- Update to 3.28.1
-- Resolves: #1567187
-
-* Wed Jun 06 2018 Richard Hughes <rhughes@redhat.com> - 3.28.0-1
-- Update to 3.28.0
-- Resolves: #1567187
-
-* Mon Feb 27 2017 Kalev Lember <klember@redhat.com> - 3.22.3-1
-- Update to 3.22.3
-- Add back the file-roller nautilus extension
-- Resolves: #1386857
-
-* Fri Feb 24 2017 Matthias Clasen <mclasen@redhat.com> - 3.22.2-1.el7
-- Rebase to 3.22.2
-- Drop upstreamed patches
-  Resolves: rhbz#1386857
-
-* Tue May 10 2016 David King <dking@redhat.com> - 3.14.2-10
-- Fix renaming files in a password-protected archive (#1233853)
-
-* Wed May 04 2016 David King <dking@redhat.com> - 3.14.2-9
-- Fix add button sensitivity (#1222955)
-
-* Tue May 03 2016 David King <dking@redhat.com> - 3.14.2-8
-- Fix delete all files (#1228645)
-
-* Wed Sep 23 2015 Ray Strode <rstrode@redhat.com> 3.14.2-7
-- Remove duplicate X-GNOME-UsesNotifications key
-  Related: #1259292
-
-* Wed Sep 23 2015 Ray Strode <rstrode@redhat.com> 3.14.2-6
-- Add more goo to the compat desktop file to prevent it
-  from getting exposed in control-center
-  Related: #1259292
-
-* Thu Jul 23 2015 David King <dking@redhat.com> - 3.14.2-5
-- Simplify extraction progress dialog crash fix (#1186481)
-
-* Mon Jul 20 2015 David King <dking@redhat.com> - 3.14.2-4
-- Fix a crash in the extraction progress dialog (#1186481)
-
-* Fri Jun 26 2015 Ray Strode <rstrode@redhat.com> 3.14.2-3
-- add NoDisplay desktop file for 3.8 desktop id to keep backward compat
-  Related: #1174580 1235413
-
-* Wed May 20 2015 David King <dking@redhat.com> - 3.14.2-2
-- Add Requires on supported archivers (#837608)
-
-* Mon Mar 23 2015 Richard Hughes <rhughes@redhat.com> - 3.14.2-1
-- Update to 3.14.2
-- Resolves: #1174580
-
 * Fri Jan 24 2014 Daniel Mach <dmach@redhat.com> - 3.8.3-3
 - Mass rebuild 2014-01-24
 

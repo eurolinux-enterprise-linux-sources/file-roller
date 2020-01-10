@@ -35,7 +35,6 @@
 typedef struct {
 	GtkBuilder *builder;
 	FrWindow   *window;
-	GtkWidget  *dialog;
 } DialogData;
 
 
@@ -65,7 +64,7 @@ response_cb (GtkWidget  *dialog,
 		g_free (password);
 	}
 
-	gtk_widget_destroy (data->dialog);
+	gtk_widget_destroy (GET_WIDGET ("dialog"));
 }
 
 
@@ -75,7 +74,6 @@ dlg_password (GtkWidget *widget,
 {
 	FrWindow   *window = callback_data;
 	DialogData *data;
-	GtkWidget  *content_area;
 	char       *basename;
 	char       *title;
 
@@ -89,30 +87,13 @@ dlg_password (GtkWidget *widget,
 
 	/* Set widgets data. */
 
-	data->dialog = g_object_new (GTK_TYPE_DIALOG,
-				     "transient-for", GTK_WINDOW (window),
-				     "modal", TRUE,
-				     "use-header-bar", _gtk_settings_get_dialogs_use_header (),
-				     NULL);
-	content_area = gtk_dialog_get_content_area (GTK_DIALOG (data->dialog));
-	gtk_container_add (GTK_CONTAINER (content_area),
-			   GET_WIDGET ("password_vbox"));
-	gtk_dialog_add_buttons (GTK_DIALOG (data->dialog),
-				_GTK_LABEL_CANCEL, GTK_RESPONSE_CANCEL,
-				_GTK_LABEL_SAVE, GTK_RESPONSE_OK,
-				NULL);
-	gtk_dialog_set_default_response (GTK_DIALOG (data->dialog), GTK_RESPONSE_OK);
-	gtk_style_context_add_class (gtk_widget_get_style_context (gtk_dialog_get_widget_for_response (GTK_DIALOG (data->dialog), GTK_RESPONSE_OK)),
-				     GTK_STYLE_CLASS_SUGGESTED_ACTION);
-
 	basename = _g_file_get_display_basename (fr_archive_get_file (window->archive));
-	title = g_strdup_printf (_("Enter a password for “%s”"), basename);
+	title = g_strdup_printf (_("Enter a password for \"%s\""), basename);
 	gtk_label_set_text (GTK_LABEL (GET_WIDGET ("title_label")), title);
 
 	g_free (title);
 	g_free (basename);
 
-	_gtk_entry_use_as_password_entry (GTK_ENTRY (GET_WIDGET ("password_entry")));
 	_gtk_entry_set_locale_text (GTK_ENTRY (GET_WIDGET ("password_entry")),
 				    fr_window_get_password (window));
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (GET_WIDGET ("encrypt_header_checkbutton")),
@@ -125,11 +106,11 @@ dlg_password (GtkWidget *widget,
 
 	/* Set the signals handlers. */
 
-	g_signal_connect ((data->dialog),
+	g_signal_connect (GET_WIDGET ("dialog"),
 			  "destroy",
 			  G_CALLBACK (destroy_cb),
 			  data);
-	g_signal_connect ((data->dialog),
+	g_signal_connect (GET_WIDGET ("dialog"),
 			  "response",
 			  G_CALLBACK (response_cb),
 			  data);
@@ -137,5 +118,7 @@ dlg_password (GtkWidget *widget,
 	/* Run dialog. */
 
 	gtk_widget_grab_focus (GET_WIDGET ("password_entry"));
-	gtk_widget_show (data->dialog);
+	gtk_window_set_transient_for (GTK_WINDOW (GET_WIDGET ("dialog")), GTK_WINDOW (window));
+	gtk_window_set_modal (GTK_WINDOW (GET_WIDGET ("dialog")), TRUE);
+	gtk_widget_show (GET_WIDGET ("dialog"));
 }

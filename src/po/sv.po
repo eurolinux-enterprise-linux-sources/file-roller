@@ -1,364 +1,641 @@
 # Swedish messages for file-roller.
-# Copyright © 2002-2017 Free Software Foundation, Inc.
+# Copyright (C) 2002-2012 Free Software Foundation, Inc.
 # Jimmy Carlson <sanaya@telia.com>, 2002.
 # Christian Rose <menthos@menthos.com>, 2002, 2003, 2004, 2005.
 # Daniel Nylander <po@danielnylander.se>, 2006, 2007, 2008, 2009, 2010, 2011, 2012.
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2014, 2016, 2017.
-# Sebastian Rasmussen <sebras@gmail.com>, 2015.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: file-roller\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=file-"
-"roller&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-11-20 08:35+0000\n"
-"PO-Revision-Date: 2017-12-26 12:47+0100\n"
-"Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-02-26 17:50+0100\n"
+"PO-Revision-Date: 2012-02-26 17:53+0100\n"
+"Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.5\n"
 
-#: data/org.gnome.FileRoller.appdata.xml.in:9
-msgid "File Roller"
-msgstr "File Roller"
+#: ../copy-n-paste/eggdesktopfile.c:165
+#, c-format
+msgid "File is not a valid .desktop file"
+msgstr "Filen är inte en giltig .desktop-fil"
 
-#: data/org.gnome.FileRoller.appdata.xml.in:10
-msgid "Open, modify and create compressed archive files"
-msgstr "Öppna, modifiera och skapa komprimerade arkivfiler"
+#: ../copy-n-paste/eggdesktopfile.c:190
+#, c-format
+msgid "Unrecognized desktop file Version '%s'"
+msgstr "Okänd Version \"%s\" i skrivbordsfil"
 
-#: data/org.gnome.FileRoller.appdata.xml.in:12
-msgid ""
-"Archive Manager (also known as File Roller) is the default GNOME application "
-"for opening, creating, and modifying archive and compressed archive files."
-msgstr ""
-"Arkivhanterare (även känd som File Roller) är standardprogrammet i GNOME för "
-"att öppna, skapa och modifiera arkivfiler och komprimerade arkivfiler."
+#: ../copy-n-paste/eggdesktopfile.c:970
+#, c-format
+msgid "Starting %s"
+msgstr "Startar %s"
 
-#: data/org.gnome.FileRoller.appdata.xml.in:16
-msgid ""
-"Archive Manager supports a wide range of different archive files, including:"
-msgstr "Arkivhanterare stöder ett brett utbud av olika arkivfiler, exempelvis:"
+#: ../copy-n-paste/eggdesktopfile.c:1112
+#, c-format
+msgid "Application does not accept documents on command line"
+msgstr "Programmet tar inte emot några dokument på kommandoraden"
 
-#: data/org.gnome.FileRoller.appdata.xml.in:20
-msgid "gzip archives (.tar.gz, .tgz)"
-msgstr "gzip-arkiv (.tar.gz, .tgz)"
+#: ../copy-n-paste/eggdesktopfile.c:1180
+#, c-format
+msgid "Unrecognized launch option: %d"
+msgstr "Okänd startflagga: %d"
 
-#: data/org.gnome.FileRoller.appdata.xml.in:21
-msgid "bzip archives (.tar.bz, .tbz)"
-msgstr "bzip-arkiv (.tar.bz, .tbz)"
+#: ../copy-n-paste/eggdesktopfile.c:1385
+#, c-format
+msgid "Can't pass documents to this desktop element"
+msgstr "Kan inte skicka dokument till detta skrivbordselement"
 
-#: data/org.gnome.FileRoller.appdata.xml.in:22
-msgid "zip archives (.zip)"
-msgstr "zip-arkiv (.zip)"
+#: ../copy-n-paste/eggdesktopfile.c:1406
+#, c-format
+msgid "Not a launchable item"
+msgstr "Inte ett körbart objekt"
 
-#: data/org.gnome.FileRoller.appdata.xml.in:23
-msgid "xz archives (.tar.xz)"
-msgstr "xz-arkiv (.tar.xz)"
+#: ../copy-n-paste/eggsmclient.c:226
+msgid "Disable connection to session manager"
+msgstr "Inaktivera anslutning till sessionshanterare"
 
-#: data/org.gnome.FileRoller.desktop.in.in:3 src/fr-application.c:454
-#: src/fr-window.c:2017 src/fr-window.c:5546
+#: ../copy-n-paste/eggsmclient.c:229
+msgid "Specify file containing saved configuration"
+msgstr "Ange fil som innehåller sparad konfiguration"
+
+#: ../copy-n-paste/eggsmclient.c:229
+msgid "FILE"
+msgstr "FIL"
+
+#: ../copy-n-paste/eggsmclient.c:232
+msgid "Specify session management ID"
+msgstr "Ange id för sessionshantering"
+
+#: ../copy-n-paste/eggsmclient.c:232
+msgid "ID"
+msgstr "ID"
+
+#: ../copy-n-paste/eggsmclient.c:253
+msgid "Session management options:"
+msgstr "Flaggor för sessionshantering:"
+
+#: ../copy-n-paste/eggsmclient.c:254
+msgid "Show session management options"
+msgstr "Visa flaggor för sessionshantering"
+
+#: ../data/file-roller.desktop.in.in.h:1
+#: ../src/fr-window.c:1981
+#: ../src/fr-window.c:5452
 msgid "Archive Manager"
 msgstr "Arkivhanterare"
 
-#: data/org.gnome.FileRoller.desktop.in.in:4
+#: ../data/file-roller.desktop.in.in.h:2
 msgid "Create and modify an archive"
 msgstr "Skapa och ändra ett arkiv"
 
-#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/org.gnome.FileRoller.desktop.in.in:6
-msgid "zip;tar;extract;unpack;"
-msgstr "zip;tar;extrahera;packa upp;"
-
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: data/org.gnome.FileRoller.desktop.in.in:13
-#| msgid "File Roller"
-msgid "file-roller"
-msgstr "file-roller"
-
-#: data/org.gnome.FileRoller.gschema.xml:58
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:1
 msgid "How to sort files"
 msgstr "Hur filer sorteras"
 
-#: data/org.gnome.FileRoller.gschema.xml:59
-msgid ""
-"What criteria must be used to arrange files. Possible values: name, size, "
-"type, time, path."
-msgstr ""
-"Vilket kriterium som ska användas för att sortera filer. Möjliga värden: "
-"name, size, type, time, path."
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:2
+msgid "What criteria must be used to arrange files. Possible values: name, size, type, time, path."
+msgstr "Vilket kriteria som ska användas för att sortera filer. Möjliga värden: name, size, type, time, path."
 
-#: data/org.gnome.FileRoller.gschema.xml:63
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:3
 msgid "Sort type"
 msgstr "Sorteringstyp"
 
-#: data/org.gnome.FileRoller.gschema.xml:64
-msgid ""
-"Whether to sort in ascending or descending direction. Possible values: "
-"ascending, descending."
-msgstr ""
-"Huruvida sortering ska ske i stigande eller fallande riktning. Möjliga "
-"värden: ascending, descending."
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:4
+msgid "Whether to sort in ascending or descending direction. Possible values: ascending, descending."
+msgstr "Huruvida sortering ska ske i stigande eller fallande riktning. Möjliga värden: ascending, descending."
 
-#: data/org.gnome.FileRoller.gschema.xml:68
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:5
 msgid "List Mode"
 msgstr "Listläge"
 
-#: data/org.gnome.FileRoller.gschema.xml:69
-msgid ""
-"Use “all-files” to view all the files in the archive in a single list, use "
-"“as-folder” to navigate the archive as a folder."
-msgstr ""
-"Använd ”all-files” för att visa alla filerna i arkivet i en enda lista, "
-"använd ”as-folder” för att navigera i arkivet som en mapp."
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:6
+msgid "Use 'all-files' to view all the files in the archive in a single list, use 'as-folder' to navigate the archive as a folder."
+msgstr "Använd \"all-files\" för att visa alla filerna i arkivet i en enda lista, använd \"as-folder\" för att navigera i arkivet som en mapp."
 
-#: data/org.gnome.FileRoller.gschema.xml:73
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:7
 msgid "Display type"
 msgstr "Visa typ"
 
-#: data/org.gnome.FileRoller.gschema.xml:74
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:8
 msgid "Display the type column in the main window."
 msgstr "Visa typkolumnen i huvudfönstret."
 
-#: data/org.gnome.FileRoller.gschema.xml:78
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:9
 msgid "Display size"
 msgstr "Visa storlek"
 
-#: data/org.gnome.FileRoller.gschema.xml:79
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:10
 msgid "Display the size column in the main window."
 msgstr "Visa storlekskolumnen i huvudfönstret."
 
-#: data/org.gnome.FileRoller.gschema.xml:83
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:11
 msgid "Display time"
 msgstr "Visa tid"
 
-#: data/org.gnome.FileRoller.gschema.xml:84
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:12
 msgid "Display the time column in the main window."
 msgstr "Visa tidskolumnen i huvudfönstret."
 
-#: data/org.gnome.FileRoller.gschema.xml:88
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:13
 msgid "Display path"
 msgstr "Visa sökväg"
 
-#: data/org.gnome.FileRoller.gschema.xml:89
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:14
 msgid "Display the path column in the main window."
 msgstr "Visa sökvägskolumnen i huvudfönstret."
 
-#: data/org.gnome.FileRoller.gschema.xml:93
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:15
+msgid "Use mime icons"
+msgstr "Använd mime-ikoner"
+
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:16
+msgid "If true will display icons depending on the file type (slower), otherwise will use always the same icon for all files (faster)."
+msgstr "Om true kommer ikoner att visas beroende på filtypen (långsammare), annars kommer samma ikon att visas för alla filer (snabbare)."
+
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:17
 msgid "Name column width"
 msgstr "Bredd för namnkolumnen"
 
-#: data/org.gnome.FileRoller.gschema.xml:94
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:18
 msgid "The default width of the name column in the file list."
 msgstr "Standardbredden för namnkolumnen i fillistan."
 
-#: data/org.gnome.FileRoller.gschema.xml:110
-msgid "View the sidebar"
-msgstr "Visa sidopanelen"
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:19
+msgid "Max history length"
+msgstr "Maximal historiklängd"
 
-#: data/org.gnome.FileRoller.gschema.xml:111
-msgid "Whether to display the sidebar."
-msgstr "Huruvida sidopanelen ska visas."
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:20
+msgid "Max number of items in the 'Open Recents' submenu."
+msgstr "Maximalt antal objekt i undermenyn \"Öppna tidigare\"."
 
-#: data/org.gnome.FileRoller.gschema.xml:130
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:21
+msgid "View toolbar"
+msgstr "Visa verktygsraden"
+
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:22
+msgid "Whether to display the toolbar."
+msgstr "Huruvida verktygsraden ska visas."
+
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:23
+msgid "View statusbar"
+msgstr "Visa statusraden"
+
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:24
+msgid "Whether to display the statusbar."
+msgstr "Huruvida statusraden ska visas."
+
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:25
+#: ../src/ui.h:229
+msgid "View the folders pane"
+msgstr "Visa mappanelen"
+
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:26
+msgid "Whether to display the folders pane."
+msgstr "Huruvida mappanelen ska visas."
+
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:27
 msgid "Editors"
 msgstr "Redigerare"
 
-#: data/org.gnome.FileRoller.gschema.xml:131
-msgid ""
-"List of applications entered in the “Open File” dialog and not associated "
-"with the file type."
-msgstr ""
-"Lista över program angivna i dialogrutan ”Öppna fil” och inte associerade "
-"med filtypen."
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:28
+msgid "List of applications entered in the 'Open File' dialog and not associated with the file type."
+msgstr "Lista över program angivna i dialogrutan \"Öppna fil\" och inte associerade med filtypen."
 
-#: data/org.gnome.FileRoller.gschema.xml:135
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:29
 msgid "Compression level"
 msgstr "Komprimeringsnivå"
 
-#: data/org.gnome.FileRoller.gschema.xml:136
-msgid ""
-"Compression level used when adding files to an archive. Possible values: "
-"very-fast, fast, normal, maximum."
-msgstr ""
-"Komprimeringsnivå som används när filer läggs till i ett arkiv. Möjliga "
-"värden: very-fast, fast, normal, maximum."
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:30
+msgid "Compression level used when adding files to an archive. Possible values: very-fast, fast, normal, maximum."
+msgstr "Komprimeringsnivå som används när filer läggs till i ett arkiv. Möjliga värden: very-fast, fast, normal, maximum."
 
-#: data/org.gnome.FileRoller.gschema.xml:140
-#: data/org.gnome.FileRoller.gschema.xml:172
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:31
 msgid "Encrypt the archive header"
 msgstr "Kryptera arkivhuvudet"
 
-#: data/org.gnome.FileRoller.gschema.xml:141
-#: data/org.gnome.FileRoller.gschema.xml:173
-msgid ""
-"Whether to encrypt the archive header. If the header is encrypted the "
-"password will be required to list the archive content as well."
-msgstr ""
-"Huruvida arkivhuvudet ska krypteras. Om huvudet krypteras kommer lösenordet "
-"att krävas även för att lista arkivets innehåll."
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:32
+msgid "Whether to encrypt the archive header. If the header is encrypted the password will be required to list the archive content as well."
+msgstr "Huruvida arkivhuvudet ska krypteras. Om huvudet krypteras kommer även lösenordet att krävas för att lista arkivets innehåll."
 
-#: data/org.gnome.FileRoller.gschema.xml:155
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:33
+msgid "Overwrite existing files"
+msgstr "Skriv över befintliga filer"
+
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:34
 msgid "Do not overwrite newer files"
 msgstr "Skriv inte över nyare filer"
 
-#: data/org.gnome.FileRoller.gschema.xml:159
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:35
 msgid "Recreate the folders stored in the archive"
 msgstr "Återskapa mappar lagrade i arkivet"
 
-#: data/org.gnome.FileRoller.gschema.xml:177
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:36
 msgid "Default volume size"
 msgstr "Standardstorlek för volym"
 
-#: data/org.gnome.FileRoller.gschema.xml:178
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:37
 msgid "The default size for volumes."
 msgstr "Standardstorleken för volymer."
 
-#: nautilus/nautilus-fileroller.c:261
+#: ../data/ui/add-options.ui.h:1
+msgid "Load Options"
+msgstr "Inläsningsalternativ"
+
+#: ../data/ui/batch-add-files.ui.h:1
+msgid "Compress"
+msgstr "Komprimera"
+
+#: ../data/ui/batch-add-files.ui.h:2
+msgid "_Filename:"
+msgstr "_Filnamn:"
+
+#. Translators: after the colon there is a folder name.
+#: ../data/ui/batch-add-files.ui.h:3
+#: ../src/fr-window.c:5905
+msgid "_Location:"
+msgstr "_Plats:"
+
+#: ../data/ui/batch-add-files.ui.h:4
+msgid "Location"
+msgstr "Plats"
+
+#: ../data/ui/batch-add-files.ui.h:5
+#: ../data/ui/batch-password.ui.h:2
+#: ../data/ui/new.ui.h:1
+#: ../data/ui/password.ui.h:3
+msgid "_Password:"
+msgstr "_Lösenord:"
+
+#: ../data/ui/batch-add-files.ui.h:6
+#: ../data/ui/new.ui.h:2
+msgid "_Encrypt the file list too"
+msgstr "_Kryptera även fillistan"
+
+#. this is part of a sentence, for example "split into volumes of 10.0 MB", where MB stands for megabyte.
+#: ../data/ui/batch-add-files.ui.h:8
+#: ../data/ui/new.ui.h:3
+msgid "Split into _volumes of"
+msgstr "Dela upp i _volymer på"
+
+#. MB means megabytes
+#: ../data/ui/batch-add-files.ui.h:10
+#: ../data/ui/new.ui.h:5
+msgid "MB"
+msgstr "MB"
+
+#: ../data/ui/batch-add-files.ui.h:11
+#: ../data/ui/new.ui.h:6
+msgid "_Other Options"
+msgstr "_Övriga alternativ"
+
+#: ../data/ui/batch-password.ui.h:1
+msgid "<span weight=\"bold\" size=\"larger\">Password required</span>"
+msgstr "<span weight=\"bold\" size=\"larger\">Lösenord krävs</span>"
+
+#: ../data/ui/delete.ui.h:1
+msgid "Delete"
+msgstr "Ta bort"
+
+#: ../data/ui/delete.ui.h:2
+#: ../src/dlg-extract.c:348
+msgid "_Files:"
+msgstr "_Filer:"
+
+#: ../data/ui/delete.ui.h:3
+#: ../src/dlg-extract.c:359
+msgid "example: *.txt; *.doc"
+msgstr "exempel: *.txt; *.doc"
+
+#: ../data/ui/delete.ui.h:4
+#: ../src/dlg-extract.c:362
+msgid "_All files"
+msgstr "A_lla filer"
+
+#: ../data/ui/delete.ui.h:5
+#: ../src/dlg-extract.c:369
+msgid "_Selected files"
+msgstr "_Markerade filer"
+
+#: ../data/ui/password.ui.h:1
+msgid "Password"
+msgstr "Lösenord"
+
+#: ../data/ui/password.ui.h:2
+msgid "_Encrypt the file list"
+msgstr "_Kryptera fillistan"
+
+#: ../data/ui/password.ui.h:4
+msgid "<i><b>Note:</b> the password will be used to encrypt files you add to the current archive, and to decrypt files you extract from the current archive. When the archive is closed the password will be deleted.</i>"
+msgstr "<i><b>Observera:</b> lösenordet kommer att användas för att kryptera de filer du lägger till det aktuella arkivet, och för att dekryptera de filer du extraherar från det aktuella arkivet. När arkivet stängs kommer lösenordet att tas bort.</i>"
+
+#. secondary text
+#: ../data/ui/update.ui.h:1
+#: ../src/dlg-update.c:175
+#: ../src/dlg-update.c:203
+#, c-format
+msgid "The file has been modified with an external application. If you don't update the file in the archive, all of your changes will be lost."
+msgid_plural "%d files have been modified with an external application. If you don't update the files in the archive, all of your changes will be lost."
+msgstr[0] "Filen har ändrats med ett externt program. Om du inte uppdaterar filen i arkivet så kommer alla dina ändringar att gå förlorade."
+msgstr[1] "%d filer som har ändrats med ett externt program. Om du inte uppdaterar filerna i arkivet så kommer alla dina ändringar att gå förlorade."
+
+#: ../data/ui/update.ui.h:2
+msgid "_Update"
+msgstr "_Uppdatera"
+
+#: ../data/ui/update.ui.h:3
+msgid "S_elect the files you want to update:"
+msgstr "Ma_rkera filerna som du vill uppdatera:"
+
+#: ../nautilus/nautilus-fileroller.c:325
 msgid "Extract Here"
 msgstr "Extrahera här"
 
 #. Translators: the current position is the current folder
-#: nautilus/nautilus-fileroller.c:263
+#: ../nautilus/nautilus-fileroller.c:327
 msgid "Extract the selected archive to the current position"
 msgstr "Extrahera det markerade arkivet till den aktuella platsen"
 
-#: nautilus/nautilus-fileroller.c:280
-msgid "Extract To…"
-msgstr "Extrahera till…"
+#: ../nautilus/nautilus-fileroller.c:344
+msgid "Extract To..."
+msgstr "Extrahera till..."
 
-#: nautilus/nautilus-fileroller.c:281
+#: ../nautilus/nautilus-fileroller.c:345
 msgid "Extract the selected archive"
 msgstr "Extrahera det markerade arkivet"
 
-#: src/dlg-add.c:114
+#: ../nautilus/nautilus-fileroller.c:364
+msgid "Compress..."
+msgstr "Komprimera..."
+
+#: ../nautilus/nautilus-fileroller.c:365
+msgid "Create a compressed archive with the selected objects"
+msgstr "Skapa ett komprimerat arkiv med de markerade objekten"
+
+#: ../src/actions.c:156
+#: ../src/actions.c:195
+#: ../src/actions.c:231
+#: ../src/dlg-batch-add.c:157
+#: ../src/dlg-batch-add.c:173
+#: ../src/dlg-batch-add.c:202
+#: ../src/dlg-batch-add.c:247
+#: ../src/dlg-batch-add.c:293
+#: ../src/fr-window.c:2980
+msgid "Could not create the archive"
+msgstr "Kunde inte skapa arkivet"
+
+#: ../src/actions.c:158
+#: ../src/dlg-batch-add.c:159
+#: ../src/dlg-batch-add.c:295
+msgid "You have to specify an archive name."
+msgstr "Du måste ange ett arkivnamn."
+
+#: ../src/actions.c:197
+msgid "You don't have permission to create an archive in this folder"
+msgstr "Du har inte rättigheter att skapa ett arkiv i denna mapp"
+
+#: ../src/actions.c:233
+#: ../src/dlg-package-installer.c:268
+#: ../src/dlg-package-installer.c:277
+#: ../src/dlg-package-installer.c:305
+#: ../src/fr-archive.c:1178
+#: ../src/fr-window.c:6090
+#: ../src/fr-window.c:6266
+msgid "Archive type not supported."
+msgstr "Arkivtypen stöds inte."
+
+#: ../src/actions.c:247
+msgid "Could not delete the old archive."
+msgstr "Kunde inte ta bort det gamla arkivet."
+
+#: ../src/actions.c:381
+#: ../src/fr-window.c:5827
+msgid "Open"
+msgstr "Öppna"
+
+#: ../src/actions.c:392
+#: ../src/dlg-new.c:312
+#: ../src/fr-window.c:5266
+msgid "All archives"
+msgstr "Alla arkiv"
+
+#: ../src/actions.c:399
+#: ../src/dlg-new.c:319
+msgid "All files"
+msgstr "Alla filer"
+
+#: ../src/actions.c:844
+msgid "Copyright © 2001–2010 Free Software Foundation, Inc."
+msgstr "Copyright © 2001–2010 Free Software Foundation, Inc."
+
+#: ../src/actions.c:845
+msgid "An archive manager for GNOME."
+msgstr "En arkivhanterare för GNOME."
+
+#: ../src/actions.c:848
+msgid "translator-credits"
+msgstr ""
+"Daniel Nylander <po@danielnylander.se>\n"
+"Christian Rose\n"
+"Jimmy Carlson\n"
+"\n"
+"Skicka synpunkter på översättningen till\n"
+"<tp-sv@listor.tp-sv.se>."
+
+#: ../src/dlg-add-files.c:99
+#: ../src/dlg-add-folder.c:129
 msgid "Could not add the files to the archive"
 msgstr "Kunde inte lägga till filerna till arkivet"
 
-#: src/dlg-add.c:115
+#: ../src/dlg-add-files.c:100
+#: ../src/dlg-add-folder.c:130
 #, c-format
-msgid "You don’t have the right permissions to read files from folder “%s”"
-msgstr "Du har inte de rättigheter som krävs för att läsa filer i mappen ”%s”"
+msgid "You don't have the right permissions to read files from folder \"%s\""
+msgstr "Du har inte de rättigheter som krävs för att läsa filer i mappen \"%s\""
 
-#: src/dlg-add.c:182
-msgctxt "Window title"
+#: ../src/dlg-add-files.c:148
+#: ../src/ui.h:46
 msgid "Add Files"
 msgstr "Lägg till filer"
 
-#: src/dlg-add.c:195
-msgid "_Options"
-msgstr "_Alternativ"
+#. Translators: add a file to the archive only if the disk version is
+#. * newer than the archive version.
+#: ../src/dlg-add-files.c:164
+#: ../src/dlg-add-folder.c:230
+msgid "Add only if _newer"
+msgstr "Lägg till endast om _nyare"
 
-#. load options
-#: src/dlg-add.c:204
-msgctxt "Action"
-msgid "Load Options"
-msgstr "Läs in alternativ"
+#: ../src/dlg-add-folder.c:216
+msgid "Add a Folder"
+msgstr "Lägg till en mapp"
 
-#. save options
-#: src/dlg-add.c:211
-msgctxt "Action"
+#: ../src/dlg-add-folder.c:231
+msgid "_Include subfolders"
+msgstr "_Inkludera undermappar"
+
+#: ../src/dlg-add-folder.c:232
+msgid "Exclude folders that are symbolic lin_ks"
+msgstr "Utelämna mappar som är symboliska län_kar"
+
+#: ../src/dlg-add-folder.c:235
+#: ../src/dlg-add-folder.c:241
+#: ../src/dlg-add-folder.c:247
+msgid "example: *.o; *.bak"
+msgstr "exempel: *.o; *.bak"
+
+#: ../src/dlg-add-folder.c:236
+msgid "Include _files:"
+msgstr "Inkludera _filer:"
+
+#: ../src/dlg-add-folder.c:242
+msgid "E_xclude files:"
+msgstr "_Utelämna filer:"
+
+#: ../src/dlg-add-folder.c:248
+msgid "_Exclude folders:"
+msgstr "_Utelämna mappar:"
+
+#: ../src/dlg-add-folder.c:252
+msgid "_Load Options"
+msgstr "_Inläsningsalternativ"
+
+#: ../src/dlg-add-folder.c:253
+msgid "Sa_ve Options"
+msgstr "Sparalternati_v"
+
+#: ../src/dlg-add-folder.c:254
+msgid "_Reset Options"
+msgstr "Å_terställ alternativ"
+
+#: ../src/dlg-add-folder.c:882
 msgid "Save Options"
-msgstr "Spara alternativ"
+msgstr "Sparalternativ"
 
-#. clear options
-#: src/dlg-add.c:218
-msgid "Reset Options"
-msgstr "Återställ alternativ"
-
-#: src/dlg-add.c:764
-msgctxt "Window title"
-msgid "Load Options"
-msgstr "Läs in alternativ"
-
-#: src/dlg-add.c:773
-msgid "_Apply"
-msgstr "_Verkställ"
-
-#: src/dlg-add.c:774 src/dlg-delete.c:136
-msgid "_Delete"
-msgstr "_Ta bort"
-
-#: src/dlg-add.c:856
-msgctxt "Window title"
-msgid "Save Options"
-msgstr "Spara alternativ"
-
-#: src/dlg-add.c:857
+#: ../src/dlg-add-folder.c:883
 msgid "_Options Name:"
 msgstr "Alte_rnativnamn:"
 
-#: src/dlg-ask-password.c:125
-msgid "_OK"
-msgstr "_OK"
-
-#. Translators: %s is a filename
-#: src/dlg-ask-password.c:148
+#: ../src/dlg-ask-password.c:122
 #, c-format
-msgid "Password required for “%s”"
-msgstr "Lösenord krävs för ”%s”"
+msgid "Enter the password for the archive '%s'."
+msgstr "Ange lösenordet för arkivet \"%s\"."
 
-#: src/dlg-ask-password.c:157
-msgid "Wrong password."
-msgstr "Felaktigt lösenord."
-
-#: src/dlg-batch-add.c:88 src/fr-application.c:226 src/fr-application.c:262
-#: src/fr-application.c:582
-msgid "Compress"
-msgstr "Komprimera"
-
-#: src/dlg-extract.c:95 src/fr-window.c:6909
+#: ../src/dlg-batch-add.c:174
 #, c-format
 msgid ""
-"Destination folder “%s” does not exist.\n"
+"The name \"%s\" is not valid because it cannot contain the characters: %s\n"
+"\n"
+"%s"
+msgstr ""
+"Namnet \"%s\" är inte giltigt eftersom det inte får innehålla tecknen: %s\n"
+"\n"
+"%s"
+
+#: ../src/dlg-batch-add.c:177
+#: ../src/fr-window.c:7644
+#: ../src/fr-window.c:7646
+msgid "Please use a different name."
+msgstr "Använd ett annat namn."
+
+#: ../src/dlg-batch-add.c:204
+msgid "You don't have the right permissions to create an archive in the destination folder."
+msgstr "Du har inte rätt rättigheter för att skapa ett arkiv i målmappen."
+
+#: ../src/dlg-batch-add.c:220
+#: ../src/dlg-extract.c:102
+#: ../src/fr-window.c:6865
+#, c-format
+msgid ""
+"Destination folder \"%s\" does not exist.\n"
 "\n"
 "Do you want to create it?"
 msgstr ""
-"Målmappen ”%s” finns inte.\n"
+"Målmappen \"%s\" finns inte.\n"
 "\n"
 "Vill du skapa den?"
 
-#: src/dlg-extract.c:103 src/fr-window.c:6917
+#: ../src/dlg-batch-add.c:229
+#: ../src/dlg-extract.c:111
+#: ../src/fr-window.c:6874
 msgid "Create _Folder"
 msgstr "S_kapa mapp"
 
-#: src/dlg-extract.c:122 src/dlg-extract.c:139 src/dlg-extract.c:166
-#: src/fr-window.c:4420 src/fr-window.c:6833 src/fr-window.c:6838
-#: src/fr-window.c:6938 src/fr-window.c:6957 src/fr-window.c:6962
-msgid "Extraction not performed"
-msgstr "Uppackning inte utförd"
-
-#: src/dlg-extract.c:123 src/fr-window.c:6934
+#: ../src/dlg-batch-add.c:248
+#: ../src/dlg-extract.c:131
+#: ../src/fr-window.c:6891
 #, c-format
 msgid "Could not create the destination folder: %s."
 msgstr "Kunde inte skapa målmappen: %s."
 
-#: src/dlg-extract.c:167 src/fr-window.c:4647 src/fr-window.c:4749
-#, c-format
-msgid ""
-"You don’t have the right permissions to extract archives in the folder “%s”"
-msgstr ""
-"Du har inte de rättigheter som krävs för att extrahera arkiv i mappen ”%s”"
+#: ../src/dlg-batch-add.c:265
+msgid "Archive not created"
+msgstr "Arkivet skapades inte"
 
-#: src/dlg-extract.c:279
-msgctxt "Window title"
+#: ../src/dlg-batch-add.c:313
+msgid "The archive is already present.  Do you want to overwrite it?"
+msgstr "Arkivet finns redan. Vill du skriva över det?"
+
+#: ../src/dlg-batch-add.c:316
+msgid "_Overwrite"
+msgstr "Skriv _över"
+
+#: ../src/dlg-extract.c:130
+#: ../src/dlg-extract.c:148
+#: ../src/dlg-extract.c:175
+#: ../src/fr-window.c:4205
+#: ../src/fr-window.c:6895
+#: ../src/fr-window.c:6914
+#: ../src/fr-window.c:6919
+msgid "Extraction not performed"
+msgstr "Uppackning inte utförd"
+
+#: ../src/dlg-extract.c:176
+#: ../src/fr-window.c:4368
+#: ../src/fr-window.c:4448
+#, c-format
+msgid "You don't have the right permissions to extract archives in the folder \"%s\""
+msgstr "Du har inte de rättigheter som krävs för att extrahera arkiv i mappen \"%s\""
+
+#: ../src/dlg-extract.c:331
+#: ../src/dlg-extract.c:429
+#: ../src/ui.h:121
 msgid "Extract"
 msgstr "Extrahera"
 
-#: src/dlg-package-installer.c:114 src/dlg-package-installer.c:227
+#: ../src/dlg-extract.c:380
+msgid "Actions"
+msgstr "Åtgärder"
+
+#: ../src/dlg-extract.c:396
+msgid "Re-crea_te folders"
+msgstr "Å_terskapa mappar"
+
+#: ../src/dlg-extract.c:400
+msgid "Over_write existing files"
+msgstr "Skriv _över befintliga filer"
+
+#: ../src/dlg-extract.c:404
+msgid "Do not e_xtract older files"
+msgstr "Extrahera _inte äldre filer"
+
+#: ../src/dlg-new.c:440
+msgctxt "File"
+msgid "New"
+msgstr "Nytt"
+
+#: ../src/dlg-new.c:453
+msgctxt "File"
+msgid "Save"
+msgstr "Spara"
+
+#: ../src/dlg-package-installer.c:107
+#: ../src/dlg-package-installer.c:219
 msgid "There was an internal error trying to search for applications:"
 msgstr "Det inträffade ett internt fel vid försök att söka efter program:"
 
-#: src/dlg-package-installer.c:296 src/dlg-package-installer.c:305
-#: src/dlg-package-installer.c:332 src/fr-archive.c:751 src/fr-window.c:4087
-#: src/fr-window.c:7640 src/fr-window.c:7997 src/fr-window.c:9512
-msgid "Archive type not supported."
-msgstr "Arkivtypen stöds inte."
-
-#: src/dlg-package-installer.c:315
+#: ../src/dlg-package-installer.c:287
 #, c-format
 msgid ""
 "There is no command installed for %s files.\n"
@@ -367,962 +644,1088 @@ msgstr ""
 "Det finns inget kommando installerat för %s-filer.\n"
 "Vill du söka efter ett kommando för att öppna denna fil?"
 
-#: src/dlg-package-installer.c:319
+#: ../src/dlg-package-installer.c:292
 msgid "Could not open this file type"
 msgstr "Kunde inte öppna denna filtyp"
 
-#: src/dlg-package-installer.c:322
+#: ../src/dlg-package-installer.c:295
 msgid "_Search Command"
 msgstr "_Sök kommando"
 
-#: src/dlg-password.c:109
-#, c-format
-msgid "Enter a password for “%s”"
-msgstr "Ange ett lösenord för ”%s”"
-
-#: src/dlg-prop.c:107
-#, c-format
-msgid "%s Properties"
-msgstr "Egenskaper för %s"
-
-#: src/dlg-update.c:162
-#, c-format
-msgid "Update the file “%s” in the archive “%s”?"
-msgstr "Uppdatera filen ”%s” i arkivet ”%s”?"
-
-#. secondary text
-#: src/dlg-update.c:174 src/dlg-update.c:200
-#, c-format
-msgid ""
-"The file has been modified with an external application. If you don’t update "
-"the file in the archive, all of your changes will be lost."
-msgid_plural ""
-"%d files have been modified with an external application. If you don’t "
-"update the files in the archive, all of your changes will be lost."
-msgstr[0] ""
-"Filen har ändrats med ett externt program. Om du inte uppdaterar filen i "
-"arkivet så kommer alla dina ändringar att gå förlorade."
-msgstr[1] ""
-"%d filer som har ändrats med ett externt program. Om du inte uppdaterar "
-"filerna i arkivet så kommer alla dina ändringar att gå förlorade."
-
-#: src/dlg-update.c:190
-#, c-format
-msgid "Update the files in the archive “%s”?"
-msgstr "Uppdatera filerna i arkivet ”%s”?"
-
-#: src/dlg-update.c:319 src/dlg-update.c:332
-msgid "_Update"
-msgstr "_Uppdatera"
-
-#: src/dlg-update.c:323
-msgid "Update Files"
-msgstr "Uppdatera filer"
-
-#: src/fr-application-menu.c:130
-msgid "Copyright © 2001–2014 Free Software Foundation, Inc."
-msgstr "Copyright © 2001–2014 Free Software Foundation, Inc."
-
-#: src/fr-application-menu.c:131
-msgid "An archive manager for GNOME."
-msgstr "En arkivhanterare för GNOME."
-
-#: src/fr-application-menu.c:134
-msgid "translator-credits"
-msgstr ""
-"Daniel Nylander <po@danielnylander.se>\n"
-"Christian Rose\n"
-"Jimmy Carlson\n"
-"Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
-"Sebastian Rasmussen <sebras@gmail.com>\n"
-"\n"
-"Skicka synpunkter på översättningen till\n"
-"<tp-sv@listor.tp-sv.se>."
-
-#: src/fr-application.c:61
-msgid "Add files to the specified archive and quit the program"
-msgstr "Lägg till filer till det angivna arkivet och avsluta programmet"
-
-#: src/fr-application.c:62
-msgid "ARCHIVE"
-msgstr "ARKIV"
-
-#: src/fr-application.c:65
-msgid "Add files asking the name of the archive and quit the program"
-msgstr "Lägg till filer, fråga om namn på arkivet och avsluta programmet"
-
-#: src/fr-application.c:69
-msgid "Extract archives to the specified folder and quit the program"
-msgstr "Extrahera filer till den angivna mappen och avsluta programmet"
-
-#: src/fr-application.c:70 src/fr-application.c:82
-msgid "FOLDER"
-msgstr "MAPP"
-
-#: src/fr-application.c:73
-msgid "Extract archives asking the destination folder and quit the program"
-msgstr "Extrahera arkiv, fråga om målmappen och avsluta programmet"
-
-#: src/fr-application.c:77
-msgid ""
-"Extract the contents of the archives in the archive folder and quit the "
-"program"
-msgstr "Extrahera innehållet i arkiven till arkivmappen och avsluta programmet"
-
-#: src/fr-application.c:81
-msgid "Default folder to use for the “--add” and “--extract” commands"
-msgstr "Standardmapp att använda för kommandona ”--add” och ”--extract”"
-
-#: src/fr-application.c:85
-msgid "Create destination folder without asking confirmation"
-msgstr "Skapa målmapp utan att fråga efter bekräftelse"
-
-#: src/fr-application.c:89
-msgid "Use the notification system to notify the operation completion"
-msgstr "Använd aviseringssystemet för att meddela om åtgärdens slutförande"
-
-#: src/fr-application.c:92
-msgid "Start as a service"
-msgstr "Starta som en tjänst"
-
-#: src/fr-application.c:95
-msgid "Show version"
-msgstr "Visa version"
-
-#: src/fr-application.c:298 src/fr-application.c:324 src/fr-application.c:605
-msgctxt "Window title"
-msgid "Extract archive"
-msgstr "Extrahera arkiv"
-
-#: src/fr-application.c:485
-msgid "— Create and modify an archive"
-msgstr "— Skapa och ändra ett arkiv"
-
-#: src/fr-archive.c:1852
-msgid "You don’t have the right permissions."
-msgstr "Du har inte rätt rättigheter."
-
-#: src/fr-archive.c:1852
-msgid "This archive type cannot be modified"
-msgstr "Denna arkivtyp kan inte ändras"
-
-#: src/fr-archive.c:1866 src/fr-new-archive-dialog.c:475
-msgid "You can’t add an archive to itself."
-msgstr "Du kan inte lägga till ett arkiv till sig självt."
-
-#. Translators: %s is a filename.
-#: src/fr-command-7z.c:297 src/fr-command-rar.c:483 src/fr-command-tar.c:307
-#, c-format
-msgid "Adding “%s”"
-msgstr "Lägger till ”%s”"
-
-#. Translators: %s is a filename.
-#: src/fr-command-7z.c:449 src/fr-command-rar.c:615 src/fr-command-tar.c:428
-#, c-format
-msgid "Extracting “%s”"
-msgstr "Extraherar ”%s”"
-
-#. Translators: %s is a filename.
-#: src/fr-command-rar.c:564 src/fr-command-tar.c:373
-#, c-format
-msgid "Removing “%s”"
-msgstr "Tar bort ”%s”"
-
-#: src/fr-command-rar.c:746
-#, c-format
-msgid "Could not find the volume: %s"
-msgstr "Kunde inte hitta volymen: %s"
-
-#: src/fr-command-tar.c:383
-msgid "Deleting files from archive"
-msgstr "Tar bort filer från arkivet"
-
-#: src/fr-command-tar.c:488
-msgid "Recompressing archive"
-msgstr "Återkomprimerar arkiv"
-
-#: src/fr-command-tar.c:767
-msgid "Decompressing archive"
-msgstr "Dekomprimerar arkiv"
-
-#: src/fr-command.c:597
-#, c-format
-msgid "Archive not found"
-msgstr "Arkivet hittades inte"
-
-#: src/fr-file-selector-dialog.c:773 src/fr-file-selector-dialog.c:818
-msgid "Could not load the location"
-msgstr "Kunde inte läsa in platsen"
-
-#: src/fr-new-archive-dialog.c:349 src/fr-new-archive-dialog.c:368
-#: src/fr-new-archive-dialog.c:384 src/fr-new-archive-dialog.c:433
-#: src/fr-new-archive-dialog.c:451 src/fr-new-archive-dialog.c:473
-#: src/fr-window.c:3032
-msgid "Could not create the archive"
-msgstr "Kunde inte skapa arkivet"
-
-#: src/fr-new-archive-dialog.c:351 src/fr-new-archive-dialog.c:370
-msgid "You have to specify an archive name."
-msgstr "Du måste ange ett arkivnamn."
-
-#: src/fr-new-archive-dialog.c:435
-msgid "You don’t have permission to create an archive in this folder"
-msgstr "Du har inte rättigheter att skapa ett arkiv i denna mapp"
-
-#. Translators: the name references to a filename.  This message can appear when renaming a file.
-#: src/fr-new-archive-dialog.c:453 src/fr-window.c:8311
-msgid "New name is the same as old one, please type other name."
-msgstr "Nya namnet är det samma som det gamla. Ange ett annat namn."
-
-#: src/fr-new-archive-dialog.c:496
-#, c-format
-msgid "A file named “%s” already exists.  Do you want to replace it?"
-msgstr "En fil med namnet ”%s” finns redan. Vill du skriva över den?"
-
-#: src/fr-new-archive-dialog.c:497
-#, c-format
-msgid ""
-"The file already exists in “%s”.  Replacing it will overwrite its contents."
-msgstr ""
-"Filen finns redan i ”%s”. Att ersätta den kommer att skriva över dess "
-"innehåll."
-
-#: src/fr-new-archive-dialog.c:503 src/fr-window.c:6758
-msgid "_Replace"
-msgstr "_Ersätt"
-
-#: src/fr-new-archive-dialog.c:518
-msgid "Could not delete the old archive."
-msgstr "Kunde inte ta bort det gamla arkivet."
-
-#: src/fr-window-actions-callbacks.c:289
-msgctxt "Window title"
-msgid "Open"
-msgstr "Öppna"
-
-#: src/fr-window-actions-callbacks.c:302
-msgid "All archives"
-msgstr "Alla arkiv"
-
-#: src/fr-window-actions-callbacks.c:309
-msgid "All files"
-msgstr "Alla filer"
-
-#: src/fr-window.c:1221
-msgid "Operation completed"
-msgstr "Åtgärden slutförd"
-
-#: src/fr-window.c:1634
-msgid "Folder"
-msgstr "Mapp"
-
-#: src/fr-window.c:2024
-msgid "[read only]"
-msgstr "[skrivskyddad]"
-
-#: src/fr-window.c:2165
-#, c-format
-msgid "Could not display the folder “%s”"
-msgstr "Kunde inte visa mappen ”%s”"
-
-#. Translators: %s is a filename
-#: src/fr-window.c:2338 src/fr-window.c:2376
-#, c-format
-msgid "Creating “%s”"
-msgstr "Skapar ”%s”"
-
-#. Translators: %s is a filename
-#: src/fr-window.c:2342
-#, c-format
-msgid "Loading “%s”"
-msgstr "Läser in ”%s”"
-
-#. Translators: %s is a filename
-#: src/fr-window.c:2346
-#, c-format
-msgid "Reading “%s”"
-msgstr "Läser ”%s”"
-
-#. Translators: %s is a filename
-#: src/fr-window.c:2350
-#, c-format
-msgid "Deleting the files from “%s”"
-msgstr "Tar bort filerna från ”%s”"
-
-#. Translators: %s is a filename
-#: src/fr-window.c:2354
-#, c-format
-msgid "Testing “%s”"
-msgstr "Testar ”%s”"
-
-#: src/fr-window.c:2357
-msgid "Getting the file list"
-msgstr "Hämtar fillistan"
-
-#. Translators: %s is a filename
-#: src/fr-window.c:2361
-#, c-format
-msgid "Copying the files to add to “%s”"
-msgstr "Kopierar filerna som kommer att läggas till ”%s”"
-
-#. Translators: %s is a filename
-#: src/fr-window.c:2365
-#, c-format
-msgid "Adding the files to “%s”"
-msgstr "Lägger till filerna till ”%s”"
-
-#. Translators: %s is a filename
-#: src/fr-window.c:2369
-#, c-format
-msgid "Extracting the files from “%s”"
-msgstr "Extraherar filerna från ”%s”"
-
-#: src/fr-window.c:2372
-msgid "Copying the extracted files to the destination"
-msgstr "Kopierar de extraherade filerna till målet"
-
-#. Translators: %s is a filename
-#: src/fr-window.c:2381
-#, c-format
-msgid "Saving “%s”"
-msgstr "Sparar ”%s”"
-
-#. Translators: %s is a filename
-#: src/fr-window.c:2388
-#, c-format
-msgid "Renaming the files in “%s”"
-msgstr "Byter namn på filerna i ”%s”"
-
-#. Translators: %s is a filename
-#: src/fr-window.c:2392
-#, c-format
-msgid "Updating the files in “%s”"
-msgstr "Uppdaterar filerna i ”%s”"
-
-#: src/fr-window.c:2681
-#, c-format
-msgid "%d file remaining"
-msgid_plural "%'d files remaining"
-msgstr[0] "%d fil återstår"
-msgstr[1] "%'d filer återstår"
-
-#: src/fr-window.c:2685 src/fr-window.c:3309
-msgid "Please wait…"
-msgstr "Vänta…"
-
-#: src/fr-window.c:2803
-msgid "Extraction completed successfully"
-msgstr "Uppackningen lyckades"
-
-#: src/fr-window.c:2806
-msgid "_Show the Files"
-msgstr "_Visa filerna"
-
-#. Translators: %s is a filename
-#: src/fr-window.c:2823 src/fr-window.c:6266
-#, c-format
-msgid "“%s” created successfully"
-msgstr "”%s” har skapats"
-
-#: src/fr-window.c:2830
-msgid "_Open the Archive"
-msgstr "_Öppna arkivet"
-
-#: src/fr-window.c:2918 src/fr-window.c:3088
-msgid "Command exited abnormally."
-msgstr "Programmet avslutades felaktigt."
-
-#: src/fr-window.c:3037
-msgid "An error occurred while extracting files."
-msgstr "Ett fel inträffade under uppackning av filer."
-
-#: src/fr-window.c:3043
-#, c-format
-msgid "Could not open “%s”"
-msgstr "Kunde inte öppna ”%s”"
-
-#: src/fr-window.c:3048
-msgid "An error occurred while loading the archive."
-msgstr "Ett fel inträffade vid inläsning av arkivet."
-
-#: src/fr-window.c:3052
-msgid "An error occurred while deleting files from the archive."
-msgstr "Ett fel inträffade vid borttagning av filer från arkivet."
-
-#: src/fr-window.c:3058
-msgid "An error occurred while adding files to the archive."
-msgstr "Ett fel inträffade vid tilläggning av filer till arkivet."
-
-#: src/fr-window.c:3062
-msgid "An error occurred while testing archive."
-msgstr "Ett fel inträffade vid testande av arkivet."
-
-#: src/fr-window.c:3067
-msgid "An error occurred while saving the archive."
-msgstr "Ett fel inträffade vid sparning av arkivet."
-
-#: src/fr-window.c:3071
-msgid "An error occurred while renaming the files."
-msgstr "Ett fel inträffade då filernas namn ändrades."
-
-#: src/fr-window.c:3075
-msgid "An error occurred while updating the files."
-msgstr "Ett fel inträffade då filerna uppdaterades."
-
-#: src/fr-window.c:3079
-msgid "An error occurred."
-msgstr "Ett fel inträffade."
-
-#: src/fr-window.c:3085
-msgid "Command not found."
-msgstr "Kommandot kunde inte hittas."
-
-#: src/fr-window.c:3241
-msgid "Test Result"
-msgstr "Testresultat"
-
-#: src/fr-window.c:4212 src/fr-window.c:8995 src/fr-window.c:9029
-#: src/fr-window.c:9309
-msgid "Could not perform the operation"
-msgstr "Kunde inte utföra åtgärden"
-
-#: src/fr-window.c:4237
-msgid ""
-"Do you want to add this file to the current archive or open it as a new "
-"archive?"
-msgstr ""
-"Vill du lägga till den här filen till det aktuella arkivet eller öppna den "
-"som ett nytt arkiv?"
-
-#: src/fr-window.c:4266
-msgid "Do you want to create a new archive with these files?"
-msgstr "Vill du skapa ett nytt arkiv med dessa filer?"
-
-#: src/fr-window.c:4269
-msgid "Create _Archive"
-msgstr "Skapa _arkiv"
-
-#: src/fr-window.c:4298 src/fr-window.c:7448
-msgid "New Archive"
-msgstr "Nytt arkiv"
-
-#: src/fr-window.c:5016
-msgid "Folders"
-msgstr "Mappar"
-
-#: src/fr-window.c:5054 src/ui/file-selector.ui:221
-msgctxt "File"
-msgid "Size"
-msgstr "Storlek"
-
-#: src/fr-window.c:5055
-msgctxt "File"
-msgid "Type"
-msgstr "Typ"
-
-#: src/fr-window.c:5056 src/ui/file-selector.ui:237
-msgctxt "File"
-msgid "Modified"
-msgstr "Ändrad"
-
-#: src/fr-window.c:5057
-msgctxt "File"
-msgid "Location"
-msgstr "Plats"
-
-#: src/fr-window.c:5066 src/ui/file-selector.ui:190
-msgctxt "File"
-msgid "Name"
-msgstr "Namn"
-
-#: src/fr-window.c:5820 src/ui/extract-dialog-options.ui:20
-msgctxt "Action"
-msgid "Extract"
-msgstr "Extrahera"
-
-#: src/fr-window.c:5824
-msgctxt "Action"
-msgid "Add Files"
-msgstr "Lägg till filer"
-
-#: src/fr-window.c:5829 src/fr-window.c:5859
-msgid "Find files by name"
-msgstr "Sök filer efter namn"
-
-#: src/fr-window.c:5876
-msgid "Go to the previous visited location"
-msgstr "Gå till föregående besökta plats"
-
-#: src/fr-window.c:5881
-msgid "Go to the next visited location"
-msgstr "Gå till nästa besökta plats"
-
-#: src/fr-window.c:5891
-msgid "Go to the home location"
-msgstr "Gå till hemplatsen"
-
 #. Translators: after the colon there is a folder name.
-#: src/fr-window.c:5900 src/ui/file-selector.ui:98
-#: src/ui/new-archive-dialog.ui:93
-msgid "_Location:"
-msgstr "Pla_ts:"
-
-#: src/fr-window.c:6280 src/ui/menus.ui:7 src/ui/menus.ui:47 src/ui/menus.ui:83
-msgctxt "Action"
-msgid "Open"
-msgstr "Öppna"
-
-#: src/fr-window.c:6747
-#, c-format
-msgid "Replace file “%s”?"
-msgstr "Ersätt filen ”%s”?"
-
-#: src/fr-window.c:6750
-#, c-format
-msgid "Another file with the same name already exists in “%s”."
-msgstr "Det finns redan en fil med samma namn i ”%s”."
-
-#: src/fr-window.c:6756
-msgid "Replace _All"
-msgstr "Ersätt _alla"
-
-#: src/fr-window.c:6757
-msgid "_Skip"
-msgstr "_Hoppa över"
-
-#: src/fr-window.c:7632 src/fr-window.c:7989
-#, c-format
-msgid "Could not save the archive “%s”"
-msgstr "Kunde inte spara arkivet ”%s”"
-
-#: src/fr-window.c:7759
-msgid "Save"
-msgstr "Spara"
-
-#: src/fr-window.c:8083
-msgid "Last Output"
-msgstr "Senaste utdata"
-
-#. Translators: the name references to a filename.  This message can appear when renaming a file.
-#: src/fr-window.c:8306
-msgid "New name is void, please type a name."
-msgstr "Nytt namn är tomt. Ange ett namn."
-
-#. Translators: the %s references to a filename.  This message can appear when renaming a file.
-#: src/fr-window.c:8316
-#, c-format
-msgid ""
-"Name “%s” is not valid because it contains at least one of the following "
-"characters: %s, please type other name."
-msgstr ""
-"Namnet ”%s” är inte giltigt eftersom det innehåller minst ett av följande "
-"tecken: %s. Ange ett annat namn."
-
-#: src/fr-window.c:8352
-#, c-format
-msgid ""
-"A folder named “%s” already exists.\n"
-"\n"
-"%s"
-msgstr ""
-"Det finns redan en mapp med namnet ”%s”.\n"
-"\n"
-"%s"
-
-#: src/fr-window.c:8352 src/fr-window.c:8354
-msgid "Please use a different name."
-msgstr "Använd ett annat namn."
-
-#: src/fr-window.c:8354
-#, c-format
-msgid ""
-"A file named “%s” already exists.\n"
-"\n"
-"%s"
-msgstr ""
-"Det finns redan en fil med namnet ”%s”.\n"
-"\n"
-"%s"
-
-#: src/fr-window.c:8424
-msgid "Rename"
-msgstr "Byt namn"
-
-#: src/fr-window.c:8425
-msgid "_New folder name:"
-msgstr "_Nytt mappnamn:"
-
-#: src/fr-window.c:8425
-msgid "_New file name:"
-msgstr "_Nytt filnamn:"
-
-#: src/fr-window.c:8429
-msgid "_Rename"
-msgstr "_Byt namn"
-
-#: src/fr-window.c:8446 src/fr-window.c:8464
-msgid "Could not rename the folder"
-msgstr "Kunde inte byta namn på mappen"
-
-#: src/fr-window.c:8446 src/fr-window.c:8464
-msgid "Could not rename the file"
-msgstr "Kunde inte byta namn på filen"
-
-#. Translators: %s are archive filenames
-#: src/fr-window.c:8902
-#, c-format
-msgid "Moving the files from “%s” to “%s”"
-msgstr "Flyttar filerna från ”%s” till ”%s”"
-
-#. Translators: %s are archive filenames
-#: src/fr-window.c:8905
-#, c-format
-msgid "Copying the files from “%s” to “%s”"
-msgstr "Kopierar filerna från ”%s” till ”%s”"
-
-#: src/fr-window.c:8956
-msgid "Paste Selection"
-msgstr "Klistra in markering"
-
-#: src/fr-window.c:8957
-msgid "_Destination folder:"
-msgstr "_Målmapp:"
-
-#: src/fr-window.c:8961 src/ui/app-menubar.ui:61
-msgid "_Paste"
-msgstr "_Klistra in"
-
-#. This is the time format used in the "Date Modified" column and
-#. * in the Properties dialog.  See the man page of strftime for an
-#. * explanation of the values.
-#: src/glib-utils.c:769
-msgid "%d %B %Y, %H:%M"
-msgstr "%B %d %Y, %H:%M"
-
-#: src/gtk-utils.c:235
-msgid "C_ommand Line Output:"
-msgstr "Kommando_radsutdata:"
-
-#: src/gtk-utils.c:510
-msgid "Could not display help"
-msgstr "Kunde inte visa hjälpen"
-
-#: src/gtk-utils.c:605
-msgid "Change password visibility"
-msgstr "Ändra synlighet för lösenord"
-
-#: src/gtk-utils.h:29
-msgid "_Add"
-msgstr "_Lägg till"
-
-#: src/gtk-utils.h:30
-msgid "_Cancel"
-msgstr "A_vbryt"
-
-#: src/gtk-utils.h:31 src/ui/app-menubar.ui:41
-msgid "_Close"
-msgstr "S_täng"
-
-#: src/gtk-utils.h:32
-msgid "C_reate"
-msgstr "S_kapa"
-
-#: src/gtk-utils.h:33
-msgid "_Extract"
-msgstr "_Extrahera"
-
-#: src/gtk-utils.h:34
-msgid "_Open"
-msgstr "Ö_ppna"
-
-#: src/gtk-utils.h:35
-msgid "_Save"
-msgstr "_Spara"
-
-#: src/ui/add-dialog-options.ui:19
-msgid "Add"
-msgstr "Lägg till"
-
-#: src/ui/add-dialog-options.ui:42
-msgid "Include _files:"
-msgstr "Inkludera _filer:"
-
-#: src/ui/add-dialog-options.ui:58
-msgid "E_xclude files:"
-msgstr "_Utelämna filer:"
-
-#: src/ui/add-dialog-options.ui:74
-msgid "_Exclude folders:"
-msgstr "Ut_elämna mappar:"
-
-#: src/ui/add-dialog-options.ui:89 src/ui/add-dialog-options.ui:104
-#: src/ui/add-dialog-options.ui:118 src/ui/extract-dialog-options.ui:104
-msgid "example: *.o; *.bak"
-msgstr "exempel: *.o; *.bak"
-
-#: src/ui/add-dialog-options.ui:153 src/ui/extract-dialog-options.ui:144
-msgid "Actions"
-msgstr "Åtgärder"
-
-#: src/ui/add-dialog-options.ui:173
-msgid "Add only if _newer"
-msgstr "Lägg till endast om _nyare"
-
-#: src/ui/add-dialog-options.ui:190
-msgid "_Follow symbolic links"
-msgstr "Följ s_ymboliska länkar"
-
-#: src/ui/app-menu.ui:6 src/ui/app-menubar.ui:8
-msgid "_New Archive…"
-msgstr "_Nytt arkiv…"
-
-#: src/ui/app-menu.ui:11 src/ui/app-menubar.ui:13
-msgid "_Open…"
-msgstr "Ö_ppna…"
-
-#: src/ui/app-menu.ui:17 src/ui/app-menubar.ui:116
-msgid "View All _Files"
-msgstr "Visa alla _filer"
-
-#: src/ui/app-menu.ui:22 src/ui/app-menubar.ui:122
-msgid "View as a F_older"
-msgstr "Visa som en _mapp"
-
-#: src/ui/app-menu.ui:30 src/ui/app-menubar.ui:110
-msgid "Sidebar"
-msgstr "Sidopanel"
-
-#: src/ui/app-menu.ui:36 src/ui/app-menubar.ui:130
-msgid "_Help"
-msgstr "_Hjälp"
-
-#: src/ui/app-menu.ui:41 src/ui/app-menubar.ui:138
-msgid "_About"
-msgstr "_Om"
-
-#: src/ui/app-menu.ui:45
-msgid "_Quit"
-msgstr "A_vsluta"
-
-#: src/ui/app-menubar.ui:4
-msgid "_File"
-msgstr "_Arkiv"
-
-#: src/ui/app-menubar.ui:18
-msgid "_Extract Files…"
-msgstr "_Extrahera filer…"
-
-#: src/ui/app-menubar.ui:25
-msgid "Save _As…"
-msgstr "Sp_ara som…"
-
-#: src/ui/app-menubar.ui:30 src/ui/gears-menu.ui:15
-msgid "_Test Integrity"
-msgstr "Testa _integritet"
-
-#: src/ui/app-menubar.ui:34 src/ui/gears-menu.ui:21
-msgid "Properties"
-msgstr "Egenskaper"
-
-#: src/ui/app-menubar.ui:47
-msgid "_Edit"
-msgstr "_Redigera"
-
-#: src/ui/app-menubar.ui:51
-msgid "Cu_t"
-msgstr "Kl_ipp ut"
-
-#: src/ui/app-menubar.ui:56
-msgid "_Copy"
-msgstr "K_opiera"
-
-#: src/ui/app-menubar.ui:68
-msgid "_Add Files…"
-msgstr "_Lägg till filer…"
-
-#: src/ui/app-menubar.ui:72 src/ui/menus.ui:35 src/ui/menus.ui:71
-#: src/ui/menus.ui:107
-msgid "_Rename…"
-msgstr "_Byt namn…"
-
-#: src/ui/app-menubar.ui:77
-msgid "_Delete Files…"
-msgstr "_Ta bort filer…"
-
-#: src/ui/app-menubar.ui:84 src/ui/file-selector.ui:11
-msgid "_Select All"
-msgstr "Markera _alla"
-
-#: src/ui/app-menubar.ui:89
-msgid "D_eselect All"
-msgstr "A_vmarkera alla"
-
-#: src/ui/app-menubar.ui:94
-msgid "_Find"
-msgstr "_Sök"
-
-#: src/ui/app-menubar.ui:101
-msgid "Set Pass_word…"
-msgstr "Ställ in lös_enord…"
-
-#: src/ui/app-menubar.ui:106
-msgid "_View"
-msgstr "_Visa"
-
-#: src/ui/app-menubar.ui:133
-msgid "Contents"
-msgstr "Innehåll"
-
-#: src/ui/ask-password.ui:53 src/ui/new-archive-dialog.ui:160
-msgid "_Password:"
-msgstr "_Lösenord:"
-
-#: src/ui/delete.ui:13 src/ui/extract-dialog-options.ui:41
-msgid "_All files"
-msgstr "A_lla filer"
-
-#: src/ui/delete.ui:31 src/ui/extract-dialog-options.ui:59
-msgid "_Selected files"
-msgstr "_Markerade filer"
-
-#: src/ui/delete.ui:54 src/ui/extract-dialog-options.ui:83
-msgid "_Files:"
-msgstr "_Filer:"
-
-#: src/ui/delete.ui:74
-msgid "example: *.txt; *.doc"
-msgstr "exempel: *.txt; *.doc"
-
-#: src/ui/extract-dialog-options.ui:165
-msgid "_Keep directory structure"
-msgstr "_Behåll katalogstruktur"
-
-#: src/ui/extract-dialog-options.ui:182
-msgid "Do not _overwrite newer files"
-msgstr "Skriv _inte över nyare filer"
-
-#: src/ui/file-selector.ui:19
-msgid "Dese_lect All"
-msgstr "Avma_rkera alla"
-
-#: src/ui/file-selector.ui:33
-msgid "Show Hidden Files"
-msgstr "Visa dolda filer"
-
-#: src/ui/file-selector.ui:127 src/ui/file-selector.ui:128
-msgid "Go up one level"
-msgstr "Gå upp en nivå"
-
-#: src/ui/gears-menu.ui:7
-msgid "Save As…"
-msgstr "Spara som…"
-
-#: src/ui/gears-menu.ui:11
-msgid "Pass_word…"
-msgstr "Lös_enord…"
-
-#: src/ui/menus.ui:11
-msgid "_Open With…"
-msgstr "_Öppna med…"
-
-#: src/ui/menus.ui:17 src/ui/menus.ui:53 src/ui/menus.ui:89
-msgid "_Extract…"
-msgstr "_Extrahera…"
-
-#: src/ui/menus.ui:23 src/ui/menus.ui:59 src/ui/menus.ui:95
-msgid "Cut"
-msgstr "Klipp ut"
-
-#: src/ui/menus.ui:27 src/ui/menus.ui:63 src/ui/menus.ui:99
-msgid "Copy"
-msgstr "Kopiera"
-
-#: src/ui/menus.ui:31 src/ui/menus.ui:67 src/ui/menus.ui:103
-msgid "Paste"
-msgstr "Klistra in"
-
-#: src/ui/menus.ui:39 src/ui/menus.ui:75 src/ui/menus.ui:111
-msgid "Delete"
-msgstr "Ta bort"
-
-#: src/ui/new-archive-dialog.ui:27
-msgid "_Filename:"
-msgstr "_Filnamn:"
-
-#: src/ui/new-archive-dialog.ui:110
-msgid "Location"
-msgstr "Plats"
-
-#: src/ui/new-archive-dialog.ui:193
-msgid "_Encrypt the file list too"
-msgstr "_Kryptera även fillistan"
-
-#. this is part of a sentence, for example "split into volumes of 10.0 MB", where MB stands for megabyte.
-#: src/ui/new-archive-dialog.ui:215
-msgid "Split into _volumes of"
-msgstr "Dela upp i _volymer på"
-
-#: src/ui/new-archive-dialog.ui:236
-msgid "10,0"
-msgstr "10,0"
-
-#. MB means megabytes
-#: src/ui/new-archive-dialog.ui:253
-msgid "MB"
-msgstr "MB"
-
-#: src/ui/new-archive-dialog.ui:276
-msgid "_Other Options"
-msgstr "_Övriga alternativ"
-
-#: src/ui/password.ui:51
-msgid "_Encrypt the file list"
-msgstr "_Kryptera fillistan"
-
-#: src/ui/properties.ui:15
+#: ../src/dlg-prop.c:106
+msgid "Location:"
+msgstr "Plats:"
+
+#: ../src/dlg-prop.c:118
 msgctxt "File"
 msgid "Name:"
 msgstr "Namn:"
 
-#. after the colon there is a folder name.
-#: src/ui/properties.ui:45
-msgid "Location:"
-msgstr "Plats:"
+#: ../src/dlg-prop.c:124
+#, c-format
+msgid "%s Properties"
+msgstr "Egenskaper för %s"
 
-#. after the colon there is a file type.
-#: src/ui/properties.ui:74
-msgid "Type:"
-msgstr "Typ:"
-
-#: src/ui/properties.ui:103
+#: ../src/dlg-prop.c:133
 msgid "Last modified:"
 msgstr "Senast ändrad:"
 
-#: src/ui/properties.ui:131
+#: ../src/dlg-prop.c:143
 msgid "Archive size:"
 msgstr "Arkivstorlek:"
 
-#: src/ui/properties.ui:159
+#: ../src/dlg-prop.c:154
 msgid "Content size:"
 msgstr "Storlek på innehåll:"
 
-#: src/ui/properties.ui:186
+#: ../src/dlg-prop.c:174
 msgid "Compression ratio:"
 msgstr "Komprimeringsnivå:"
 
-#: src/ui/properties.ui:213
+#: ../src/dlg-prop.c:189
 msgid "Number of files:"
 msgstr "Antal filer:"
 
-#: src/ui/update.ui:48
-msgid "S_elect the files you want to update:"
-msgstr "Ma_rkera filerna som du vill uppdatera:"
+#: ../src/dlg-update.c:163
+#, c-format
+msgid "Update the file \"%s\" in the archive \"%s\"?"
+msgstr "Uppdatera filen \"%s\" i arkivet \"%s\"?"
 
-#~ msgid "Extract To..."
-#~ msgstr "Extrahera till…"
+#: ../src/dlg-update.c:192
+#, c-format
+msgid "Update the files in the archive \"%s\"?"
+msgstr "Uppdatera filerna i arkivet \"%s\"?"
 
-#~ msgid "Compress..."
-#~ msgstr "Komprimera…"
+#: ../src/eggfileformatchooser.c:236
+#, c-format
+msgid "File _Format: %s"
+msgstr "Fil_format: %s"
 
-#~ msgid "Create a compressed archive with the selected objects"
-#~ msgstr "Skapa ett komprimerat arkiv med de markerade objekten"
+#: ../src/eggfileformatchooser.c:397
+msgid "All Files"
+msgstr "Alla filer"
+
+#: ../src/eggfileformatchooser.c:398
+msgid "All Supported Files"
+msgstr "Alla filer som stöds"
+
+#: ../src/eggfileformatchooser.c:407
+msgid "By Extension"
+msgstr "Efter filändelse"
+
+#: ../src/eggfileformatchooser.c:422
+msgid "File Format"
+msgstr "Filformat"
+
+#: ../src/eggfileformatchooser.c:440
+msgid "Extension(s)"
+msgstr "Filändelse(r)"
+
+#: ../src/eggfileformatchooser.c:675
+#, c-format
+msgid "The program was not able to find out the file format you want to use for `%s'. Please make sure to use a known extension for that file or manually choose a file format from the list below."
+msgstr "Programmet kunde inte ta reda på filformatet som du vill använda för \"%s\". Försäkra dig om att använda en känd filändelse för den filen eller välj manuellt ett filformat från nedanstående lista."
+
+#: ../src/eggfileformatchooser.c:682
+msgid "File format not recognized"
+msgstr "Filformatet känns inte igen"
+
+#: ../src/fr-archive.c:1158
+msgid "File not found."
+msgstr "Filen hittades inte."
+
+#: ../src/fr-archive.c:1261
+#, c-format
+msgid "Archive not found"
+msgstr "Arkivet hittades inte"
+
+#: ../src/fr-archive.c:2427
+msgid "You don't have the right permissions."
+msgstr "Du har inte rätt rättigheter."
+
+#: ../src/fr-archive.c:2427
+msgid "This archive type cannot be modified"
+msgstr "Denna arkivtyp kan inte ändras"
+
+#: ../src/fr-archive.c:2439
+msgid "You can't add an archive to itself."
+msgstr "Du kan inte lägga till ett arkiv till sig självt."
+
+#. Translators: after the colon there is a filename.
+#: ../src/fr-command-7z.c:297
+#: ../src/fr-command-rar.c:324
+#: ../src/fr-command-tar.c:307
+msgid "Adding file: "
+msgstr "Lägger till fil: "
+
+#. Translators: after the colon there is a filename.
+#: ../src/fr-command-7z.c:418
+#: ../src/fr-command-rar.c:451
+#: ../src/fr-command-tar.c:426
+msgid "Extracting file: "
+msgstr "Extraherar fil: "
+
+#. Translators: after the colon there is a filename.
+#: ../src/fr-command-rar.c:402
+#: ../src/fr-command-tar.c:372
+msgid "Removing file: "
+msgstr "Tar bort fil: "
+
+#: ../src/fr-command-rar.c:584
+#, c-format
+msgid "Could not find the volume: %s"
+msgstr "Kunde inte hitta volymen: %s"
+
+#: ../src/fr-command-tar.c:381
+#: ../src/fr-window.c:2315
+msgid "Deleting files from archive"
+msgstr "Tar bort filer från arkivet"
+
+#: ../src/fr-command-tar.c:485
+msgid "Recompressing archive"
+msgstr "Återkomprimerar arkiv"
+
+#: ../src/fr-command-tar.c:736
+msgid "Decompressing archive"
+msgstr "Dekomprimerar arkiv"
+
+#: ../src/fr-init.c:58
+msgid "7-Zip (.7z)"
+msgstr "7-Zip (.7z)"
+
+#: ../src/fr-init.c:59
+msgid "Tar compressed with 7z (.tar.7z)"
+msgstr "Tar komprimerat med 7z (.tar.7z)"
+
+#: ../src/fr-init.c:60
+msgid "Ace (.ace)"
+msgstr "Ace (.ace)"
+
+#: ../src/fr-init.c:62
+msgid "Ar (.ar)"
+msgstr "Ar (.ar)"
+
+#: ../src/fr-init.c:63
+msgid "Arj (.arj)"
+msgstr "Arj (.arj)"
+
+#: ../src/fr-init.c:65
+msgid "Tar compressed with bzip2 (.tar.bz2)"
+msgstr "Tar komprimerat med bzip2 (.tar.bz2)"
+
+#: ../src/fr-init.c:67
+msgid "Tar compressed with bzip (.tar.bz)"
+msgstr "Tar komprimerat med bzip (.tar.bz)"
+
+#: ../src/fr-init.c:68
+msgid "Cabinet (.cab)"
+msgstr "Kabinett (.cab)"
+
+#: ../src/fr-init.c:69
+msgid "Rar Archived Comic Book (.cbr)"
+msgstr "Rar-arkiverad serietidning (.cbr)"
+
+#: ../src/fr-init.c:70
+msgid "Zip Archived Comic Book (.cbz)"
+msgstr "Zip-arkiverad serietidning (.cbz)"
+
+#: ../src/fr-init.c:73
+msgid "Tar compressed with gzip (.tar.gz)"
+msgstr "Tar komprimerat med gzip (.tar.gz)"
+
+#: ../src/fr-init.c:76
+msgid "Ear (.ear)"
+msgstr "Ear (.ear)"
+
+#: ../src/fr-init.c:77
+msgid "Self-extracting zip (.exe)"
+msgstr "Självuppackande zip (.exe)"
+
+#: ../src/fr-init.c:79
+msgid "Jar (.jar)"
+msgstr "Jar (.jar)"
+
+#: ../src/fr-init.c:80
+msgid "Lha (.lzh)"
+msgstr "Lha (.lzh)"
+
+#: ../src/fr-init.c:81
+msgid "Lrzip (.lrz)"
+msgstr "Lrzip (.lrz)"
+
+#: ../src/fr-init.c:82
+msgid "Tar compressed with lrzip (.tar.lrz)"
+msgstr "Tar komprimerat med lrzip (.tar.lrz)"
+
+#: ../src/fr-init.c:84
+msgid "Tar compressed with lzip (.tar.lz)"
+msgstr "Tar komprimerat med lzip (.tar.lz)"
+
+#: ../src/fr-init.c:86
+msgid "Tar compressed with lzma (.tar.lzma)"
+msgstr "Tar komprimerat med lzma (.tar.lzma)"
+
+#: ../src/fr-init.c:88
+msgid "Tar compressed with lzop (.tar.lzo)"
+msgstr "Tar komprimerat med lzop (.tar.lzo)"
+
+#: ../src/fr-init.c:89
+msgid "Windows Imaging Format (.wim)"
+msgstr "Windows Imaging Format (.wim)"
+
+#: ../src/fr-init.c:90
+msgid "Rar (.rar)"
+msgstr "Rar (.rar)"
+
+#: ../src/fr-init.c:93
+msgid "Tar uncompressed (.tar)"
+msgstr "Okomprimerat tar (.tar) "
+
+#: ../src/fr-init.c:94
+msgid "Tar compressed with compress (.tar.Z)"
+msgstr "Tar komprimerat med compress (.tar.Z) "
+
+#: ../src/fr-init.c:96
+msgid "War (.war)"
+msgstr "War (.war)"
+
+#: ../src/fr-init.c:97
+msgid "Xz (.xz)"
+msgstr "Xz (.xz)"
+
+#: ../src/fr-init.c:98
+msgid "Tar compressed with xz (.tar.xz)"
+msgstr "Tar komprimerat med xz (.tar.xz)"
+
+#: ../src/fr-init.c:99
+msgid "Zoo (.zoo)"
+msgstr "Zoo (.zoo)"
+
+#: ../src/fr-init.c:100
+msgid "Zip (.zip)"
+msgstr "Zip (.zip)"
+
+#: ../src/fr-stock.c:41
+msgid "C_reate"
+msgstr "S_kapa"
+
+#: ../src/fr-stock.c:42
+#: ../src/fr-stock.c:43
+msgid "_Add"
+msgstr "_Lägg till"
+
+#: ../src/fr-stock.c:44
+msgid "_Extract"
+msgstr "_Extrahera"
+
+#: ../src/fr-window.c:1517
+#, c-format
+msgid "%d object (%s)"
+msgid_plural "%d objects (%s)"
+msgstr[0] "%d objekt (%s)"
+msgstr[1] "%d objekt (%s)"
+
+#: ../src/fr-window.c:1522
+#, c-format
+msgid "%d object selected (%s)"
+msgid_plural "%d objects selected (%s)"
+msgstr[0] "%d objekt markerat (%s)"
+msgstr[1] "%d objekt markerade (%s)"
+
+#: ../src/fr-window.c:1592
+msgid "Folder"
+msgstr "Mapp"
+
+#: ../src/fr-window.c:1989
+msgid "[read only]"
+msgstr "[skrivskyddad]"
+
+#: ../src/fr-window.c:2238
+#, c-format
+msgid "Could not display the folder \"%s\""
+msgstr "Kunde inte visa mappen \"%s\""
+
+#: ../src/fr-window.c:2306
+#: ../src/fr-window.c:2336
+msgid "Creating archive"
+msgstr "Skapar arkiv"
+
+#: ../src/fr-window.c:2309
+msgid "Loading archive"
+msgstr "Läser in arkiv"
+
+#: ../src/fr-window.c:2312
+msgid "Reading archive"
+msgstr "Läser arkiv"
+
+#: ../src/fr-window.c:2318
+msgid "Testing archive"
+msgstr "Testar arkivet"
+
+#: ../src/fr-window.c:2321
+msgid "Getting the file list"
+msgstr "Hämtar fillistan"
+
+#: ../src/fr-window.c:2324
+#: ../src/fr-window.c:2333
+msgid "Copying the file list"
+msgstr "Kopierar fillistan"
+
+#: ../src/fr-window.c:2327
+msgid "Adding files to archive"
+msgstr "Lägger till filer till arkivet"
+
+#: ../src/fr-window.c:2330
+msgid "Extracting files from archive"
+msgstr "Extraherar filer från arkivet"
+
+#: ../src/fr-window.c:2339
+msgid "Saving archive"
+msgstr "Sparar arkiv"
+
+#: ../src/fr-window.c:2509
+msgid "_Open the Archive"
+msgstr "_Öppna arkivet"
+
+#: ../src/fr-window.c:2510
+msgid "_Show the Files"
+msgstr "_Visa filerna"
+
+#: ../src/fr-window.c:2565
+msgid "Archive:"
+msgstr "Arkiv:"
+
+#: ../src/fr-window.c:2736
+msgid "Extraction completed successfully"
+msgstr "Uppackningen lyckades"
+
+#: ../src/fr-window.c:2759
+msgid "Archive created successfully"
+msgstr "Skapandet av arkiv lyckades"
+
+#: ../src/fr-window.c:2807
+msgid "please wait…"
+msgstr "vänta..."
+
+#: ../src/fr-window.c:2892
+#: ../src/fr-window.c:3027
+msgid "Command exited abnormally."
+msgstr "Programmet avslutades felaktigt."
+
+#: ../src/fr-window.c:2985
+msgid "An error occurred while extracting files."
+msgstr "Ett fel inträffade under uppackning av filer."
+
+#: ../src/fr-window.c:2991
+#, c-format
+msgid "Could not open \"%s\""
+msgstr "Kunde inte öppna \"%s\""
+
+#: ../src/fr-window.c:2996
+msgid "An error occurred while loading the archive."
+msgstr "Ett fel inträffade vid inläsning av arkivet."
+
+#: ../src/fr-window.c:3000
+msgid "An error occurred while deleting files from the archive."
+msgstr "Ett fel inträffade vid borttagning av filer från arkivet."
+
+#: ../src/fr-window.c:3006
+msgid "An error occurred while adding files to the archive."
+msgstr "Ett fel inträffade vid tilläggning av filer till arkivet."
+
+#: ../src/fr-window.c:3010
+msgid "An error occurred while testing archive."
+msgstr "Ett fel inträffade vid testande av arkivet."
+
+#: ../src/fr-window.c:3014
+msgid "An error occurred while saving the archive."
+msgstr "Ett fel inträffade vid sparning av arkivet."
+
+#: ../src/fr-window.c:3018
+msgid "An error occurred."
+msgstr "Ett fel inträffade."
+
+#: ../src/fr-window.c:3024
+msgid "Command not found."
+msgstr "Kommandot kunde inte hittas."
+
+#: ../src/fr-window.c:3226
+msgid "Test Result"
+msgstr "Testresultat"
+
+#: ../src/fr-window.c:4048
+#: ../src/fr-window.c:8197
+#: ../src/fr-window.c:8231
+#: ../src/fr-window.c:8481
+msgid "Could not perform the operation"
+msgstr "Kunde inte utföra åtgärden"
+
+#: ../src/fr-window.c:4074
+msgid "Do you want to add this file to the current archive or open it as a new archive?"
+msgstr "Vill du lägga till den här filen till det aktuella arkivet eller öppna den som ett nytt arkiv?"
+
+#: ../src/fr-window.c:4104
+msgid "Do you want to create a new archive with these files?"
+msgstr "Vill du skapa ett nytt arkiv med dessa filer?"
+
+#: ../src/fr-window.c:4107
+msgid "Create _Archive"
+msgstr "Skapa _arkiv"
+
+#: ../src/fr-window.c:4700
+#: ../src/fr-window.c:5776
+msgid "Folders"
+msgstr "Mappar"
+
+#: ../src/fr-window.c:4738
+msgctxt "File"
+msgid "Size"
+msgstr "Storlek"
+
+#: ../src/fr-window.c:4739
+msgctxt "File"
+msgid "Type"
+msgstr "Typ"
+
+#: ../src/fr-window.c:4740
+msgctxt "File"
+msgid "Date Modified"
+msgstr "Ändringsdatum"
+
+#: ../src/fr-window.c:4741
+msgctxt "File"
+msgid "Location"
+msgstr "Plats"
+
+#: ../src/fr-window.c:4750
+msgctxt "File"
+msgid "Name"
+msgstr "Namn"
+
+#: ../src/fr-window.c:5697
+msgid "Find:"
+msgstr "Sök:"
+
+#: ../src/fr-window.c:5784
+msgid "Close the folders pane"
+msgstr "Stäng mappanelen"
+
+#. Translators: this is the label for the "open recent file" sub-menu.
+#: ../src/fr-window.c:5815
+msgid "Open _Recent"
+msgstr "Öppna _tidigare"
+
+#: ../src/fr-window.c:5816
+#: ../src/fr-window.c:5828
+msgid "Open a recently used archive"
+msgstr "Öppna ett nyligen använt arkiv"
+
+#: ../src/fr-window.c:6258
+#, c-format
+msgid "Could not save the archive \"%s\""
+msgstr "Kunde inte spara arkivet \"%s\""
+
+#: ../src/fr-window.c:6774
+#, c-format
+msgid "Replace file \"%s\"?"
+msgstr "Ersätt filen \"%s\"?"
+
+#: ../src/fr-window.c:6777
+#, c-format
+msgid "Another file with the same name already exists in \"%s\"."
+msgstr "Det finns redan en fil med samma namn i \"%s\"."
+
+#: ../src/fr-window.c:6784
+msgid "Replace _All"
+msgstr "Ersätt _alla"
+
+#: ../src/fr-window.c:6785
+msgid "_Skip"
+msgstr "_Hoppa över"
+
+#: ../src/fr-window.c:6786
+msgid "_Replace"
+msgstr "_Ersätt"
+
+#: ../src/fr-window.c:7293
+msgid "Last Output"
+msgstr "Senaste utdata"
+
+#. Translators: the name references to a filename.  This message can appear when renaming a file.
+#: ../src/fr-window.c:7598
+msgid "New name is void, please type a name."
+msgstr "Nytt namn är tomt. Ange ett namn."
+
+#. Translators: the name references to a filename.  This message can appear when renaming a file.
+#: ../src/fr-window.c:7603
+msgid "New name is the same as old one, please type other name."
+msgstr "Nya namnet är det samma som det gamla. Ange ett annat namn."
+
+#. Translators: the %s references to a filename.  This message can appear when renaming a file.
+#: ../src/fr-window.c:7608
+#, c-format
+msgid "Name \"%s\" is not valid because it contains at least one of the following characters: %s, please type other name."
+msgstr "Namnet \"%s\" är inte giltigt eftersom det innehåller minst ett av följande tecken: %s. Ange ett annat namn."
+
+#: ../src/fr-window.c:7644
+#, c-format
+msgid ""
+"A folder named \"%s\" already exists.\n"
+"\n"
+"%s"
+msgstr ""
+"Det finns redan en mapp med namnet \"%s\".\n"
+"\n"
+"%s"
+
+#: ../src/fr-window.c:7646
+#, c-format
+msgid ""
+"A file named \"%s\" already exists.\n"
+"\n"
+"%s"
+msgstr ""
+"Det finns redan en fil med namnet \"%s\".\n"
+"\n"
+"%s"
+
+#: ../src/fr-window.c:7716
+msgid "Rename"
+msgstr "Byt namn"
+
+#: ../src/fr-window.c:7717
+msgid "_New folder name:"
+msgstr "_Nytt mappnamn:"
+
+#: ../src/fr-window.c:7717
+msgid "_New file name:"
+msgstr "_Nytt filnamn:"
+
+#: ../src/fr-window.c:7721
+msgid "_Rename"
+msgstr "_Byt namn"
+
+#: ../src/fr-window.c:7738
+#: ../src/fr-window.c:7758
+msgid "Could not rename the folder"
+msgstr "Kunde inte byta namn på mappen"
+
+#: ../src/fr-window.c:7738
+#: ../src/fr-window.c:7758
+msgid "Could not rename the file"
+msgstr "Kunde inte byta namn på filen"
+
+#: ../src/fr-window.c:8158
+msgid "Paste Selection"
+msgstr "Klistra in markering"
+
+#: ../src/fr-window.c:8159
+msgid "_Destination folder:"
+msgstr "_Målmapp:"
+
+#: ../src/fr-window.c:8760
+msgid "Add files to an archive"
+msgstr "Lägg till filer till arkivet"
+
+#: ../src/fr-window.c:8804
+msgid "Extract archive"
+msgstr "Extrahera arkiv"
+
+#. This is the time format used in the "Date Modified" column and
+#. * in the Properties dialog.  See the man page of strftime for an
+#. * explanation of the values.
+#: ../src/glib-utils.c:560
+msgid "%d %B %Y, %H:%M"
+msgstr "%B %d %Y, %H.%M"
+
+#. Expander
+#: ../src/gtk-utils.c:421
+msgid "Command _Line Output"
+msgstr "Kommando_radsutdata"
+
+#: ../src/gtk-utils.c:750
+msgid "Could not display help"
+msgstr "Kunde inte visa hjälpen"
+
+#: ../src/main.c:51
+msgid "Add files to the specified archive and quit the program"
+msgstr "Lägg till filer till det angivna arkivet och avsluta programmet"
+
+#: ../src/main.c:52
+msgid "ARCHIVE"
+msgstr "ARKIV"
+
+#: ../src/main.c:55
+msgid "Add files asking the name of the archive and quit the program"
+msgstr "Lägg till filer, fråga om namn på arkivet och avsluta programmet"
+
+#: ../src/main.c:59
+msgid "Extract archives to the specified folder and quit the program"
+msgstr "Extrahera filer till den angivna mappen och avsluta programmet"
+
+#: ../src/main.c:60
+#: ../src/main.c:72
+msgid "FOLDER"
+msgstr "MAPP"
+
+#: ../src/main.c:63
+msgid "Extract archives asking the destination folder and quit the program"
+msgstr "Extrahera arkiv, fråga om målmappen och avsluta programmet"
+
+#: ../src/main.c:67
+msgid "Extract the contents of the archives in the archive folder and quit the program"
+msgstr "Extrahera innehållet i arkiven till arkivmappen och avsluta programmet"
+
+#: ../src/main.c:71
+msgid "Default folder to use for the '--add' and '--extract' commands"
+msgstr "Standardmapp att använda för kommandona \"--add\" och \"--extract\""
+
+#: ../src/main.c:75
+msgid "Create destination folder without asking confirmation"
+msgstr "Skapa målmapp utan att fråga efter bekräftelse"
+
+#: ../src/main.c:296
+#: ../src/server.c:444
+msgid "- Create and modify an archive"
+msgstr "- Skapa och ändra ett arkiv"
+
+#: ../src/main.c:312
+#: ../src/server.c:457
+msgid "File Roller"
+msgstr "File Roller"
+
+#: ../src/ui.h:31
+msgid "_Archive"
+msgstr "_Arkiv"
+
+#: ../src/ui.h:32
+msgid "_Edit"
+msgstr "_Redigera"
+
+#: ../src/ui.h:33
+msgid "_View"
+msgstr "_Visa"
+
+#: ../src/ui.h:34
+msgid "_Help"
+msgstr "_Hjälp"
+
+#: ../src/ui.h:35
+msgid "_Arrange Files"
+msgstr "_Ordna filer"
+
+#: ../src/ui.h:39
+msgid "Information about the program"
+msgstr "Information om programmet"
+
+#: ../src/ui.h:42
+msgid "_Add Files…"
+msgstr "_Lägg till filer..."
+
+#: ../src/ui.h:43
+#: ../src/ui.h:47
+msgid "Add files to the archive"
+msgstr "Lägg till filer till arkivet"
+
+#: ../src/ui.h:50
+msgid "Add a _Folder…"
+msgstr "Lägg till en _mapp..."
+
+#: ../src/ui.h:51
+#: ../src/ui.h:55
+msgid "Add a folder to the archive"
+msgstr "Lägg till en mapp till arkivet"
+
+#: ../src/ui.h:54
+msgid "Add Folder"
+msgstr "Lägg till mapp"
+
+#: ../src/ui.h:59
+msgid "Close the current archive"
+msgstr "Stäng det aktuella arkivet"
+
+#: ../src/ui.h:62
+msgid "Contents"
+msgstr "Innehåll"
+
+#: ../src/ui.h:63
+msgid "Display the File Roller Manual"
+msgstr "Visa File Roller-manualen"
+
+#: ../src/ui.h:68
+#: ../src/ui.h:89
+msgid "Copy the selection"
+msgstr "Kopiera markeringen"
+
+#: ../src/ui.h:72
+#: ../src/ui.h:93
+msgid "Cut the selection"
+msgstr "Klipp ut markeringen"
+
+#: ../src/ui.h:76
+#: ../src/ui.h:97
+msgid "Paste the clipboard"
+msgstr "Klistra in urklipp"
+
+#: ../src/ui.h:79
+#: ../src/ui.h:100
+msgid "_Rename…"
+msgstr "_Byt namn..."
+
+#: ../src/ui.h:80
+#: ../src/ui.h:101
+msgid "Rename the selection"
+msgstr "Byt namn på markeringen"
+
+#: ../src/ui.h:84
+#: ../src/ui.h:105
+msgid "Delete the selection from the archive"
+msgstr "Ta bort markeringen från arkivet"
+
+#: ../src/ui.h:109
+msgid "Dese_lect All"
+msgstr "Avma_rkera alla"
+
+#: ../src/ui.h:110
+msgid "Deselect all files"
+msgstr "Avmarkera alla filer"
+
+#: ../src/ui.h:113
+#: ../src/ui.h:117
+msgid "_Extract…"
+msgstr "_Extrahera..."
+
+#: ../src/ui.h:114
+#: ../src/ui.h:118
+#: ../src/ui.h:122
+msgid "Extract files from the archive"
+msgstr "Extrahera filer från arkivet"
+
+#: ../src/ui.h:125
+msgid "Find…"
+msgstr "Sök..."
+
+#: ../src/ui.h:130
+msgid "New…"
+msgstr "Ny…"
+
+#: ../src/ui.h:131
+msgid "Create a new archive"
+msgstr "Skapa ett nytt arkiv"
+
+#: ../src/ui.h:134
+msgid "Open…"
+msgstr "Öppna..."
+
+#: ../src/ui.h:135
+#: ../src/ui.h:139
+msgid "Open archive"
+msgstr "Öppna arkiv"
+
+#: ../src/ui.h:142
+msgid "_Open With…"
+msgstr "_Öppna med..."
+
+#: ../src/ui.h:143
+msgid "Open selected files with an application"
+msgstr "Öppna valda filer med ett program"
+
+#: ../src/ui.h:146
+msgid "Pass_word…"
+msgstr "Lös_enord..."
+
+#: ../src/ui.h:147
+msgid "Specify a password for this archive"
+msgstr "Ange ett lösenord för detta arkiv"
+
+#: ../src/ui.h:151
+msgid "Show archive properties"
+msgstr "Visa arkivegenskaper"
+
+#: ../src/ui.h:155
+msgid "Reload current archive"
+msgstr "Läs om aktuellt arkiv"
+
+#: ../src/ui.h:158
+msgid "Save As…"
+msgstr "Spara som..."
+
+#: ../src/ui.h:159
+msgid "Save the current archive with a different name"
+msgstr "Spara det aktuella arkivet med ett annat namn"
+
+#: ../src/ui.h:163
+msgid "Select all files"
+msgstr "Markera alla filer"
+
+#: ../src/ui.h:167
+msgid "Stop current operation"
+msgstr "Stoppa aktuell åtgärd"
+
+#: ../src/ui.h:170
+msgid "_Test Integrity"
+msgstr "_Testa integritet"
+
+#: ../src/ui.h:171
+msgid "Test whether the archive contains errors"
+msgstr "Testa huruvida arkivet innehåller fel"
+
+#: ../src/ui.h:175
+#: ../src/ui.h:179
+msgid "Open the selected file"
+msgstr "Öppna den markerade filen"
+
+#: ../src/ui.h:183
+#: ../src/ui.h:187
+msgid "Open the selected folder"
+msgstr "Öppna den markerade mappen"
+
+#: ../src/ui.h:192
+msgid "Go to the previous visited location"
+msgstr "Gå till föregående besökta plats"
+
+#: ../src/ui.h:196
+msgid "Go to the next visited location"
+msgstr "Gå till nästa besökta plats"
+
+#: ../src/ui.h:200
+msgid "Go up one level"
+msgstr "Gå upp en nivå"
+
+#. Translators: the home location is the home folder.
+#: ../src/ui.h:205
+msgid "Go to the home location"
+msgstr "Gå till hemplatsen"
+
+#: ../src/ui.h:213
+msgid "_Toolbar"
+msgstr "_Verktygsrad"
+
+#: ../src/ui.h:214
+msgid "View the main toolbar"
+msgstr "Visa huvudverktygsraden"
+
+#: ../src/ui.h:218
+msgid "Stat_usbar"
+msgstr "Status_rad"
+
+#: ../src/ui.h:219
+msgid "View the statusbar"
+msgstr "Visa statusraden"
+
+#: ../src/ui.h:223
+msgid "_Reversed Order"
+msgstr "_Omvänd ordning"
+
+#: ../src/ui.h:224
+msgid "Reverse the list order"
+msgstr "Vänd på listordningen"
+
+#: ../src/ui.h:228
+msgid "_Folders"
+msgstr "_Mappar"
+
+#: ../src/ui.h:238
+msgid "View All _Files"
+msgstr "Visa alla _filer"
+
+#: ../src/ui.h:241
+msgid "View as a F_older"
+msgstr "Visa som en _mapp"
+
+#: ../src/ui.h:249
+msgid "by _Name"
+msgstr "efter _namn"
+
+#: ../src/ui.h:250
+msgid "Sort file list by name"
+msgstr "Sortera fillista efter namn"
+
+#: ../src/ui.h:252
+msgid "by _Size"
+msgstr "efter _storlek"
+
+#: ../src/ui.h:253
+msgid "Sort file list by file size"
+msgstr "Sortera fillista efter filstorlek"
+
+#: ../src/ui.h:255
+msgid "by T_ype"
+msgstr "efter t_yp"
+
+#: ../src/ui.h:256
+msgid "Sort file list by type"
+msgstr "Sortera fillista efter typ"
+
+#: ../src/ui.h:258
+msgid "by _Date Modified"
+msgstr "efter ändrings_datum"
+
+#: ../src/ui.h:259
+msgid "Sort file list by modification time"
+msgstr "Sortera fillista efter ändringstid"
+
+#. Translators: this is the "sort by file location" menu item
+#: ../src/ui.h:262
+msgid "by _Location"
+msgstr "efter _plats"
+
+#. Translators: location is the file location
+#: ../src/ui.h:264
+msgid "Sort file list by location"
+msgstr "Sortera fillista efter plats"
+
+#~ msgid "Modified on:"
+#~ msgstr "Ändrad den:"
+
+#~ msgid "The file doesn't exist"
+#~ msgstr "Filen finns inte"
+
+#~ msgid "The new name is void."
+#~ msgstr "Det nya namnet är tomt."
+
+#~ msgid "The new name is equal to the old one."
+#~ msgstr "Det nya namnet är identiskt med det gamla."
+
+#~ msgid "_Add Files..."
+#~ msgstr "_Lägg till filer..."
+
+#~ msgid "Add a _Folder..."
+#~ msgstr "Lägg till en _mapp..."
+
+#~ msgid "_Rename..."
+#~ msgstr "_Byt namn..."
+
+#~ msgid "_Extract..."
+#~ msgstr "_Extrahera..."
+
+#~ msgid "Find..."
+#~ msgstr "Sök..."
+
+#~ msgid "_Last Output"
+#~ msgstr "Senaste ut_data"
+
+#~ msgid "View the output produced by the last executed command"
+#~ msgstr "Visa utdata från det senast exekverade kommandot"
+
+#~ msgid "New..."
+#~ msgstr "Nytt..."
+
+#~ msgid "Open..."
+#~ msgstr "Öppna..."
+
+#~ msgid "Pass_word..."
+#~ msgstr "Lösen_ord..."
+
+#~ msgid "A_vailable application:"
+#~ msgstr "_Tillgängligt program:"
+
+#~ msgid "Open Files"
+#~ msgstr "Öppna filer"
+
+#~ msgid "R_ecent applications:"
+#~ msgstr "S_enaste programmen:"
+
+#~ msgid "_Application:"
+#~ msgstr "_Program:"
+
+#~ msgid ""
+#~ "File Roller is free software; you can redistribute it and/or modify it "
+#~ "under the terms of the GNU General Public License as published by the "
+#~ "Free Software Foundation; either version 2 of the License, or (at your "
+#~ "option) any later version."
+#~ msgstr ""
+#~ "File Roller är fri programvara. Du kan distribuera det och/eller "
+#~ "modifiera det under villkoren i GNU General Public License, publicerad av "
+#~ "Free Software Foundation, antingen version 2 eller (om du så vill) någon "
+#~ "senare version."
+
+#~ msgid ""
+#~ "File Roller is distributed in the hope that it will be useful, but "
+#~ "WITHOUT ANY WARRANTY; without even the implied warranty of "
+#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General "
+#~ "Public License for more details."
+#~ msgstr ""
+#~ "File Roller distribueras i hopp om att det ska vara användbart, men UTAN "
+#~ "NÅGON SOM HELST GARANTI, även utan underförstådd garanti om SÄLJBARHET "
+#~ "eller LÄMPLIGHET FÖR NÅGOT SPECIELLT ÄNDAMÅL. Se GNU General Public "
+#~ "License för ytterligare information."
+
+#~ msgid ""
+#~ "You should have received a copy of the GNU General Public License along "
+#~ "with File Roller; if not, write to the Free Software Foundation, Inc., 51 "
+#~ "Franklin St, Fifth Floor, Boston, MA  02110-1301 USA"
+#~ msgstr ""
+#~ "Du bör ha fått en kopia av GNU General Public License tillsammans med "
+#~ "File Roller. Om inte, skriv till Free Software Foundation, Inc., 51 "
+#~ "Franklin St, Fifth Floor, Boston, MA  02110-1301 USA"
+
+#~ msgid "_File"
+#~ msgstr "_Arkiv"
+
+#~ msgid "Archive _type:"
+#~ msgstr "Arkiv_typ:"
+
+#~ msgid "Automatic"
+#~ msgstr "Automatisk"
+
+#~ msgid "Create Archive"
+#~ msgstr "Skapa arkiv"
+
+#~ msgid "_Archive:"
+#~ msgstr "_Arkiv:"
+
+#~ msgid "Create Archive..."
+#~ msgstr "Skapa arkiv..."
+
+#~ msgid "_Open the Destination"
+#~ msgstr "_Öppna målet"
+
+#~ msgid ""
+#~ "Extract archives using the archive name as destination folder and quit "
+#~ "the program"
+#~ msgstr ""
+#~ "Packa upp arkiv och använd arkivnamnet som målmapp och avsluta programmet"
+
+#~ msgid "Files"
+#~ msgstr "Filer"
+
+#~ msgid "Archive type:"
+#~ msgstr "Arkivtyp:"
+
+#~ msgid "_Encrypt with password:"
+#~ msgstr "_Kryptera med lösenord:"
+
+#~ msgid "_Open destination folder after extraction"
+#~ msgstr "_Öppna målmapp efter uppackning"
+
+#~ msgid "_View File"
+#~ msgstr "_Visa fil"
+
+#~ msgid "View the selected file"
+#~ msgstr "Visa den markerade filen"
+
+#~ msgid "Open Go to the next visited location selected folder"
+#~ msgstr "Öppna Gå till nästa besökta plats"
+
+#~ msgid "The archive already exists.  Do you want to overwrite it?"
+#~ msgstr "Arkivet finns redan. Vill du skriva över det?"
+
+#~ msgid "Overwrite"
+#~ msgstr "Skriv över"
+
+#~ msgid "Path:"
+#~ msgstr "Sökväg:"
+
+#~ msgid "Unknown type"
+#~ msgstr "Okänd typ"
+
+#~ msgid "Symbolic link"
+#~ msgstr "Symbolisk länk"
+
+#~ msgid "_Select All"
+#~ msgstr "Markera _alla"
+
+#~ msgid "Cannot extract archives in a remote folder \"%s\""
+#~ msgstr "Kan inte packa upp arkiv i en fjärrmapp \"%s\""

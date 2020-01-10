@@ -23,6 +23,7 @@
 #include <string.h>
 #include <unistd.h>
 #include "file-utils.h"
+#include "fr-stock.h"
 #include "fr-init.h"
 #include "glib-utils.h"
 #include "gtk-utils.h"
@@ -51,7 +52,7 @@ file_selector_destroy_cb (GtkWidget  *widget,
 			  DialogData *data)
 {
 	if (! data->extract_clicked)
-		fr_window_batch_stop (data->window);
+		fr_window_stop_batch (data->window);
 
 	g_object_unref (data->builder);
 	_g_string_list_free (data->selected_files);
@@ -92,14 +93,15 @@ extract_cb (GtkWidget   *w,
 			char      *msg;
 
 			folder_name = _g_file_get_display_basename (destination);
-			msg = g_strdup_printf (_("Destination folder “%s” does not exist.\n\nDo you want to create it?"), folder_name);
+			msg = g_strdup_printf (_("Destination folder \"%s\" does not exist.\n\nDo you want to create it?"), folder_name);
 			g_free (folder_name);
 
 			d = _gtk_message_dialog_new (GTK_WINDOW (data->dialog),
 						     GTK_DIALOG_MODAL,
+						     GTK_STOCK_DIALOG_QUESTION,
 						     msg,
 						     NULL,
-						     _GTK_LABEL_CANCEL, GTK_RESPONSE_CANCEL,
+						     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 						     _("Create _Folder"), GTK_RESPONSE_YES,
 						     NULL);
 
@@ -136,9 +138,10 @@ extract_cb (GtkWidget   *w,
 
 		d = _gtk_message_dialog_new (GTK_WINDOW (window),
 					     GTK_DIALOG_DESTROY_WITH_PARENT,
+					     GTK_STOCK_DIALOG_WARNING,
 					     _("Extraction not performed"),
 					     NULL,
-					     _GTK_LABEL_CLOSE, GTK_RESPONSE_OK,
+					     GTK_STOCK_OK, GTK_RESPONSE_OK,
 					     NULL);
 		gtk_dialog_set_default_response (GTK_DIALOG (d), GTK_RESPONSE_OK);
 		gtk_dialog_run (GTK_DIALOG (d));
@@ -164,7 +167,7 @@ extract_cb (GtkWidget   *w,
 					   GTK_DIALOG_DESTROY_WITH_PARENT,
 					   NULL,
 					   _("Extraction not performed"),
-					   _("You don’t have the right permissions to extract archives in the folder “%s”"),
+					   _("You don't have the right permissions to extract archives in the folder \"%s\""),
 					   utf8_path);
 		gtk_dialog_run (GTK_DIALOG (d));
 		gtk_widget_destroy (GTK_WIDGET (d));
@@ -175,7 +178,7 @@ extract_cb (GtkWidget   *w,
 		return FALSE;
 	}
 
-	fr_window_set_extract_default_dir (window, destination);
+	fr_window_set_extract_default_dir (window, destination, TRUE);
 
 	skip_newer = ! gtk_toggle_button_get_inconsistent (GTK_TOGGLE_BUTTON (GET_WIDGET ("keep_newer_checkbutton"))) && gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (GET_WIDGET ("keep_newer_checkbutton")));
 	junk_paths = ! gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (GET_WIDGET ("keep_structure_checkbutton")));
@@ -220,13 +223,14 @@ extract_cb (GtkWidget   *w,
 
 	/* extract ! */
 
-	fr_window_extract_archive_and_continue (window,
-				       	        file_list,
-						destination,
-						base_dir,
-						skip_newer,
-						FR_OVERWRITE_ASK,
-						junk_paths);
+	fr_window_archive_extract (window,
+				   file_list,
+				   destination,
+				   base_dir,
+				   skip_newer,
+				   FR_OVERWRITE_ASK,
+				   junk_paths,
+				   TRUE);
 
 	_g_string_list_free (file_list);
 	g_object_unref (destination);
@@ -276,11 +280,11 @@ dlg_extract__common (FrWindow *window,
 	data->base_dir_for_selection = base_dir_for_selection;
 	data->extract_clicked = FALSE;
 
-	data->dialog = gtk_file_chooser_dialog_new (C_("Window title", "Extract"),
+	data->dialog = gtk_file_chooser_dialog_new (_("Extract"),
 						    GTK_WINDOW (data->window),
 						    GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,
-						    _GTK_LABEL_CANCEL, GTK_RESPONSE_CANCEL,
-						    _GTK_LABEL_EXTRACT, GTK_RESPONSE_OK,
+						    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+						    FR_STOCK_EXTRACT, GTK_RESPONSE_OK,
 						    NULL);
 
 	gtk_window_set_default_size (GTK_WINDOW (data->dialog), 530, 510);

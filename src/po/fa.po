@@ -6,82 +6,107 @@
 # Meelad Zakaria <meelad@farsiweb.info>, 2005.
 # Elnaz Sarbar <elnaz@farsiweb.info>, 2005, 2006.
 # Farzaneh Sarafarz <farzaneh@farsiweb.info>, 2006
-# Arash Mousavi <mousavi.arash@gmail.com>, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017.
+# Arash Mousavi <mousavi.arash@gmail.com>, 2010, 2011, 2012, 2013.
 # Mahyar Moghimi <mahyar.moqimi@gmail.com>, 2010.
-# Danial Behzadi <dani.behzi@ubuntu.com>, 2014.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: file-roller HEAD\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=file-"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=file-"
 "roller&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-08-04 01:02+0000\n"
-"PO-Revision-Date: 2017-09-30 00:55+0330\n"
+"POT-Creation-Date: 2013-03-11 06:59+0000\n"
+"PO-Revision-Date: 2013-03-22 10:58+0330\n"
 "Last-Translator: Arash Mousavi <mousavi.arash@gmail.com>\n"
-"Language-Team: Persian <>\n"
+"Language-Team: Persian\n"
 "Language: fa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 2.0.4\n"
+"X-Generator: Poedit 1.5.4\n"
 
-#: ../data/org.gnome.FileRoller.appdata.xml.in.h:1
-msgid "File Roller"
-msgstr "پرونده‌پیچ"
+#: ../copy-n-paste/eggdesktopfile.c:165
+#, c-format
+msgid "File is not a valid .desktop file"
+msgstr "این یک پرونده‌ی معتبر desktop. نمی‌باشد"
 
-#: ../data/org.gnome.FileRoller.appdata.xml.in.h:2
-msgid "Open, modify and create compressed archive files"
-msgstr "بازکردن، تغییر و ساخت پرونده‌های بایگانی فشرده شده"
+#: ../copy-n-paste/eggdesktopfile.c:190
+#, c-format
+msgid "Unrecognized desktop file Version '%s'"
+msgstr "نسخه‌ی پرونده میزکار نامشخص «%s»"
 
-#: ../data/org.gnome.FileRoller.appdata.xml.in.h:3
-msgid ""
-"Archive Manager (also known as File Roller) is the default GNOME application "
-"for opening, creating, and modifying archive and compressed archive files."
-msgstr ""
-"مدیر بایگانی (یا پرونده پیچ) نرم‌افزار پیش‌فرض گنوم برای بازکردن و تغییر "
-"بایگانی‌ها و فشرده کردن پرونده‌های بایگانی است."
+#: ../copy-n-paste/eggdesktopfile.c:970
+#, c-format
+msgid "Starting %s"
+msgstr "درحال آغاز %s"
 
-#: ../data/org.gnome.FileRoller.appdata.xml.in.h:4
-msgid ""
-"Archive Manager supports a wide range of different archive files, including:"
-msgstr "مدیر بایگانی بازه‌ی بلندی از پرونده‌های بایگانی را پشتبانی می‌کند، شامل:"
+#: ../copy-n-paste/eggdesktopfile.c:1112
+#, c-format
+msgid "Application does not accept documents on command line"
+msgstr "برنامه سند‌ها را در خط فرمان نمی‌پذیرد"
 
-#: ../data/org.gnome.FileRoller.appdata.xml.in.h:5
-msgid "gzip archives (.tar.gz, .tgz)"
-msgstr "بایگانی‌های gzip (مانند .tar.gz, .tgz)"
+#: ../copy-n-paste/eggdesktopfile.c:1180
+#, c-format
+msgid "Unrecognized launch option: %d"
+msgstr "گزینه‌ی راه‌اندازی ناشناخته‌ی: %d"
 
-#: ../data/org.gnome.FileRoller.appdata.xml.in.h:6
-msgid "bzip archives (.tar.bz, .tbz)"
-msgstr "بایگانی‌های bzip (مانند .tar.bz, .tbz)"
+#: ../copy-n-paste/eggdesktopfile.c:1385
+#, c-format
+msgid "Can't pass documents to this desktop element"
+msgstr "نمی‌توان اسناد را به این عنصر رومیزی منتقل کرد"
 
-#: ../data/org.gnome.FileRoller.appdata.xml.in.h:7
-msgid "zip archives (.zip)"
-msgstr "بایگانی‌های zip (مانند .zip)"
+#: ../copy-n-paste/eggdesktopfile.c:1406
+#, c-format
+msgid "Not a launchable item"
+msgstr "مورد غیرقابل راه‌اندازی است"
 
-#: ../data/org.gnome.FileRoller.appdata.xml.in.h:8
-msgid "xz archives (.tar.xz)"
-msgstr "بایگانی‌های xz (مانند .tar.xz)"
+#: ../copy-n-paste/eggsmclient.c:226
+msgid "Disable connection to session manager"
+msgstr "از کار انداختن اتصال به مدیر نشست"
 
-#: ../data/org.gnome.FileRoller.desktop.in.in.h:1 ../src/fr-application.c:454
-#: ../src/fr-window.c:2017 ../src/fr-window.c:5546
+#: ../copy-n-paste/eggsmclient.c:229
+msgid "Specify file containing saved configuration"
+msgstr "پرونده‌ی شامل اطلاعات پیکربندی ذخیره شده را مشخص کنید"
+
+#: ../copy-n-paste/eggsmclient.c:229
+msgid "FILE"
+msgstr "پرونده"
+
+#: ../copy-n-paste/eggsmclient.c:232
+msgid "Specify session management ID"
+msgstr "شناسه‌ی مدیریت نشست را مشخص کنید"
+
+#: ../copy-n-paste/eggsmclient.c:232
+msgid "ID"
+msgstr "شناسه"
+
+#: ../copy-n-paste/eggsmclient.c:253
+msgid "Session management options:"
+msgstr "گزینه‌های مدیریت نشست:"
+
+#: ../copy-n-paste/eggsmclient.c:254
+msgid "Show session management options"
+msgstr "نمایش گزینه‌های مدیریت نشست"
+
+#: ../data/file-roller.desktop.in.in.h:1 ../src/fr-window.c:2005
+#: ../src/fr-window.c:5384
 msgid "Archive Manager"
-msgstr "مدیر بایگانی"
+msgstr "مدیر آرشیو"
 
-#: ../data/org.gnome.FileRoller.desktop.in.in.h:2
+#: ../data/file-roller.desktop.in.in.h:2
 msgid "Create and modify an archive"
-msgstr "ایجاد و تغییر بایگانی"
+msgstr "ایجاد و تغییر آرشیو"
 
-#: ../data/org.gnome.FileRoller.desktop.in.in.h:3
+#: ../data/file-roller.desktop.in.in.h:3
 msgid "zip;tar;extract;unpack;"
-msgstr "zip;tar;استخراج;بازکردن;extract;unpack;"
+msgstr "zip;tar;استخراج;بازکردن;"
 
-#: ../data/org.gnome.FileRoller.gschema.xml.h:1
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:1
 msgid "How to sort files"
 msgstr "چگونگی مرتب سازی پرونده‌ها"
 
-#: ../data/org.gnome.FileRoller.gschema.xml.h:2
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:2
 msgid ""
 "What criteria must be used to arrange files. Possible values: name, size, "
 "type, time, path."
@@ -89,225 +114,254 @@ msgstr ""
 "چه معیارهایی باید برای مرتب کردن پرونده‌ها به کار رود. مقادیر ممکن: نام، "
 "اندازه، نوع، زمان، مسیر."
 
-#: ../data/org.gnome.FileRoller.gschema.xml.h:3
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:3
 msgid "Sort type"
 msgstr "نوع مرتب کردن"
 
-#: ../data/org.gnome.FileRoller.gschema.xml.h:4
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:4
 msgid ""
 "Whether to sort in ascending or descending direction. Possible values: "
 "ascending, descending."
 msgstr "این که به صورت صعودی یا نزولی مرتب سازی شود. مقادیر ممکن: صعودی نزولی."
 
-#: ../data/org.gnome.FileRoller.gschema.xml.h:5
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:5 ../src/ui/app-menu.ui.h:2
 msgid "List Mode"
 msgstr "حالت فهرستی"
 
-#: ../data/org.gnome.FileRoller.gschema.xml.h:6
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:6
 msgid ""
-"Use “all-files” to view all the files in the archive in a single list, use “as-"
-"folder” to navigate the archive as a folder."
+"Use 'all-files' to view all the files in the archive in a single list, use "
+"'as-folder' to navigate the archive as a folder."
 msgstr ""
-"برای مشاهدهٔ تمام پرونده‌های درون بایگانی از «all-files» استفاده کنید، برای ناوش "
-"آرشیو به صورت یک پوشه از «as-folder» استفاده کنید."
+"برای مشاهده‌ی تمام پرونده‌های درون آرشیو از «تمام پرونده‌ها» استفاده کنید، برای "
+"ناوش آرشیو به صورت یک پوشه از «همچون پوشه» استفاده کنید."
 
-#: ../data/org.gnome.FileRoller.gschema.xml.h:7
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:7
 msgid "Display type"
 msgstr "نمایش نوع"
 
-#: ../data/org.gnome.FileRoller.gschema.xml.h:8
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:8
 msgid "Display the type column in the main window."
 msgstr "نمایش ستون نوع در پنجره‌ی اصلی."
 
-#: ../data/org.gnome.FileRoller.gschema.xml.h:9
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:9
 msgid "Display size"
 msgstr "نمایش اندازه"
 
-#: ../data/org.gnome.FileRoller.gschema.xml.h:10
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:10
 msgid "Display the size column in the main window."
 msgstr "نمایش ستون اندازه در پنجره‌ی اصلی."
 
-#: ../data/org.gnome.FileRoller.gschema.xml.h:11
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:11
 msgid "Display time"
 msgstr "نمایش زمان"
 
-#: ../data/org.gnome.FileRoller.gschema.xml.h:12
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:12
 msgid "Display the time column in the main window."
 msgstr "نمایش ستون زمان در پنجره‌ی اصلی."
 
-#: ../data/org.gnome.FileRoller.gschema.xml.h:13
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:13
 msgid "Display path"
 msgstr "نمایش مسیر"
 
-#: ../data/org.gnome.FileRoller.gschema.xml.h:14
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:14
 msgid "Display the path column in the main window."
 msgstr "نمایش ستون مسیر در پنجره‌ی اصلی."
 
-#: ../data/org.gnome.FileRoller.gschema.xml.h:15
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:15
 msgid "Name column width"
 msgstr "عرض ستون نام"
 
-#: ../data/org.gnome.FileRoller.gschema.xml.h:16
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:16
 msgid "The default width of the name column in the file list."
 msgstr "اندازه‌ی پیش‌فرض عرضِ ستونِ نام در فهرست پرونده‌ها."
 
-#: ../data/org.gnome.FileRoller.gschema.xml.h:17
-msgid "View the sidebar"
-msgstr "نمایش نوار کناری"
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:17
+msgid "Max history length"
+msgstr "بیشینه‌ی طول تاریچه"
 
-#: ../data/org.gnome.FileRoller.gschema.xml.h:18
-msgid "Whether to display the sidebar."
-msgstr "این که نوار کناری نشان داده شود یا نه."
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:18
+msgid "Max number of items in the 'Open Recents' submenu."
+msgstr "بیشینه‌ی موردها در زیر منوی «باز کردن موارد اخیر»."
 
-#: ../data/org.gnome.FileRoller.gschema.xml.h:19
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:19
+msgid "View statusbar"
+msgstr "دیدن نوار وضعیت"
+
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:20
+msgid "Whether to display the statusbar."
+msgstr "اینکه نوار وضعیت نشان داده شود."
+
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:21 ../src/ui.h:198
+msgid "View the folders pane"
+msgstr "نمایش قاب پوشه‌ها"
+
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:22
+msgid "Whether to display the folders pane."
+msgstr "این‌که قاب پوشه‌ها نمایش داده شود."
+
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:23
 msgid "Editors"
 msgstr "ویرایش‌گرها"
 
-#: ../data/org.gnome.FileRoller.gschema.xml.h:20
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:24
 msgid ""
-"List of applications entered in the “Open File” dialog and not associated with "
-"the file type."
+"List of applications entered in the 'Open File' dialog and not associated "
+"with the file type."
 msgstr ""
-"فهرست برنامه‌های وارد شده در محاوره‌ی «بازکردن پرونده» که مرتبط با نوع پرونده "
+"فهرست برنامه‌های وارد شده در محاوره‌ی «بازکردن پرونده» که همبسته با نوع پرونده "
 "نیستند."
 
-#: ../data/org.gnome.FileRoller.gschema.xml.h:21
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:25
 msgid "Compression level"
 msgstr "سطح فشردگی"
 
-#: ../data/org.gnome.FileRoller.gschema.xml.h:22
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:26
 msgid ""
-"Compression level used when adding files to an archive. Possible values: very-"
-"fast, fast, normal, maximum."
+"Compression level used when adding files to an archive. Possible values: "
+"very-fast, fast, normal, maximum."
 msgstr ""
-"سطح فشرده‌سازی که هنگام افزودن پرونده‌ها به یک آرشیو استفاده می‌شود. مقادیر ممکن: "
-"خیلی سریع، سریع، معمولی، بیشینه."
+"سطح فشرده‌سازی که هنگام افزودن پرونده‌ها به یک آرشیو استفاده می‌شود. مقادیر "
+"ممکن: خیلی سریع، سریع، معمولی، بیشینه."
 
-#: ../data/org.gnome.FileRoller.gschema.xml.h:23
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:27
 msgid "Encrypt the archive header"
 msgstr "سرآیند آرشیو رمزنگاری شود"
 
-#: ../data/org.gnome.FileRoller.gschema.xml.h:24
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:28
 msgid ""
-"Whether to encrypt the archive header. If the header is encrypted the password "
-"will be required to list the archive content as well."
+"Whether to encrypt the archive header. If the header is encrypted the "
+"password will be required to list the archive content as well."
 msgstr ""
 "اینکه سرآیند آرشیو رمزنگاری شود. اگر سرآیند رمزنگاری شود برای فهرست محتوای "
 "آرشیو نیز نیاز به گذرواژه هست."
 
-#: ../data/org.gnome.FileRoller.gschema.xml.h:25
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:29
 msgid "Do not overwrite newer files"
 msgstr "پرونده‌های جدیدتر رونویسی نشوند"
 
-#: ../data/org.gnome.FileRoller.gschema.xml.h:26
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:30
 msgid "Recreate the folders stored in the archive"
 msgstr "بازتولیدپوشه‌های ذخیره شده درون آرشیو"
 
-#: ../data/org.gnome.FileRoller.gschema.xml.h:27
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:31
 msgid "Default volume size"
 msgstr "اندازه‌ی پیش‌فرض جلد"
 
-#: ../data/org.gnome.FileRoller.gschema.xml.h:28
+#: ../data/org.gnome.FileRoller.gschema.xml.in.h:32
 msgid "The default size for volumes."
 msgstr "اندازه‌ی پیش‌فرض برای جلدها."
 
-#: ../nautilus/nautilus-fileroller.c:260
+#: ../nautilus/nautilus-fileroller.c:327
 msgid "Extract Here"
 msgstr "اینجا استخراج شود"
 
 #. Translators: the current position is the current folder
-#: ../nautilus/nautilus-fileroller.c:262
+#: ../nautilus/nautilus-fileroller.c:329
 msgid "Extract the selected archive to the current position"
 msgstr "آرشیو انتخاب شده در محل جاری استخراج شود"
 
-#: ../nautilus/nautilus-fileroller.c:279
-msgid "Extract To…"
-msgstr "استخراج به…"
+#: ../nautilus/nautilus-fileroller.c:346
+msgid "Extract To..."
+msgstr "استخراج در..."
 
-#: ../nautilus/nautilus-fileroller.c:280
+#: ../nautilus/nautilus-fileroller.c:347
 msgid "Extract the selected archive"
 msgstr "استخراج آرشیو انتخاب شده"
 
-#: ../src/dlg-add.c:114
+#: ../nautilus/nautilus-fileroller.c:366
+msgid "Compress..."
+msgstr "فشرده‌سازی..."
+
+#: ../nautilus/nautilus-fileroller.c:367
+msgid "Create a compressed archive with the selected objects"
+msgstr "ایجاد یک آرشیو با اشیاء انتخاب شده"
+
+#: ../src/actions.c:112 ../src/fr-window.c:5678 ../src/fr-window.c:6227
+msgid "Open"
+msgstr "باز کردن"
+
+#: ../src/actions.c:125 ../src/fr-window.c:5235
+msgid "All archives"
+msgstr "همه‌ی آرشیوها"
+
+#: ../src/actions.c:132
+msgid "All files"
+msgstr "همه‌ی پرونده‌ها"
+
+#: ../src/actions.c:487
+msgid "Copyright © 2001–2010 Free Software Foundation, Inc."
+msgstr "حق رونوشت © ۲۰۱۰-۲۰۰۱ بنیاد نرم‌افزار آزاد."
+
+#: ../src/actions.c:488
+msgid "An archive manager for GNOME."
+msgstr "مدیر آرشیوی برای گنوم"
+
+#: ../src/actions.c:491
+msgid "translator-credits"
+msgstr ""
+"آرش موسوی <mousavi.arash@gmail.com>\n"
+"مهیار مقیمی <mahyar.moqimi@gmail.com>\n"
+"روزبه پورنادر <roozbeh@farsiweb.info>\n"
+"بهنام پورنادر <bp@farsiweb.info>\n"
+"میلاد زکریا <meelad@farsiweb.info>\n"
+"الناز سربر <elnaz@farsiweb.info>"
+
+#: ../src/dlg-add.c:116
 msgid "Could not add the files to the archive"
 msgstr "نمی‌توان پرونده‌ها را به آرشیو اضافه کرد"
 
-#: ../src/dlg-add.c:115
+#: ../src/dlg-add.c:117
 #, c-format
-msgid "You don’t have the right permissions to read files from folder “%s”"
-msgstr "شما اجازهٔ لازم را برای خواندن پرونده‌های پوشه‌ی «%s» ندارید"
+msgid "You don't have the right permissions to read files from folder \"%s\""
+msgstr "شما اجازه‌ی لازم را برای خواندن پرونده‌های پوشه‌ی «%s» ندارید"
 
-#: ../src/dlg-add.c:182
-msgctxt "Window title"
+#: ../src/dlg-add.c:182 ../src/ui.h:42
 msgid "Add Files"
 msgstr "اضافه کردن پرونده‌ها"
 
-#: ../src/dlg-add.c:195
+#: ../src/dlg-add.c:193
 msgid "_Options"
 msgstr "_گزینه‌ها"
 
 #. load options
-#: ../src/dlg-add.c:204
-msgctxt "Action"
+#: ../src/dlg-add.c:202 ../src/ui/add-options.ui.h:1
 msgid "Load Options"
-msgstr "گزینه‌های بار کردن"
+msgstr "بار کردن گزینه‌ها"
 
 #. save options
-#: ../src/dlg-add.c:211
-msgctxt "Action"
+#: ../src/dlg-add.c:209 ../src/dlg-add.c:827
 msgid "Save Options"
-msgstr "گزینه‌های ذخیره"
+msgstr "ذخیره‌ی گزینه‌ها"
 
 #. clear options
-#: ../src/dlg-add.c:218
+#: ../src/dlg-add.c:216
 msgid "Reset Options"
 msgstr "بازنشاندن گزینه‌ها"
 
-#: ../src/dlg-add.c:764
-msgctxt "Window title"
-msgid "Load Options"
-msgstr "گزینه‌های بار کردن"
-
-#: ../src/dlg-add.c:773
-msgid "_Apply"
-msgstr "_اعمال"
-
-#: ../src/dlg-add.c:774 ../src/dlg-delete.c:136
-msgid "_Delete"
-msgstr "_حذف"
-
-#: ../src/dlg-add.c:856
-msgctxt "Window title"
-msgid "Save Options"
-msgstr "گزینه‌های ذخیره کردن"
-
-#: ../src/dlg-add.c:857
+#: ../src/dlg-add.c:828
 msgid "_Options Name:"
 msgstr "نام _گزینه‌ها:"
 
-#: ../src/dlg-ask-password.c:125
-msgid "_OK"
-msgstr "_تایید"
-
 #. Translators: %s is a filename
-#: ../src/dlg-ask-password.c:148
+#: ../src/dlg-ask-password.c:131
 #, c-format
-msgid "Password required for “%s”"
+msgid "Password required for \"%s\""
 msgstr "گذرواژه برای «%s» لازم است"
 
-#: ../src/dlg-ask-password.c:157
+#: ../src/dlg-ask-password.c:139
 msgid "Wrong password."
-msgstr "گذرواژهٔ نادرست."
+msgstr "گذرواژه‌ی نادرست"
 
-#: ../src/dlg-batch-add.c:88 ../src/fr-application.c:226
-#: ../src/fr-application.c:262 ../src/fr-application.c:582
+#: ../src/dlg-batch-add.c:87 ../src/fr-application.c:329
+#: ../src/fr-application.c:683
 msgid "Compress"
 msgstr "فشرده‌سازی"
 
-#: ../src/dlg-extract.c:95 ../src/fr-window.c:6909
+#: ../src/dlg-extract.c:96 ../src/fr-window.c:6774
 #, c-format
 msgid ""
-"Destination folder “%s” does not exist.\n"
+"Destination folder \"%s\" does not exist.\n"
 "\n"
 "Do you want to create it?"
 msgstr ""
@@ -315,44 +369,44 @@ msgstr ""
 "\n"
 "آیا می‌خواهید آن را ایجاد کنید؟"
 
-#: ../src/dlg-extract.c:103 ../src/fr-window.c:6917
+#: ../src/dlg-extract.c:105 ../src/fr-window.c:6783
 msgid "Create _Folder"
 msgstr "ایجاد _پوشه"
 
-#: ../src/dlg-extract.c:122 ../src/dlg-extract.c:139 ../src/dlg-extract.c:166
-#: ../src/fr-window.c:4420 ../src/fr-window.c:6833 ../src/fr-window.c:6838
-#: ../src/fr-window.c:6938 ../src/fr-window.c:6957 ../src/fr-window.c:6962
+#: ../src/dlg-extract.c:124 ../src/dlg-extract.c:142 ../src/dlg-extract.c:169
+#: ../src/fr-window.c:4197 ../src/fr-window.c:6678 ../src/fr-window.c:6683
+#: ../src/fr-window.c:6804 ../src/fr-window.c:6823 ../src/fr-window.c:6828
 msgid "Extraction not performed"
 msgstr "استخراج انجام نشد"
 
-#: ../src/dlg-extract.c:123 ../src/fr-window.c:6934
+#: ../src/dlg-extract.c:125 ../src/fr-window.c:6800
 #, c-format
 msgid "Could not create the destination folder: %s."
 msgstr "نمی‌توان پو‌شه‌ی مقصد را ایجاد کرد: %s."
 
-#: ../src/dlg-extract.c:167 ../src/fr-window.c:4647 ../src/fr-window.c:4749
+#: ../src/dlg-extract.c:170 ../src/fr-window.c:4366 ../src/fr-window.c:4450
 #, c-format
 msgid ""
-"You don’t have the right permissions to extract archives in the folder “%s”"
-msgstr "اجازه‌ی لازم را برای استخراج آرشیوها در پوشه‌ی «%s» ندارید"
+"You don't have the right permissions to extract archives in the folder \"%s\""
+msgstr "اجازه‌ی لازم را برای ایجاد آرشیو در پوشه‌ی «%s» ندارید"
 
-#: ../src/dlg-extract.c:279
-msgctxt "Window title"
+#: ../src/dlg-extract.c:283 ../src/ui/extract-dialog-options.ui.h:1
+#: ../src/ui.h:109
 msgid "Extract"
 msgstr "استخراج"
 
-#: ../src/dlg-package-installer.c:114 ../src/dlg-package-installer.c:227
+#: ../src/dlg-package-installer.c:112 ../src/dlg-package-installer.c:225
 msgid "There was an internal error trying to search for applications:"
 msgstr "یک خطای درونی رخ داد هنگام جستجو برای برنامه‌های:"
 
-#: ../src/dlg-package-installer.c:296 ../src/dlg-package-installer.c:305
-#: ../src/dlg-package-installer.c:332 ../src/fr-archive.c:751
-#: ../src/fr-window.c:4087 ../src/fr-window.c:7640 ../src/fr-window.c:7997
-#: ../src/fr-window.c:9512
+#: ../src/dlg-package-installer.c:294 ../src/dlg-package-installer.c:303
+#: ../src/dlg-package-installer.c:331 ../src/fr-archive.c:743
+#: ../src/fr-window.c:3927 ../src/fr-window.c:7402 ../src/fr-window.c:7758
+#: ../src/fr-window.c:9290
 msgid "Archive type not supported."
 msgstr "نوع آرشیو پشتیبانی نمی‌شود."
 
-#: ../src/dlg-package-installer.c:315
+#: ../src/dlg-package-installer.c:313
 #, c-format
 msgid ""
 "There is no command installed for %s files.\n"
@@ -361,560 +415,544 @@ msgstr ""
 "هیچ فرمانی برای پرونده‌های %s نصب نشده است. \n"
 "آیا مایلید برای باز کردن این پرونده فرمان مناسب را جستجو کنید؟"
 
-#: ../src/dlg-package-installer.c:319
+#: ../src/dlg-package-installer.c:318
 msgid "Could not open this file type"
 msgstr "ناتوان در بازکردن این نوع فایل"
 
-#: ../src/dlg-package-installer.c:322
+#: ../src/dlg-package-installer.c:321
 msgid "_Search Command"
 msgstr "_فرمان جستجو"
 
-#: ../src/dlg-password.c:109
+#: ../src/dlg-password.c:91
 #, c-format
-msgid "Enter a password for “%s”"
-msgstr "یک گذرواژه برای «%s» وارد کنید"
+msgid "Enter a password for \"%s\""
+msgstr "گذرواژه را برای «%s» وارد کنید."
 
-#: ../src/dlg-prop.c:107
+#: ../src/dlg-prop.c:96
 #, c-format
 msgid "%s Properties"
 msgstr "ویژگی‌های %s"
 
-#: ../src/dlg-update.c:162
+#: ../src/dlg-update.c:163
 #, c-format
-msgid "Update the file “%s” in the archive “%s”?"
-msgstr "بروزرسانی پروندهٔ «%s» در بایگانی «%s»؟"
+msgid "Update the file \"%s\" in the archive \"%s\"?"
+msgstr "به‌روز رسانی پرونده «%s» در آرشیو«%s»؟"
 
 #. secondary text
-#: ../src/dlg-update.c:174 ../src/dlg-update.c:200
+#: ../src/dlg-update.c:174 ../src/dlg-update.c:199 ../src/ui/update.ui.h:2
 #, c-format
 msgid ""
-"The file has been modified with an external application. If you don’t update "
+"The file has been modified with an external application. If you don't update "
 "the file in the archive, all of your changes will be lost."
 msgid_plural ""
-"%d files have been modified with an external application. If you don’t update "
-"the files in the archive, all of your changes will be lost."
+"%d files have been modified with an external application. If you don't "
+"update the files in the archive, all of your changes will be lost."
 msgstr[0] ""
-"پرونده توسط یک برنامه‌ی خارجی تغییر کرده است. چنانچه پروندهٔ درون بایگانی را "
+"پرونده توسط یک برنامه خارجی تغییر کرده است. چناچه پرونده درون آرشیو را "
 "بروزرسانی نکنید، تمام تغییرات خود را از دست خواهید داد."
 msgstr[1] ""
-"تعداد %Id پرونده توسط یک برنامه خارجی تغییر کرده است. چنانچه پرونده‌های درون "
+"تعداد %Id پرونده توسط یک برنامه خارجی تغییر کرده است. چناچه پرونده درون "
 "آرشیو را بروزرسانی نکنید، تمام تغییرات خود را از دست خواهید داد."
 
-#: ../src/dlg-update.c:190
+#: ../src/dlg-update.c:189
 #, c-format
-msgid "Update the files in the archive “%s”?"
-msgstr "بروزرسانی پرونده‌های درون بایگانی «%s»؟"
-
-#: ../src/dlg-update.c:319 ../src/dlg-update.c:332
-msgid "_Update"
-msgstr "_به‌روزرسانی"
-
-#: ../src/dlg-update.c:323
-msgid "Update Files"
-msgstr "بروزرسانی پرونده‌ها"
-
-#: ../src/fr-application.c:61
-msgid "Add files to the specified archive and quit the program"
-msgstr "اضافه کردن پرونده‌ها به بایگانی و ترک برنامه"
-
-#: ../src/fr-application.c:62
-msgid "ARCHIVE"
-msgstr "ARCHIVE"
+msgid "Update the files in the archive \"%s\"?"
+msgstr "به‌روز رسانی پرونده‌های درون آرشیو «%s»؟"
 
 #: ../src/fr-application.c:65
-msgid "Add files asking the name of the archive and quit the program"
-msgstr "اضافه کردن پرونده‌ها با پرسیدن نام بایگانی و ترک برنامه"
+msgid "Add files to the specified archive and quit the program"
+msgstr "اضافه کردن پرونده‌ها به آرشیو و ترک برنامه"
+
+#: ../src/fr-application.c:66
+msgid "ARCHIVE"
+msgstr "آرشیو"
 
 #: ../src/fr-application.c:69
-msgid "Extract archives to the specified folder and quit the program"
-msgstr "استخراج بایگانی‌ها به پوشه‌ی مشخّص شده و ترک برنامه"
+msgid "Add files asking the name of the archive and quit the program"
+msgstr "اضافه کردن پرونده‌ها با پرسیدن نام آرشیو و ترک برنامه"
 
-#: ../src/fr-application.c:70 ../src/fr-application.c:82
+#: ../src/fr-application.c:73
+msgid "Extract archives to the specified folder and quit the program"
+msgstr "استخراج آرشیوها به پرونده و ترک برنامه"
+
+#: ../src/fr-application.c:74 ../src/fr-application.c:86
 msgid "FOLDER"
 msgstr "پوشه"
 
-#: ../src/fr-application.c:73
-msgid "Extract archives asking the destination folder and quit the program"
-msgstr "استخراج بایگانی‌ها با پرسیدن پوشه‌ی مقصد و ترک برنامه"
-
 #: ../src/fr-application.c:77
-msgid ""
-"Extract the contents of the archives in the archive folder and quit the program"
-msgstr "استخراج محتویات بایگانی‌ها در پوشه‌ی بایگانی و خروج از برنامه"
+msgid "Extract archives asking the destination folder and quit the program"
+msgstr "استخراج آرشیوها با پرسیدن پوشه‌ی مقصد و ترک برنامه"
 
 #: ../src/fr-application.c:81
-msgid "Default folder to use for the “--add” and “--extract” commands"
-msgstr "پوشه‌ی پیش‌فرض برای فرمان‌های «--add» و «--extract»"
+msgid ""
+"Extract the contents of the archives in the archive folder and quit the "
+"program"
+msgstr "استخراج محتویات آرشیوها در پوشه‌ی آرشیو و خروج از برنامه"
 
 #: ../src/fr-application.c:85
+msgid "Default folder to use for the '--add' and '--extract' commands"
+msgstr "پوشه‌ی پیش‌فرض برای فرمان‌های «--add» و «--extract»"
+
+#: ../src/fr-application.c:89
 msgid "Create destination folder without asking confirmation"
 msgstr "ایجاد پوشه‌ی مقصد بدون تصدیق"
 
-#: ../src/fr-application.c:89
+#: ../src/fr-application.c:93
 msgid "Use the notification system to notify the operation completion"
 msgstr "استفاده از سیستم اعلان برای اطلاع دادن از پایان عملیات"
 
-#: ../src/fr-application.c:92
+#: ../src/fr-application.c:96
 msgid "Start as a service"
 msgstr "شروع به عنوان یک سرویس"
 
-#: ../src/fr-application.c:95
+#: ../src/fr-application.c:99
 msgid "Show version"
 msgstr "نمایش نسخه"
 
-#: ../src/fr-application.c:298 ../src/fr-application.c:324
-#: ../src/fr-application.c:605
-msgctxt "Window title"
+#: ../src/fr-application.c:365 ../src/fr-application.c:401
+#: ../src/fr-application.c:427 ../src/fr-application.c:707
+#: ../src/fr-window.c:9353
 msgid "Extract archive"
-msgstr "استخراج بایگانی"
+msgstr "استخراج آرشیو"
 
-#: ../src/fr-application.c:485
-msgid "— Create and modify an archive"
-msgstr "— ایجاد و تغییر یک بایگانی"
+#: ../src/fr-application.c:565
+msgid "- Create and modify an archive"
+msgstr "- ایجاد و تغییر یک آرشیو"
 
-#: ../src/fr-application-menu.c:130
-msgid "Copyright © 2001–2014 Free Software Foundation, Inc."
-msgstr "حق رونوشت © ۲۰۱۴-۲۰۰۱ بنیاد نرم‌افزار آزاد."
+#. manually set name and icon
+#: ../src/fr-application.c:833
+msgid "File Roller"
+msgstr "پرونده‌پیچ"
 
-#: ../src/fr-application-menu.c:131
-msgid "An archive manager for GNOME."
-msgstr "یک مدیر بایگانی برای گنوم."
-
-#: ../src/fr-application-menu.c:134
-msgid "translator-credits"
-msgstr ""
-"آرش موسوی <mousavi.arash@gmail.com>\n"
-"دانیال بهزادی <dani.behzi@ubuntu.com>\n"
-"مهیار مقیمی <mahyar.moqimi@gmail.com>\n"
-"روزبه پورنادر <roozbeh@farsiweb.info>\n"
-"بهنام پورنادر <bp@farsiweb.info>\n"
-"میلاد زکریا <meelad@farsiweb.info>\n"
-"الناز سربر <elnaz@farsiweb.info>"
-
-#: ../src/fr-archive.c:1852
-msgid "You don’t have the right permissions."
+#: ../src/fr-archive.c:1844
+msgid "You don't have the right permissions."
 msgstr "شما اجازه‌های لازم را ندارید."
 
-#: ../src/fr-archive.c:1852
+#: ../src/fr-archive.c:1844
 msgid "This archive type cannot be modified"
-msgstr "این نوع بایگانی را نمی‌توان دست‌کاری کرد"
+msgstr "امکان اصلاح این نوع آرشیو  وجود ندارد"
 
-#: ../src/fr-archive.c:1866 ../src/fr-new-archive-dialog.c:475
-msgid "You can’t add an archive to itself."
-msgstr "بایگانی را نمی‌توان به خودش اضافه کرد."
-
-#. Translators: %s is a filename.
-#: ../src/fr-command-7z.c:297 ../src/fr-command-rar.c:425
-#: ../src/fr-command-tar.c:307
-#, c-format
-msgid "Adding “%s”"
-msgstr "در حال اضافه کردن «%s»"
+#: ../src/fr-archive.c:1858
+msgid "You can't add an archive to itself."
+msgstr "آرشیو را نمی‌توان به خودش اضافه کرد."
 
 #. Translators: %s is a filename.
-#: ../src/fr-command-7z.c:449 ../src/fr-command-rar.c:557
-#: ../src/fr-command-tar.c:428
+#: ../src/fr-command-7z.c:297 ../src/fr-command-rar.c:328
+#: ../src/fr-command-tar.c:305
 #, c-format
-msgid "Extracting “%s”"
-msgstr "در حال استخراج «%s»"
+msgid "Adding \"%s\""
+msgstr "درحال اضافه کردن «%s»"
+
+#. Translators: %s is a filename.
+#: ../src/fr-command-7z.c:424 ../src/fr-command-rar.c:460
+#: ../src/fr-command-tar.c:426
+#, c-format
+msgid "Extracting \"%s\""
+msgstr "درحال استخراج «%s»"
 
 #: ../src/fr-command.c:597
 #, c-format
 msgid "Archive not found"
-msgstr "بایگانی پیدا نشد"
+msgstr "آرشیو پیدا نشد"
 
 #. Translators: %s is a filename.
-#: ../src/fr-command-rar.c:506 ../src/fr-command-tar.c:373
+#: ../src/fr-command-rar.c:409 ../src/fr-command-tar.c:371
 #, c-format
-msgid "Removing “%s”"
+msgid "Removing \"%s\""
 msgstr "در حال حذف «%s»"
 
-#: ../src/fr-command-rar.c:688
+#: ../src/fr-command-rar.c:586
 #, c-format
 msgid "Could not find the volume: %s"
 msgstr "ناتوان در پیدا کردن جلد: %s"
 
-#: ../src/fr-command-tar.c:383
+#: ../src/fr-command-tar.c:381
 msgid "Deleting files from archive"
-msgstr "در حال حذف پرونده‌ها از بایگانی"
+msgstr "در حال حذف پرونده‌ها از آرشیو"
 
-#: ../src/fr-command-tar.c:488
+#: ../src/fr-command-tar.c:486
 msgid "Recompressing archive"
-msgstr "در حال فشرده‌سازی مجدّد بایگانی"
+msgstr "در حال فشرده‌سازی مجدد آرشیو"
 
-#: ../src/fr-command-tar.c:767
+#: ../src/fr-command-tar.c:726
 msgid "Decompressing archive"
-msgstr "در حال گشایش بایگانی"
+msgstr "در حال گشایش آرشیو"
 
-#: ../src/fr-file-selector-dialog.c:773 ../src/fr-file-selector-dialog.c:818
+#: ../src/fr-file-selector-dialog.c:588
+msgid "File System"
+msgstr "سیستم‌پرونده"
+
+#: ../src/fr-file-selector-dialog.c:1331 ../src/fr-file-selector-dialog.c:1376
 msgid "Could not load the location"
 msgstr "نمی‌توان مکان را بارگیری کرد"
 
-#: ../src/fr-new-archive-dialog.c:349 ../src/fr-new-archive-dialog.c:368
-#: ../src/fr-new-archive-dialog.c:384 ../src/fr-new-archive-dialog.c:433
-#: ../src/fr-new-archive-dialog.c:451 ../src/fr-new-archive-dialog.c:473
-#: ../src/fr-window.c:3032
+#: ../src/fr-new-archive-dialog.c:335 ../src/fr-new-archive-dialog.c:354
+#: ../src/fr-new-archive-dialog.c:370 ../src/fr-new-archive-dialog.c:418
+#: ../src/fr-window.c:2868
 msgid "Could not create the archive"
-msgstr "نمی‌توان بایگانی را ایجاد کرد"
+msgstr "نمی‌توان آرشیو را ایجاد کرد"
 
-#: ../src/fr-new-archive-dialog.c:351 ../src/fr-new-archive-dialog.c:370
+#: ../src/fr-new-archive-dialog.c:337 ../src/fr-new-archive-dialog.c:356
 msgid "You have to specify an archive name."
-msgstr "باید نامی به بایگانی اختصاص دهید."
+msgstr "باید برای آرشیو نام انتخاب کنید."
 
-#: ../src/fr-new-archive-dialog.c:435
-msgid "You don’t have permission to create an archive in this folder"
-msgstr "شما اجازه‌ی ایجاد بایگانی در این پوشه را ندارید"
+#: ../src/fr-new-archive-dialog.c:420
+msgid "You don't have permission to create an archive in this folder"
+msgstr "شما اجازه‌ی ایجاد آرشیو در این پوشه را ندارد"
 
-#. Translators: the name references to a filename.  This message can appear when renaming a file.
-#: ../src/fr-new-archive-dialog.c:453 ../src/fr-window.c:8311
-msgid "New name is the same as old one, please type other name."
-msgstr "نام جدید هم‌مانند نام قبلی است، لطفا یک نام دیگر تایپ کنید."
-
-#: ../src/fr-new-archive-dialog.c:496
+#: ../src/fr-new-archive-dialog.c:439
 #, c-format
-msgid "A file named “%s” already exists.  Do you want to replace it?"
+msgid "A file named \"%s\" already exists.  Do you want to replace it?"
 msgstr "یک پرونده به نام «%s» از قبل وجود دارد. آیا می‌خواهید جایگزین‌اش کنید؟"
 
-#: ../src/fr-new-archive-dialog.c:497
+#: ../src/fr-new-archive-dialog.c:440
 #, c-format
 msgid ""
-"The file already exists in “%s”.  Replacing it will overwrite its contents."
-msgstr "پرونده از قبل در «%s» وجود دارد. جابجایی آن، محتویاتش را بازنویسی می‌کند."
+"The file already exists in \"%s\".  Replacing it will overwrite its contents."
+msgstr ""
+"پرونده از قبل در «%s» وجود دارد. جابجایی آن، محتویاتش را بازنویسی می‌کند."
 
-#: ../src/fr-new-archive-dialog.c:503 ../src/fr-window.c:6758
+#: ../src/fr-new-archive-dialog.c:447 ../src/fr-window.c:6616
 msgid "_Replace"
 msgstr "_جای‌گزینی"
 
-#: ../src/fr-new-archive-dialog.c:518
+#: ../src/fr-new-archive-dialog.c:462
 msgid "Could not delete the old archive."
-msgstr "نمی‌توان بایگانی قبلی را حذف کرد."
+msgstr "نمی‌توان آرشیو قبلی را حذف کرد"
 
-#: ../src/fr-window-actions-callbacks.c:289
-msgctxt "Window title"
-msgid "Open"
-msgstr "باز کردن"
+#: ../src/fr-stock.c:41
+msgid "C_reate"
+msgstr "ای_جاد شود"
 
-#: ../src/fr-window-actions-callbacks.c:302
-msgid "All archives"
-msgstr "همه‌ی بایگانی‌ها"
+#: ../src/fr-stock.c:42 ../src/fr-stock.c:43
+msgid "_Add"
+msgstr "ا_ضافه شود"
 
-#: ../src/fr-window-actions-callbacks.c:309
-msgid "All files"
-msgstr "همه‌ی پرونده‌ها"
+#: ../src/fr-stock.c:44
+msgid "_Extract"
+msgstr "ا_ستخراج شود"
 
-#: ../src/fr-window.c:1221
+#: ../src/fr-window.c:1126
 msgid "Operation completed"
 msgstr "عملیات کامل شد"
 
-#: ../src/fr-window.c:1634
+#: ../src/fr-window.c:1243
+#, c-format
+msgid "%d object (%s)"
+msgid_plural "%d objects (%s)"
+msgstr[0] "تنها %Id شئ (%s)"
+msgstr[1] "تعداد %Id شئ (%s)"
+
+#: ../src/fr-window.c:1248
+#, c-format
+msgid "%d object selected (%s)"
+msgid_plural "%d objects selected (%s)"
+msgstr[0] "تنها %Id شی انتخاب شد (%s)"
+msgstr[1] "تعداد %Id شی انتخاب شد (%s)"
+
+#: ../src/fr-window.c:1633
 msgid "Folder"
 msgstr "پوشه"
 
-#: ../src/fr-window.c:2024
+#: ../src/fr-window.c:2013
 msgid "[read only]"
 msgstr "[فقط خواندنی]"
 
-#: ../src/fr-window.c:2165
+#: ../src/fr-window.c:2132
 #, c-format
-msgid "Could not display the folder “%s”"
+msgid "Could not display the folder \"%s\""
 msgstr "امکان نمایش پرونده‌ی «%s» وجود ندارد"
 
 #. Translators: %s is a filename
-#: ../src/fr-window.c:2338 ../src/fr-window.c:2376
+#: ../src/fr-window.c:2223 ../src/fr-window.c:2261
 #, c-format
-msgid "Creating “%s”"
-msgstr "در حال ساختن «%s»"
+msgid "Creating \"%s\""
+msgstr "درحال ساختن «%s»"
 
 #. Translators: %s is a filename
-#: ../src/fr-window.c:2342
+#: ../src/fr-window.c:2227
 #, c-format
-msgid "Loading “%s”"
-msgstr "در حال بارگیری «%s»"
+msgid "Loading \"%s\""
+msgstr "درحال بارگیری «%s»"
 
 #. Translators: %s is a filename
-#: ../src/fr-window.c:2346
+#: ../src/fr-window.c:2231
 #, c-format
-msgid "Reading “%s”"
-msgstr "در حال خواندن «%s»"
+msgid "Reading \"%s\""
+msgstr "درحال خواندن «%s»"
 
 #. Translators: %s is a filename
-#: ../src/fr-window.c:2350
+#: ../src/fr-window.c:2235
 #, c-format
-msgid "Deleting the files from “%s”"
+msgid "Deleting the files from \"%s\""
 msgstr "در حال حذف پرونده‌ها از «%s»"
 
 #. Translators: %s is a filename
-#: ../src/fr-window.c:2354
+#: ../src/fr-window.c:2239
 #, c-format
-msgid "Testing “%s”"
-msgstr "در حال آزمایش کردن «%s»"
+msgid "Testing \"%s\""
+msgstr "درحال آزمایش کردن «%s»"
 
-#: ../src/fr-window.c:2357
+#: ../src/fr-window.c:2242
 msgid "Getting the file list"
 msgstr "در حال گرفتن فهرست پرونده‌ها"
 
 #. Translators: %s is a filename
-#: ../src/fr-window.c:2361
+#: ../src/fr-window.c:2246
 #, c-format
-msgid "Copying the files to add to “%s”"
-msgstr "در حال رونوشت از پرونده‌ها جهت اضافه کردن به «%s»"
+msgid "Copying the files to add to \"%s\""
+msgstr "درحال رونوشت از پرونده‌ها جهت اضافه کردن به «%s»"
 
 #. Translators: %s is a filename
-#: ../src/fr-window.c:2365
+#: ../src/fr-window.c:2250
 #, c-format
-msgid "Adding the files to “%s”"
-msgstr "در حال اضافه کردن پرونده‌ها به «%s»"
+msgid "Adding the files to \"%s\""
+msgstr "درحال اضافه کردن پرونده‌ها به «%s»"
 
 #. Translators: %s is a filename
-#: ../src/fr-window.c:2369
+#: ../src/fr-window.c:2254
 #, c-format
-msgid "Extracting the files from “%s”"
-msgstr "در حال استخراج پرونده‌ها از «%s»"
+msgid "Extracting the files from \"%s\""
+msgstr "درحال استخراج پرونده‌ها از «%s»"
 
-#: ../src/fr-window.c:2372
+#: ../src/fr-window.c:2257
 msgid "Copying the extracted files to the destination"
-msgstr "در حال رونشت پرونده‌های استخراج شده به مقصد"
+msgstr "درحال رونشت پرونده‌های استخراج شده به مقصد"
 
 #. Translators: %s is a filename
-#: ../src/fr-window.c:2381
+#: ../src/fr-window.c:2266
 #, c-format
-msgid "Saving “%s”"
-msgstr "در حال ذخیره «%s»"
+msgid "Saving \"%s\""
+msgstr "درحال ذخیره «%s»"
 
 #. Translators: %s is a filename
-#: ../src/fr-window.c:2388
+#: ../src/fr-window.c:2273
 #, c-format
-msgid "Renaming the files in “%s”"
-msgstr "در حال نامگذاری مجدد پرونده‌ها در «%s»"
+msgid "Renaming the files in \"%s\""
+msgstr "درحال نامگذاری مجدد پرونده‌ها در «%s»"
 
 #. Translators: %s is a filename
-#: ../src/fr-window.c:2392
+#: ../src/fr-window.c:2277
 #, c-format
-msgid "Updating the files in “%s”"
+msgid "Updating the files in \"%s\""
 msgstr "بروزرسانی پرونده‌های درون «%s»"
 
-#: ../src/fr-window.c:2681
+#: ../src/fr-window.c:2452
+msgid "_Open the Archive"
+msgstr "_باز کردن آرشیو"
+
+#: ../src/fr-window.c:2453
+msgid "_Show the Files"
+msgstr "_نمایش پرونده‌ها"
+
+#: ../src/fr-window.c:2570
 #, c-format
 msgid "%d file remaining"
 msgid_plural "%'d files remaining"
 msgstr[0] "%Id پرونده باقیمانده است"
 msgstr[1] "%Id پرونده باقیمانده است"
 
-#: ../src/fr-window.c:2685 ../src/fr-window.c:3309
+#: ../src/fr-window.c:2574 ../src/fr-window.c:3153
 msgid "Please wait…"
-msgstr "لطفا صبر کنید…"
+msgstr "لطفا صبر کنید..."
 
-#: ../src/fr-window.c:2803
+#: ../src/fr-window.c:2630
 msgid "Extraction completed successfully"
 msgstr "استخراج با موفقیت تکمیل شد"
 
-#: ../src/fr-window.c:2806
-msgid "_Show the Files"
-msgstr "_نمایش پرونده‌ها"
-
 #. Translators: %s is a filename
-#: ../src/fr-window.c:2823 ../src/fr-window.c:6266
+#: ../src/fr-window.c:2662 ../src/fr-window.c:6205
 #, c-format
-msgid "“%s” created successfully"
+msgid "\"%s\" created successfully"
 msgstr "«%s» با موفقیت ساخته شد"
 
-#: ../src/fr-window.c:2830
-msgid "_Open the Archive"
-msgstr "_باز کردن بایگانی"
-
-#: ../src/fr-window.c:2918 ../src/fr-window.c:3088
+#: ../src/fr-window.c:2752 ../src/fr-window.c:2924
 msgid "Command exited abnormally."
 msgstr "فرمان به‌طور غيرطبيعی خارج شد."
 
-#: ../src/fr-window.c:3037
+#: ../src/fr-window.c:2873
 msgid "An error occurred while extracting files."
 msgstr "هنگام استخراج پرونده‌ها خطایی رخ داد."
 
-#: ../src/fr-window.c:3043
+#: ../src/fr-window.c:2879
 #, c-format
-msgid "Could not open “%s”"
+msgid "Could not open \"%s\""
 msgstr "امکان باز کردن «%s» وجود ندارد"
 
-#: ../src/fr-window.c:3048
+#: ../src/fr-window.c:2884
 msgid "An error occurred while loading the archive."
-msgstr "هنگام بارکردن بایگانی خطایی رخ داد."
+msgstr "هنگام بارکردن آرشیو خطایی رخ داد."
 
-#: ../src/fr-window.c:3052
+#: ../src/fr-window.c:2888
 msgid "An error occurred while deleting files from the archive."
-msgstr "هنگام حذف پرونده‌ها از بایگانی، خطایی رخ داد."
+msgstr "هنگام حذف پرونده‌ها از آرشیو، خطایی رخ داد."
 
-#: ../src/fr-window.c:3058
+#: ../src/fr-window.c:2894
 msgid "An error occurred while adding files to the archive."
-msgstr "هنگام اضافه کردن پرونده‌ها به بایگانی، خطایی رخ داد."
+msgstr "هنگام اضافه کردن پرونده‌ها به آرشیو، خطایی رخ داد."
 
-#: ../src/fr-window.c:3062
+#: ../src/fr-window.c:2898
 msgid "An error occurred while testing archive."
-msgstr "هنگام آزمایش بایگانی، خطایی رخ داد."
+msgstr "هنگام آزمایش آرشیو، خطایی رخ داد"
 
-#: ../src/fr-window.c:3067
+#: ../src/fr-window.c:2903
 msgid "An error occurred while saving the archive."
-msgstr "خطایی هنگام ذخیره کردن بایگانی رخ داد."
+msgstr "خطایی هنگام ذخیره کردن آرشیو رخ داد."
 
-#: ../src/fr-window.c:3071
+#: ../src/fr-window.c:2907
 msgid "An error occurred while renaming the files."
 msgstr "یک خزا هنگام نامگذاری مجدد پرونده رُخ داد."
 
-#: ../src/fr-window.c:3075
+#: ../src/fr-window.c:2911
 msgid "An error occurred while updating the files."
 msgstr "هنگام بروزرسانی پرونده‌ها خطایی رُخ داد."
 
-#: ../src/fr-window.c:3079
+#: ../src/fr-window.c:2915
 msgid "An error occurred."
 msgstr "خطایی رخ داد."
 
-#: ../src/fr-window.c:3085
+#: ../src/fr-window.c:2921
 msgid "Command not found."
 msgstr "فرمان یافت نشد."
 
-#: ../src/fr-window.c:3241
+#: ../src/fr-window.c:3081
 msgid "Test Result"
 msgstr "نتیجه‌ی آزمایش"
 
-#: ../src/fr-window.c:4212 ../src/fr-window.c:8995 ../src/fr-window.c:9029
-#: ../src/fr-window.c:9309
+#: ../src/fr-window.c:4045 ../src/fr-window.c:8751 ../src/fr-window.c:8785
+#: ../src/fr-window.c:9064
 msgid "Could not perform the operation"
 msgstr "نمی‌توان عملیات را انجام داد"
 
-#: ../src/fr-window.c:4237
+#: ../src/fr-window.c:4071
 msgid ""
 "Do you want to add this file to the current archive or open it as a new "
 "archive?"
 msgstr ""
-"آیا می‌خواهید این پرونده را به بایگانی فعلی اضافه ‌کنید یا به شکل بایگانی جدیدی "
+"آیا می‌خواهید این پرونده را به آرشیو فعلی اضافه ‌کنید یا به شکل آرشیو جدیدی "
 "بازش می‌کنید؟"
 
-#: ../src/fr-window.c:4266
+#: ../src/fr-window.c:4101
 msgid "Do you want to create a new archive with these files?"
-msgstr "آیا می‌خواهید بایگانی جدیدی با این پرونده‌ها ایجاد کنید؟"
+msgstr "آیا می‌خواهید آرشیو جدیدی با این پرونده‌ها ایجاد کنید؟"
 
-#: ../src/fr-window.c:4269
+#: ../src/fr-window.c:4104
 msgid "Create _Archive"
-msgstr "ایجاد _بایگانی"
+msgstr "آر_شیو ایجاد شود"
 
-#: ../src/fr-window.c:4298 ../src/fr-window.c:7448
+#: ../src/fr-window.c:4133 ../src/fr-window.c:7212
 msgid "New Archive"
-msgstr "بایگانی جدید"
+msgstr "آرشیو جدید"
 
-#: ../src/fr-window.c:5016
+#: ../src/fr-window.c:4706
 msgid "Folders"
 msgstr "پوشه‌ها"
 
-#: ../src/fr-window.c:5054 ../src/ui/file-selector.ui.h:7
+#: ../src/fr-window.c:4744 ../src/ui/file-selector.ui.h:5
 msgctxt "File"
 msgid "Size"
 msgstr "اندازه"
 
-#: ../src/fr-window.c:5055
+#: ../src/fr-window.c:4745
 msgctxt "File"
 msgid "Type"
 msgstr "نوع"
 
-#: ../src/fr-window.c:5056 ../src/ui/file-selector.ui.h:8
+#: ../src/fr-window.c:4746 ../src/ui/file-selector.ui.h:6
 msgctxt "File"
 msgid "Modified"
-msgstr "تغییر داده شده"
+msgstr "تغییر داده شده [ پرونده ]"
 
-#: ../src/fr-window.c:5057
+#: ../src/fr-window.c:4747
 msgctxt "File"
 msgid "Location"
 msgstr "مکان"
 
-#: ../src/fr-window.c:5066 ../src/ui/file-selector.ui.h:6
+#: ../src/fr-window.c:4756 ../src/ui/file-selector.ui.h:4
 msgctxt "File"
 msgid "Name"
 msgstr "نام"
 
-#: ../src/fr-window.c:5820 ../src/ui/extract-dialog-options.ui.h:1
-msgctxt "Action"
-msgid "Extract"
-msgstr "استخراج"
+#. Translators: this is the label for the "open recent file" sub-menu.
+#: ../src/fr-window.c:5666
+msgid "Open _Recent"
+msgstr "باز کردن موارد ا_خیر"
 
-#: ../src/fr-window.c:5824
-msgctxt "Action"
-msgid "Add Files"
-msgstr "اضافه کردن پرونده‌ها"
+#: ../src/fr-window.c:5667 ../src/fr-window.c:5679
+msgid "Open a recently used archive"
+msgstr "باز کردن یک آرشیو به‌کاررفته‌ی اخیر "
 
-#: ../src/fr-window.c:5829 ../src/fr-window.c:5859
-msgid "Find files by name"
-msgstr "پیدا کردن پرونده براساس نام"
+#: ../src/fr-window.c:5695
+#| msgid "_Other Options"
+msgid "_Other Actions"
+msgstr "_کنش‌های دیگر"
 
-#: ../src/fr-window.c:5876
-msgid "Go to the previous visited location"
-msgstr "رفتن به مکان بازدید شده‌ی قبلی"
-
-#: ../src/fr-window.c:5881
-msgid "Go to the next visited location"
-msgstr "رفتن به مکان بازدید شده‌ی بعدی"
-
-#: ../src/fr-window.c:5891
-msgid "Go to the home location"
-msgstr "رفتن به مکان آغازه"
+#: ../src/fr-window.c:5696
+#| msgid "_Other Options"
+msgid "Other actions"
+msgstr "کنش‌های دیگر"
 
 #. Translators: after the colon there is a folder name.
-#: ../src/fr-window.c:5900 ../src/ui/file-selector.ui.h:4
+#: ../src/fr-window.c:5760 ../src/ui/file-selector.ui.h:1
 #: ../src/ui/new-archive-dialog.ui.h:2
 msgid "_Location:"
 msgstr "_مکان:"
 
-#: ../src/fr-window.c:6280 ../src/ui/menus.ui.h:1
-msgctxt "Action"
-msgid "Open"
-msgstr "باز کردن"
-
-#: ../src/fr-window.c:6747
+#: ../src/fr-window.c:6604
 #, c-format
-msgid "Replace file “%s”?"
+msgid "Replace file \"%s\"?"
 msgstr "جای‌گزینی پرونده‌ی «%s»؟"
 
-#: ../src/fr-window.c:6750
+#: ../src/fr-window.c:6607
 #, c-format
-msgid "Another file with the same name already exists in “%s”."
+msgid "Another file with the same name already exists in \"%s\"."
 msgstr "پرونده‌ای با نام مشابه از قبل در «%s» وجود دارد."
 
-#: ../src/fr-window.c:6756
+#: ../src/fr-window.c:6614
 msgid "Replace _All"
 msgstr "جای‌گزینی _همه"
 
-#: ../src/fr-window.c:6757
+#: ../src/fr-window.c:6615
 msgid "_Skip"
 msgstr "_پرش"
 
-#: ../src/fr-window.c:7632 ../src/fr-window.c:7989
+#: ../src/fr-window.c:7394 ../src/fr-window.c:7750
 #, c-format
-msgid "Could not save the archive “%s”"
-msgstr "نمی‌توان بایگانی «%s» را ذخیره کرد."
+msgid "Could not save the archive \"%s\""
+msgstr "نمی‌توان آرشیو «%s» را ذخیره کرد."
 
-#: ../src/fr-window.c:7759
+#: ../src/fr-window.c:7521
 msgid "Save"
 msgstr "ذخیره"
 
-#: ../src/fr-window.c:8083
+#: ../src/fr-window.c:7844
 msgid "Last Output"
 msgstr "آخرین خروجی"
 
 #. Translators: the name references to a filename.  This message can appear when renaming a file.
-#: ../src/fr-window.c:8306
+#: ../src/fr-window.c:8066
 msgid "New name is void, please type a name."
 msgstr "نام جدید بی‌اعتبار است، لطفا یک نام وارد کنید."
 
+#. Translators: the name references to a filename.  This message can appear when renaming a file.
+#: ../src/fr-window.c:8071
+msgid "New name is the same as old one, please type other name."
+msgstr "نام جدید هم‌مانند نام قبلی است، لطفا یک نام دیگر تایپ کنید."
+
 #. Translators: the %s references to a filename.  This message can appear when renaming a file.
-#: ../src/fr-window.c:8316
+#: ../src/fr-window.c:8076
 #, c-format
 msgid ""
-"Name “%s” is not valid because it contains at least one of the following "
+"Name \"%s\" is not valid because it contains at least one of the following "
 "characters: %s, please type other name."
 msgstr ""
-"نام «%s» معتبر نیست چون حداقل حاوی یکی از این نویسه‌هاست: %s، لطفا یک نام دیگر "
-"تایپ کنید."
+"نام «%s» معتبر نیست چون حداقل حاوی یکی از این نویسه‌هاست: %s، لطفا یک نام "
+"دیگر تایپ کنید."
 
-#: ../src/fr-window.c:8352
+#: ../src/fr-window.c:8112
 #, c-format
 msgid ""
-"A folder named “%s” already exists.\n"
+"A folder named \"%s\" already exists.\n"
 "\n"
 "%s"
 msgstr ""
@@ -922,14 +960,14 @@ msgstr ""
 "\n"
 "‏%s"
 
-#: ../src/fr-window.c:8352 ../src/fr-window.c:8354
+#: ../src/fr-window.c:8112 ../src/fr-window.c:8114
 msgid "Please use a different name."
 msgstr "لطفاً از نام دیگری استفاده کنید."
 
-#: ../src/fr-window.c:8354
+#: ../src/fr-window.c:8114
 #, c-format
 msgid ""
-"A file named “%s” already exists.\n"
+"A file named \"%s\" already exists.\n"
 "\n"
 "%s"
 msgstr ""
@@ -937,104 +975,68 @@ msgstr ""
 "\n"
 "‏%s"
 
-#: ../src/fr-window.c:8424
+#: ../src/fr-window.c:8184
 msgid "Rename"
 msgstr "تغییر نام"
 
-#: ../src/fr-window.c:8425
+#: ../src/fr-window.c:8185
 msgid "_New folder name:"
 msgstr "نام پوشه‌ی _جدید:"
 
-#: ../src/fr-window.c:8425
+#: ../src/fr-window.c:8185
 msgid "_New file name:"
 msgstr "نام پرونده‌ی _جدید:"
 
-#: ../src/fr-window.c:8429
+#: ../src/fr-window.c:8189
 msgid "_Rename"
 msgstr "_تغییر نام"
 
-#: ../src/fr-window.c:8446 ../src/fr-window.c:8464
+#: ../src/fr-window.c:8206 ../src/fr-window.c:8225
 msgid "Could not rename the folder"
 msgstr "نمی‌توان نام پوشه را تغییر داد"
 
-#: ../src/fr-window.c:8446 ../src/fr-window.c:8464
+#: ../src/fr-window.c:8206 ../src/fr-window.c:8225
 msgid "Could not rename the file"
-msgstr "نمی‌توان نام پرونده را تغییر داد"
+msgstr "نمی‌توان نام پرونده را تغییر داد."
 
 #. Translators: %s are archive filenames
-#: ../src/fr-window.c:8902
+#: ../src/fr-window.c:8658
 #, c-format
-msgid "Moving the files from “%s” to “%s”"
+msgid "Moving the files from \"%s\" to \"%s\""
 msgstr "جایجایی پرونده‌ها از «%s» به «%s»"
 
 #. Translators: %s are archive filenames
-#: ../src/fr-window.c:8905
+#: ../src/fr-window.c:8661
 #, c-format
-msgid "Copying the files from “%s” to “%s”"
-msgstr "در حال رونوشت پرونده‌ها از «%s» به «%s»"
+msgid "Copying the files from \"%s\" to \"%s\""
+msgstr "درحال رونوشت پرونده‌ها از «%s» به «%s»"
 
-#: ../src/fr-window.c:8956
+#: ../src/fr-window.c:8712
 msgid "Paste Selection"
-msgstr "جای‌گذاری انتخاب"
+msgstr "چسباندن انتخاب"
 
-#: ../src/fr-window.c:8957
+#: ../src/fr-window.c:8713
 msgid "_Destination folder:"
 msgstr "پوشه‌ی _مقصد:"
 
-#: ../src/fr-window.c:8961 ../src/ui/app-menubar.ui.h:12
-msgid "_Paste"
-msgstr "_جای‌گذاری"
+#: ../src/fr-window.c:9308
+msgid "Add files to an archive"
+msgstr "اضافه کردن پرونده‌ها به آرشیو"
 
 #. This is the time format used in the "Date Modified" column and
 #. * in the Properties dialog.  See the man page of strftime for an
 #. * explanation of the values.
-#: ../src/glib-utils.c:769
+#: ../src/glib-utils.c:765
 msgid "%d %B %Y, %H:%M"
 msgstr "%Od %B %Oy، %OH:%OM"
 
-#: ../src/gtk-utils.c:235
-msgid "C_ommand Line Output:"
-msgstr "خروجی _خط فرمان:"
-
-#: ../src/gtk-utils.c:510
+#: ../src/gtk-utils.c:557
 msgid "Could not display help"
 msgstr "نمی‌توان راهنما را نمایش داد"
 
-#: ../src/gtk-utils.c:605
-msgid "Change password visibility"
-msgstr "تغییر وضعیت نمایان گذرواژه"
-
-#: ../src/gtk-utils.h:29
-msgid "_Add"
-msgstr "ا_فزودن"
-
-#: ../src/gtk-utils.h:30
-msgid "_Cancel"
-msgstr "_لغو"
-
-#: ../src/gtk-utils.h:31 ../src/ui/app-menubar.ui.h:8
-msgid "_Close"
-msgstr "_بستن"
-
-#: ../src/gtk-utils.h:32
-msgid "C_reate"
-msgstr "_ایجاد"
-
-#: ../src/gtk-utils.h:33
-msgid "_Extract"
-msgstr "ا_ستخراج"
-
-#: ../src/gtk-utils.h:34
-msgid "_Open"
-msgstr "_گشودن"
-
-#: ../src/gtk-utils.h:35
-msgid "_Save"
-msgstr "_ذخیره"
-
 #: ../src/ui/add-dialog-options.ui.h:1
 msgid "Add"
-msgstr "افزودن"
+msgstr "اضافه"
 
 #: ../src/ui/add-dialog-options.ui.h:2
 msgid "Include _files:"
@@ -1064,125 +1066,62 @@ msgstr "فقط در صورت _جدیدتر بودن اضافه شود"
 msgid "_Follow symbolic links"
 msgstr "_دنبال کردن پیوندهای نمادین"
 
-#: ../src/ui/app-menubar.ui.h:1
-msgid "_File"
-msgstr "_پرونده"
+#: ../src/ui/app-menu.ui.h:1
+msgid "_New Archive"
+msgstr "آر_شیو جدید"
 
-#: ../src/ui/app-menubar.ui.h:2 ../src/ui/app-menu.ui.h:1
-msgid "_New Archive…"
-msgstr "بایگانی _جدید…"
-
-#: ../src/ui/app-menubar.ui.h:3 ../src/ui/app-menu.ui.h:2
-msgid "_Open…"
-msgstr "بازکردن…"
-
-#: ../src/ui/app-menubar.ui.h:4
-msgid "_Extract Files…"
-msgstr "ا_ستخراج پرونده‌ها…"
-
-#: ../src/ui/app-menubar.ui.h:5
-msgid "Save _As…"
-msgstr "ذخیره به _نام…"
-
-#: ../src/ui/app-menubar.ui.h:6 ../src/ui/gears-menu.ui.h:3
-msgid "_Test Integrity"
-msgstr "آ_زمایش صحت "
-
-#: ../src/ui/app-menubar.ui.h:7 ../src/ui/gears-menu.ui.h:4
-msgid "Properties"
-msgstr "ویژگی‌ها"
-
-#: ../src/ui/app-menubar.ui.h:9
-msgid "_Edit"
-msgstr "_ویرایش"
-
-#: ../src/ui/app-menubar.ui.h:10
-msgid "Cu_t"
-msgstr "_بریدن"
-
-#: ../src/ui/app-menubar.ui.h:11
-msgid "_Copy"
-msgstr "_رونوشت"
-
-#: ../src/ui/app-menubar.ui.h:13
-msgid "_Add Files…"
-msgstr "_اضافه کردن پرونده‌ها…"
-
-#: ../src/ui/app-menubar.ui.h:14 ../src/ui/menus.ui.h:7
-msgid "_Rename…"
-msgstr "_تغییر نام…"
-
-#: ../src/ui/app-menubar.ui.h:15
-msgid "_Delete Files…"
-msgstr "_حذف پرونده‌ها…"
-
-#: ../src/ui/app-menubar.ui.h:16 ../src/ui/file-selector.ui.h:1
-msgid "_Select All"
-msgstr "انتخاب _همه"
-
-#: ../src/ui/app-menubar.ui.h:17
-msgid "D_eselect All"
-msgstr "انتخاب _نکردن همه"
-
-#: ../src/ui/app-menubar.ui.h:18
-msgid "_Find"
-msgstr "_پیدا کردن"
-
-#: ../src/ui/app-menubar.ui.h:19
-msgid "Set Pass_word…"
-msgstr "تنظیم _گذرواژه…"
-
-#: ../src/ui/app-menubar.ui.h:20
-msgid "_View"
-msgstr "_نما"
-
-#: ../src/ui/app-menubar.ui.h:21 ../src/ui/app-menu.ui.h:5
-msgid "Sidebar"
-msgstr "نوار کناری"
-
-#: ../src/ui/app-menubar.ui.h:22 ../src/ui/app-menu.ui.h:3
+#: ../src/ui/app-menu.ui.h:3 ../src/ui.h:213
 msgid "View All _Files"
 msgstr "نمایش همه‌ی _پرونده‌ها"
 
-#: ../src/ui/app-menubar.ui.h:23 ../src/ui/app-menu.ui.h:4
+#: ../src/ui/app-menu.ui.h:4 ../src/ui.h:216
 msgid "View as a F_older"
 msgstr "نمایش به شکل پو_شه"
 
-#: ../src/ui/app-menubar.ui.h:24 ../src/ui/app-menu.ui.h:6
+#: ../src/ui/app-menu.ui.h:5 ../src/ui.h:197
+msgid "_Folders"
+msgstr "_پوشه‌ها"
+
+#: ../src/ui/app-menu.ui.h:6
 msgid "_Help"
 msgstr "_راهنما"
 
-#: ../src/ui/app-menubar.ui.h:25
-msgid "Contents"
-msgstr "محتویات"
-
-#: ../src/ui/app-menubar.ui.h:26 ../src/ui/app-menu.ui.h:7
-msgid "_About"
-msgstr "_درباره"
+#: ../src/ui/app-menu.ui.h:7
+msgid "_About Archive Manager"
+msgstr "_درباره مدیر آرشیو"
 
 #: ../src/ui/app-menu.ui.h:8
 msgid "_Quit"
 msgstr "_خروج"
 
-#: ../src/ui/ask-password.ui.h:1 ../src/ui/new-archive-dialog.ui.h:4
+#: ../src/ui/ask-password.ui.h:1 ../src/ui/new-archive-dialog-options.ui.h:1
+#: ../src/ui/new-archive-dialog.ui.h:4
 msgid "_Password:"
 msgstr "_گذرواژه:"
 
-#: ../src/ui/delete.ui.h:1 ../src/ui/extract-dialog-options.ui.h:2
-msgid "_All files"
-msgstr "_همه‌ی پرونده‌ها"
+#: ../src/ui/delete.ui.h:1
+msgid "Delete"
+msgstr "حذف"
 
-#: ../src/ui/delete.ui.h:2 ../src/ui/extract-dialog-options.ui.h:3
-msgid "_Selected files"
-msgstr "پرونده‌های انت_خاب شده"
-
-#: ../src/ui/delete.ui.h:3 ../src/ui/extract-dialog-options.ui.h:4
+#: ../src/ui/delete.ui.h:2 ../src/ui/extract-dialog-options.ui.h:4
 msgid "_Files:"
 msgstr "_پرونده‌ها:"
 
-#: ../src/ui/delete.ui.h:4
+#: ../src/ui/delete.ui.h:3
 msgid "example: *.txt; *.doc"
 msgstr "مثال: *.txt؛ *.doc"
+
+#: ../src/ui/delete.ui.h:4 ../src/ui/extract-dialog-options.ui.h:2
+msgid "_All files"
+msgstr "_همه‌ی پرونده‌ها"
+
+#: ../src/ui/delete.ui.h:5 ../src/ui/extract-dialog-options.ui.h:3
+msgid "_Selected files"
+msgstr "پرونده‌های انت_خاب شده"
+
+#: ../src/ui/error-dialog.ui.h:1
+msgid "C_ommand Line Output:"
+msgstr "خروجی _خط فرمان"
 
 #: ../src/ui/extract-dialog-options.ui.h:7
 msgid "_Keep directory structure"
@@ -1192,49 +1131,205 @@ msgstr "_نگاه داشتن ساختار شاخه"
 msgid "Do not _overwrite newer files"
 msgstr "پرونده‌های جدیدتر _رونویسی نشوند"
 
-#: ../src/ui/file-selector.ui.h:2
-msgid "Dese_lect All"
-msgstr "انتخاب _نکردن همه"
-
-#: ../src/ui/file-selector.ui.h:3
-msgid "Show Hidden Files"
-msgstr "نمایش پرونده‌های مخفی"
-
-#: ../src/ui/file-selector.ui.h:5
+#: ../src/ui/file-selector.ui.h:2 ../src/ui.h:179
 msgid "Go up one level"
 msgstr "یک سطر بالا رفتن"
 
-#: ../src/ui/gears-menu.ui.h:1
-msgid "Save As…"
-msgstr "ذخیره با نام…"
+#: ../src/ui/file-selector.ui.h:3
+msgid "Places"
+msgstr "مکان‌ها"
 
-#: ../src/ui/gears-menu.ui.h:2
-msgid "Pass_word…"
-msgstr "_گذرواژه…"
+#: ../src/ui/file-selector.ui.h:7
+msgid "_Select All"
+msgstr "انتخاب _همه"
 
-#: ../src/ui/menus.ui.h:2
-msgid "_Open With…"
-msgstr "با_ز کردن با…"
+#: ../src/ui/file-selector.ui.h:8 ../src/ui.h:97
+msgid "Dese_lect All"
+msgstr "انتخاب _نکردن همه"
 
-#: ../src/ui/menus.ui.h:3
+#: ../src/ui/file-selector.ui.h:9
+msgid "Show Hidden Files"
+msgstr "نمایش پرونده‌های مخفی"
+
+#: ../src/ui.h:35
+msgid "Information about the program"
+msgstr "اطلاعاتی درباره‌ی این برنامه"
+
+#: ../src/ui.h:38
+msgid "_Add Files…"
+msgstr "_اضافه کردن پرونده‌ها..."
+
+#: ../src/ui.h:39 ../src/ui.h:43
+msgid "Add files to the archive"
+msgstr "اضافه کردن پرونده‌ها به آرشیو"
+
+#: ../src/ui.h:47
+msgid "Close the current archive"
+msgstr "بستن آرشیو فعلی"
+
+#: ../src/ui.h:50
+msgid "Contents"
+msgstr "محتویات"
+
+#: ../src/ui.h:51
+msgid "Display the File Roller Manual"
+msgstr "نمایش صفحه‌ی راهنمای پرونده‌پیچ"
+
+#: ../src/ui.h:56 ../src/ui.h:77
+msgid "Copy the selection"
+msgstr "نسخه‌برداری از انتخاب شده‌ها"
+
+#: ../src/ui.h:60 ../src/ui.h:81
+msgid "Cut the selection"
+msgstr "برش انتخاب شده‌ها"
+
+#: ../src/ui.h:64 ../src/ui.h:85
+msgid "Paste the clipboard"
+msgstr "چسباندن تخته‌گیره"
+
+#: ../src/ui.h:67 ../src/ui.h:88
+msgid "_Rename…"
+msgstr "_تغییر نام..."
+
+#: ../src/ui.h:68 ../src/ui.h:89
+msgid "Rename the selection"
+msgstr "تغییر نام انتخاب شده‌ها"
+
+#: ../src/ui.h:72 ../src/ui.h:93
+msgid "Delete the selection from the archive"
+msgstr "حذف انتخاب شده‌ها از آرشیو"
+
+#: ../src/ui.h:98
+msgid "Deselect all files"
+msgstr "انتخاب نکردن همه پرونده‌ها"
+
+#: ../src/ui.h:101 ../src/ui.h:105
 msgid "_Extract…"
-msgstr "ا_ستخراج…"
+msgstr "ا_ستخراج..."
 
-#: ../src/ui/menus.ui.h:4
-msgid "Cut"
-msgstr "بریدن"
+#: ../src/ui.h:102 ../src/ui.h:106 ../src/ui.h:110
+msgid "Extract files from the archive"
+msgstr "استخراج پرونده‌ها از آرشیو"
 
-#: ../src/ui/menus.ui.h:5
-msgid "Copy"
-msgstr "رونوشت"
+#: ../src/ui.h:113
+msgid "New…"
+msgstr "جدید..."
 
-#: ../src/ui/menus.ui.h:6
-msgid "Paste"
-msgstr "جای‌گذاری"
+#: ../src/ui.h:114
+msgid "Create a new archive"
+msgstr "ایجاد آرشیو جدید"
 
-#: ../src/ui/menus.ui.h:8
-msgid "Delete"
-msgstr "حذف"
+#: ../src/ui.h:117
+msgid "Open…"
+msgstr "باز کردن..."
+
+#: ../src/ui.h:118 ../src/ui.h:122
+msgid "Open archive"
+msgstr "باز کردن آرشیو"
+
+#: ../src/ui.h:125
+msgid "_Open With…"
+msgstr "با_ز کردن با..."
+
+#: ../src/ui.h:126
+msgid "Open selected files with an application"
+msgstr "باز کردن پرونده‌های انتخاب شده با یک برنامه"
+
+#: ../src/ui.h:129
+msgid "Pass_word…"
+msgstr "_گذرواژه"
+
+#: ../src/ui.h:130
+msgid "Specify a password for this archive"
+msgstr "مشخص کردن گذرواژه برای این آرشیو"
+
+#: ../src/ui.h:134
+msgid "Show archive properties"
+msgstr "نمایش ویژگی‌های آرشیو"
+
+#: ../src/ui.h:138
+msgid "Reload current archive"
+msgstr "بارکردن مجدد آرشیو فعلی"
+
+#: ../src/ui.h:141
+msgid "Save As…"
+msgstr "ذخیره با نام..."
+
+#: ../src/ui.h:142
+msgid "Save the current archive with a different name"
+msgstr "ذخیره‌ی آرشیو فعلی با نامی دیگر"
+
+#: ../src/ui.h:146
+msgid "Select all files"
+msgstr "انتخاب همه‌ی پرونده‌ها"
+
+#: ../src/ui.h:149
+msgid "_Test Integrity"
+msgstr "آ_زمایش صحت "
+
+#: ../src/ui.h:150
+msgid "Test whether the archive contains errors"
+msgstr "آزمایش وجود خطا در آرشیو"
+
+#: ../src/ui.h:154 ../src/ui.h:158
+msgid "Open the selected file"
+msgstr "بازکردن پرونده‌‌ی انتخاب‌شده"
+
+#: ../src/ui.h:162 ../src/ui.h:166
+msgid "Open the selected folder"
+msgstr "بازکردن پوشه‌ی انتخاب‌شده"
+
+#: ../src/ui.h:171
+msgid "Go to the previous visited location"
+msgstr "رفتن به مکان بازدید شده‌ی قبلی"
+
+#: ../src/ui.h:175
+msgid "Go to the next visited location"
+msgstr "رفتن به مکان بازدید شده‌ی بعدی"
+
+#. Translators: the home location is the home folder.
+#: ../src/ui.h:184
+msgid "Go to the home location"
+msgstr "رفتن به مکان آغازه"
+
+#: ../src/ui.h:192
+msgid "Stat_usbar"
+msgstr "نوار و_ضعیت"
+
+#: ../src/ui.h:193
+msgid "View the statusbar"
+msgstr "نمایش نوار وضعیت"
+
+#: ../src/ui.h:202
+msgid "Find…"
+msgstr "پیدا کردن..."
+
+#: ../src/ui.h:203
+#| msgid "_New file name:"
+msgid "Find files by name"
+msgstr "پیدا کردن پرونده براساس نام"
+
+#: ../src/ui/new-archive-dialog-options.ui.h:2
+#: ../src/ui/new-archive-dialog.ui.h:5
+msgid "_Encrypt the file list too"
+msgstr "_فهرست پرونده‌ها هم رمزنگاری شود"
+
+#. this is part of a sentence, for example "split into volumes of 10.0 MB", where MB stands for megabyte.
+#: ../src/ui/new-archive-dialog-options.ui.h:3
+#: ../src/ui/new-archive-dialog.ui.h:7
+msgid "Split into _volumes of"
+msgstr "تقسیم بر _جلدهای"
+
+#. MB means megabytes
+#: ../src/ui/new-archive-dialog-options.ui.h:5
+#: ../src/ui/new-archive-dialog.ui.h:9
+msgid "MB"
+msgstr "مگابایت"
+
+#: ../src/ui/new-archive-dialog-options.ui.h:6
+#: ../src/ui/new-archive-dialog.ui.h:10
+msgid "_Other Options"
+msgstr "_گزینه‌های دیگر"
 
 #: ../src/ui/new-archive-dialog.ui.h:1
 msgid "_Filename:"
@@ -1244,29 +1339,11 @@ msgstr "_نام پرونده:"
 msgid "Location"
 msgstr "مکان"
 
-#: ../src/ui/new-archive-dialog.ui.h:5
-msgid "_Encrypt the file list too"
-msgstr "_فهرست پرونده‌ها هم رمزنگاری شود"
-
-#. this is part of a sentence, for example "split into volumes of 10.0 MB", where MB stands for megabyte.
-#: ../src/ui/new-archive-dialog.ui.h:7
-msgid "Split into _volumes of"
-msgstr "تقسیم بر _جلدهای"
-
-#: ../src/ui/new-archive-dialog.ui.h:8
-msgid "10,0"
-msgstr "10,0"
-
-#. MB means megabytes
-#: ../src/ui/new-archive-dialog.ui.h:10
-msgid "MB"
-msgstr "مگابایت"
-
-#: ../src/ui/new-archive-dialog.ui.h:11
-msgid "_Other Options"
-msgstr "_گزینه‌های دیگر"
-
 #: ../src/ui/password.ui.h:1
+msgid "Password"
+msgstr "گذرواژه"
+
+#: ../src/ui/password.ui.h:2
 msgid "_Encrypt the file list"
 msgstr "_رمزنگاری فهرست پرونده‌ها"
 
@@ -1275,223 +1352,43 @@ msgctxt "File"
 msgid "Name:"
 msgstr "نام:"
 
+#: ../src/ui/properties.ui.h:2
+msgid "Archive size:"
+msgstr "اندازه‌ی آرشیو:"
+
 #. after the colon there is a folder name.
-#: ../src/ui/properties.ui.h:3
+#: ../src/ui/properties.ui.h:4
 msgid "Location:"
 msgstr "مکان:"
 
-#. after the colon there is a file type.
 #: ../src/ui/properties.ui.h:5
-msgid "Type:"
-msgstr "نوع:"
+msgid "Compression ratio:"
+msgstr "ضریب فشردگی:"
 
 #: ../src/ui/properties.ui.h:6
 msgid "Last modified:"
 msgstr "تاریخ آخرین تغییر:"
 
 #: ../src/ui/properties.ui.h:7
-msgid "Archive size:"
-msgstr "اندازه‌ی بایگانی:"
-
-#: ../src/ui/properties.ui.h:8
 msgid "Content size:"
 msgstr "اندازه‌ی محتویات:"
 
-#: ../src/ui/properties.ui.h:9
-msgid "Compression ratio:"
-msgstr "ضریب فشردگی:"
-
-#: ../src/ui/properties.ui.h:10
+#: ../src/ui/properties.ui.h:8
 msgid "Number of files:"
 msgstr "تعداد پرونده‌ها:"
 
+#. after the colon there is a file type.
+#: ../src/ui/properties.ui.h:10
+msgid "Type:"
+msgstr "نوع:"
+
 #: ../src/ui/update.ui.h:1
+msgid "_Update"
+msgstr "_به‌روزرسانی"
+
+#: ../src/ui/update.ui.h:3
 msgid "S_elect the files you want to update:"
 msgstr "پ_رونده‌هابی را که مایلید به روز رسانی کنید انتخاب کنید:"
-
-#~ msgid "Extract To..."
-#~ msgstr "استخراج در..."
-
-#~ msgid "Compress..."
-#~ msgstr "فشرده‌سازی..."
-
-#~ msgid "Create a compressed archive with the selected objects"
-#~ msgstr "ایجاد یک آرشیو با اشیاء انتخاب شده"
-
-#~ msgid "Password"
-#~ msgstr "گذرواژه"
-
-#~ msgid "File is not a valid .desktop file"
-#~ msgstr "این یک پرونده‌ی معتبر desktop. نمی‌باشد"
-
-#~ msgid "Unrecognized desktop file Version '%s'"
-#~ msgstr "نسخه‌ی پرونده میزکار نامشخص «%s»"
-
-#~ msgid "Starting %s"
-#~ msgstr "درحال آغاز %s"
-
-#~ msgid "Application does not accept documents on command line"
-#~ msgstr "برنامه سند‌ها را در خط فرمان نمی‌پذیرد"
-
-#~ msgid "Unrecognized launch option: %d"
-#~ msgstr "گزینه‌ی راه‌اندازی ناشناخته‌ی: %d"
-
-#~ msgid "Can't pass documents to this desktop element"
-#~ msgstr "نمی‌توان اسناد را به این عنصر رومیزی منتقل کرد"
-
-#~ msgid "Not a launchable item"
-#~ msgstr "مورد غیرقابل راه‌اندازی است"
-
-#~ msgid "Disable connection to session manager"
-#~ msgstr "از کار انداختن اتصال به مدیر نشست"
-
-#~ msgid "Specify file containing saved configuration"
-#~ msgstr "پرونده‌ی شامل اطلاعات پیکربندی ذخیره شده را مشخص کنید"
-
-#~ msgid "FILE"
-#~ msgstr "پرونده"
-
-#~ msgid "Specify session management ID"
-#~ msgstr "شناسه‌ی مدیریت نشست را مشخص کنید"
-
-#~ msgid "ID"
-#~ msgstr "شناسه"
-
-#~ msgid "Session management options:"
-#~ msgstr "گزینه‌های مدیریت نشست:"
-
-#~ msgid "Show session management options"
-#~ msgstr "نمایش گزینه‌های مدیریت نشست"
-
-#~ msgid "_Folders"
-#~ msgstr "_پوشه‌ها"
-
-#~ msgid "_About Archive Manager"
-#~ msgstr "_درباره‌ی مدیر بایگانی"
-
-#~ msgid "Close"
-#~ msgstr "بستن"
-
-#~ msgid "Max history length"
-#~ msgstr "بیشینه‌ی طول تاریچه"
-
-#~ msgid "Max number of items in the 'Open Recents' submenu."
-#~ msgstr "بیشینه‌ی موردها در زیر منوی «باز کردن موارد اخیر»."
-
-#~ msgid "View statusbar"
-#~ msgstr "دیدن نوار وضعیت"
-
-#~ msgid "View the folders pane"
-#~ msgstr "نمایش قاب پوشه‌ها"
-
-#~ msgid "Whether to display the folders pane."
-#~ msgstr "این‌که قاب پوشه‌ها نمایش داده شود."
-
-#~ msgid "%d object (%s)"
-#~ msgid_plural "%d objects (%s)"
-#~ msgstr[0] "تنها %Id شئ (%s)"
-#~ msgstr[1] "تعداد %Id شئ (%s)"
-
-#~ msgid "%d object selected (%s)"
-#~ msgid_plural "%d objects selected (%s)"
-#~ msgstr[0] "تنها %Id شی انتخاب شد (%s)"
-#~ msgstr[1] "تعداد %Id شی انتخاب شد (%s)"
-
-#~ msgid "Open _Recent"
-#~ msgstr "باز کردن موارد ا_خیر"
-
-#~ msgid "Open a recently used archive"
-#~ msgstr "باز کردن یک آرشیو به‌کاررفته‌ی اخیر "
-
-#~ msgid "_Other Actions"
-#~ msgstr "_کنش‌های دیگر"
-
-#~ msgid "Other actions"
-#~ msgstr "کنش‌های دیگر"
-
-#~ msgid "Add files to an archive"
-#~ msgstr "اضافه کردن پرونده‌ها به آرشیو"
-
-#~ msgid "Information about the program"
-#~ msgstr "اطلاعاتی درباره‌ی این برنامه"
-
-#~ msgid "Add files to the archive"
-#~ msgstr "اضافه کردن پرونده‌ها به آرشیو"
-
-#~ msgid "Close the current archive"
-#~ msgstr "بستن آرشیو فعلی"
-
-#~ msgid "Display the File Roller Manual"
-#~ msgstr "نمایش صفحه‌ی راهنمای پرونده‌پیچ"
-
-#~ msgid "Copy the selection"
-#~ msgstr "نسخه‌برداری از انتخاب شده‌ها"
-
-#~ msgid "Cut the selection"
-#~ msgstr "برش انتخاب شده‌ها"
-
-#~ msgid "Paste the clipboard"
-#~ msgstr "چسباندن تخته‌گیره"
-
-#~ msgid "Rename the selection"
-#~ msgstr "تغییر نام انتخاب شده‌ها"
-
-#~ msgid "Delete the selection from the archive"
-#~ msgstr "حذف انتخاب شده‌ها از آرشیو"
-
-#~ msgid "Deselect all files"
-#~ msgstr "انتخاب نکردن همه پرونده‌ها"
-
-#~ msgid "Extract files from the archive"
-#~ msgstr "استخراج پرونده‌ها از آرشیو"
-
-#~ msgid "New…"
-#~ msgstr "جدید..."
-
-#~ msgid "Create a new archive"
-#~ msgstr "ایجاد آرشیو جدید"
-
-#~ msgid "Open archive"
-#~ msgstr "باز کردن آرشیو"
-
-#~ msgid "Open selected files with an application"
-#~ msgstr "باز کردن پرونده‌های انتخاب شده با یک برنامه"
-
-#~ msgid "Specify a password for this archive"
-#~ msgstr "مشخص کردن گذرواژه برای این آرشیو"
-
-#~ msgid "Show archive properties"
-#~ msgstr "نمایش ویژگی‌های آرشیو"
-
-#~ msgid "Reload current archive"
-#~ msgstr "بارکردن مجدد آرشیو فعلی"
-
-#~ msgid "Save the current archive with a different name"
-#~ msgstr "ذخیره‌ی آرشیو فعلی با نامی دیگر"
-
-#~ msgid "Select all files"
-#~ msgstr "انتخاب همه‌ی پرونده‌ها"
-
-#~ msgid "Test whether the archive contains errors"
-#~ msgstr "آزمایش وجود خطا در آرشیو"
-
-#~ msgid "Open the selected file"
-#~ msgstr "بازکردن پرونده‌‌ی انتخاب‌شده"
-
-#~ msgid "Open the selected folder"
-#~ msgstr "بازکردن پوشه‌ی انتخاب‌شده"
-
-#~ msgid "Stat_usbar"
-#~ msgstr "نوار و_ضعیت"
-
-#~ msgid "Find…"
-#~ msgstr "پیدا کردن..."
-
-#~ msgid "File System"
-#~ msgstr "سیستم‌پرونده"
-
-#~ msgid "Places"
-#~ msgstr "مکان‌ها"
 
 #~ msgid "View toolbar"
 #~ msgstr "دیدن نوار ابزار"
@@ -1499,8 +1396,17 @@ msgstr "پ_رونده‌هابی را که مایلید به روز رسانی �
 #~ msgid "Whether to display the toolbar."
 #~ msgstr "اینکه نوار ابزار نشان داده شود."
 
+#~ msgid "Find:"
+#~ msgstr "پیدا کردن:"
+
 #~ msgid "_Archive"
 #~ msgstr "آر_شیو"
+
+#~ msgid "_Edit"
+#~ msgstr "_ویرایش"
+
+#~ msgid "_View"
+#~ msgstr "_نما"
 
 #~ msgid "_Arrange Files"
 #~ msgstr "_مرتب کردن پرونده‌ها"
@@ -1529,8 +1435,8 @@ msgstr "پ_رونده‌هابی را که مایلید به روز رسانی �
 
 #~ msgid ""
 #~ "<i><b>Note:</b> the password will be used to encrypt files you add to the "
-#~ "current archive, and to decrypt files you extract from the current archive. "
-#~ "When the archive is closed the password will be deleted.</i>"
+#~ "current archive, and to decrypt files you extract from the current "
+#~ "archive. When the archive is closed the password will be deleted.</i>"
 #~ msgstr ""
 #~ "<i><b>توجه:</b> گذرواژه برای رمزگذاری پرونده‌هایی که به آرشیو فعلی اضافه "
 #~ "کرده‌اید و از رمز در آوردن پرونده‌هایی که از آرشیو فعلی استخراج می‌کنید، به "
@@ -1549,7 +1455,8 @@ msgstr "پ_رونده‌هابی را که مایلید به روز رسانی �
 #~ msgstr "_ذخیره‌ی گزینه‌ها"
 
 #~ msgid ""
-#~ "The name \"%s\" is not valid because it cannot contain the characters: %s\n"
+#~ "The name \"%s\" is not valid because it cannot contain the characters: "
+#~ "%s\n"
 #~ "\n"
 #~ "%s"
 #~ msgstr ""
@@ -1703,6 +1610,9 @@ msgstr "پ_رونده‌هابی را که مایلید به روز رسانی �
 
 #~ msgid "Zoo (.zoo)"
 #~ msgstr "Zoo (.zoo)"
+
+#~ msgid "Zip (.zip)"
+#~ msgstr "Zip (.zip)"
 
 #~ msgid "Creating archive"
 #~ msgstr "درحال ساخت آرشیو"

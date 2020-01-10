@@ -33,7 +33,6 @@
 #include "file-utils.h"
 #include "fr-error.h"
 #include "fr-archive-libarchive.h"
-#include "gio-utils.h"
 #include "glib-utils.h"
 #include "typedefs.h"
 
@@ -67,29 +66,20 @@ fr_archive_libarchive_finalize (GObject *object)
 
 
 const char *libarchiver_mime_types[] = {
-		"application/vnd.debian.binary-package",
 		"application/vnd.ms-cab-compressed",
 		"application/x-7z-compressed",
 		"application/x-ar",
-		"application/x-bzip-compressed-tar",
-		"application/x-cbr",
-		"application/x-cbz",
 		"application/x-cd-image",
 		"application/x-compressed-tar",
 		"application/x-cpio",
-		"application/x-deb",
+		"application/x-bzip-compressed-tar",
 		"application/x-lha",
-		"application/x-lrzip-compressed-tar",
 		"application/x-lzip-compressed-tar",
 		"application/x-lzma-compressed-tar",
-		"application/x-lzop-compressed-tar",
-		"application/x-rar",
-		"application/x-rpm",
 		"application/x-tar",
 		"application/x-tarz",
 		"application/x-xar",
 		"application/x-xz-compressed-tar",
-		"application/zip",
 		NULL };
 
 
@@ -122,49 +112,11 @@ fr_archive_libarchive_get_capabilities (FrArchive  *archive,
 		return capabilities;
 	}
 
-	/* give priority to 7z, unzip and zip that supports ZIP files better. */
-	if ((strcmp (mime_type, "application/zip") == 0)
-	    || (strcmp (mime_type, "application/x-cbz") == 0))
-	{
-		if (_g_program_is_available ("7z", check_command)) {
-			return capabilities;
-		}
-		if (!_g_program_is_available ("unzip", check_command)) {
-			capabilities |= FR_ARCHIVE_CAN_READ;
-		}
-		if (!_g_program_is_available ("zip", check_command)) {
-			capabilities |= FR_ARCHIVE_CAN_WRITE;
-		}
-		return capabilities;
-	}
-
-	/* give priority to utilities that support RAR files better. */
-	if ((strcmp (mime_type, "application/x-rar") == 0)
-	    || (strcmp (mime_type, "application/x-cbr") == 0))
-	{
-		if (_g_program_is_available ("rar", check_command)
-		    || _g_program_is_available ("unrar", check_command)
-		    || _g_program_is_available ("unar", check_command)) {
-			return capabilities;
-		}
-	}
-
-	/* tar.lrz format requires external lrzip */
-	if (strcmp (mime_type, "application/x-lrzip-compressed-tar") == 0) {
-		if (!_g_program_is_available ("lrzip", check_command))
-			return capabilities;
-	}
-
 	capabilities |= FR_ARCHIVE_CAN_READ;
 
 	/* read-only formats */
 	if ((strcmp (mime_type, "application/vnd.ms-cab-compressed") == 0)
-	    || (strcmp (mime_type, "application/x-cbr") == 0)
-	    || (strcmp (mime_type, "application/x-deb") == 0)
-	    || (strcmp (mime_type, "application/vnd.debian.binary-package") == 0)
 	    || (strcmp (mime_type, "application/x-lha") == 0)
-	    || (strcmp (mime_type, "application/x-rar") == 0)
-	    || (strcmp (mime_type, "application/x-rpm") == 0)
 	    || (strcmp (mime_type, "application/x-xar") == 0))
 	{
 		return capabilities;
@@ -315,23 +267,6 @@ _g_file_get_size (GFile        *file,
 }
 
 
-static GError *
-_g_error_new_from_archive_error (const char *s)
-{
-	char   *msg;
-	GError *error;
-
-	msg = (s != NULL) ? g_locale_to_utf8 (s, -1, NULL, NULL, NULL) : NULL;
-	if (msg == NULL)
-		msg = g_strdup ("Fatal error");
-	error = g_error_new_literal (FR_ERROR, FR_ERROR_COMMAND_ERROR, msg);
-
-	g_free (msg);
-
-	return error;
-}
-
-
 static void
 list_archive_thread (GSimpleAsyncResult *result,
 		     GObject            *object,
@@ -361,7 +296,7 @@ list_archive_thread (GSimpleAsyncResult *result,
 		file_data = file_data_new ();
 
 		if (archive_entry_size_is_set (entry)) {
-			file_data->size = archive_entry_size (entry);
+			file_data->size =  archive_entry_size (entry);
 			FR_ARCHIVE_LIBARCHIVE (load_data->archive)->priv->uncompressed_size += file_data->size;
 		}
 
@@ -394,7 +329,6 @@ list_archive_thread (GSimpleAsyncResult *result,
 		g_print ("\toriginal_path: %s\n", file_data->original_path);
 		g_print ("\tname: %s\n", file_data->name);
 		g_print ("\tpath: %s\n", file_data->path);
-		g_print ("\tlink: %s\n", file_data->link);
 		*/
 
 		fr_archive_add_file (load_data->archive, file_data);
@@ -404,7 +338,7 @@ list_archive_thread (GSimpleAsyncResult *result,
 	archive_read_free (a);
 
 	if ((load_data->error == NULL) && (r != ARCHIVE_EOF) && (archive_error_string (a) != NULL))
-		load_data->error = _g_error_new_from_archive_error (archive_error_string (a));
+		load_data->error = g_error_new_literal (FR_ERROR, FR_ERROR_COMMAND_ERROR, archive_error_string (a));
 	if (load_data->error == NULL)
 		g_cancellable_set_error_if_cancelled (cancellable, &load_data->error);
 	if (load_data->error != NULL)
@@ -444,9 +378,6 @@ fr_archive_libarchive_list (FrArchive           *archive,
 /* -- extract -- */
 
 
-#define NULL_BUFFER_SIZE (16 * 1024)
-
-
 typedef struct {
 	LoadData    parent;
 	GList      *file_list;
@@ -459,7 +390,6 @@ typedef struct {
 	int         n_files_to_extract;
 	GHashTable *usernames;
 	GHashTable *groupnames;
-	char       *null_buffer;
 } ExtractData;
 
 
@@ -472,7 +402,6 @@ extract_data_free (ExtractData *extract_data)
 	g_hash_table_unref (extract_data->files_to_extract);
 	g_hash_table_unref (extract_data->usernames);
 	g_hash_table_unref (extract_data->groupnames);
-	g_free (extract_data->null_buffer);
 	load_data_free (LOAD_DATA (extract_data));
 }
 
@@ -488,18 +417,28 @@ extract_data_get_extraction_requested (ExtractData *extract_data,
 }
 
 
-static GFileInfo *
-_g_file_info_create_from_entry (struct archive_entry *entry,
-			        ExtractData          *extract_data)
+static void
+_g_file_set_attributes_from_entry (GFile                *file,
+				   struct archive_entry *entry,
+				   ExtractData          *extract_data,
+				   GCancellable         *cancellable)
 {
 	GFileInfo *info;
+	GError    *error = NULL;
 
 	info = g_file_info_new ();
 
 	/* times */
 
-	if (archive_entry_mtime_is_set (entry))
+	if (archive_entry_ctime_is_set (entry)) {
+		g_file_info_set_attribute_uint64 (info, G_FILE_ATTRIBUTE_TIME_CREATED, archive_entry_ctime (entry));
+		g_file_info_set_attribute_uint32 (info, G_FILE_ATTRIBUTE_TIME_CREATED_USEC, archive_entry_ctime_nsec (entry));
+	}
+
+	if (archive_entry_mtime_is_set (entry)) {
 		g_file_info_set_attribute_uint64 (info, G_FILE_ATTRIBUTE_TIME_MODIFIED, archive_entry_mtime (entry));
+		g_file_info_set_attribute_uint32 (info, G_FILE_ATTRIBUTE_TIME_MODIFIED_USEC, archive_entry_mtime_nsec (entry));
+	}
 
 	/* username */
 
@@ -539,65 +478,12 @@ _g_file_info_create_from_entry (struct archive_entry *entry,
 
 	g_file_info_set_attribute_uint32 (info, G_FILE_ATTRIBUTE_UNIX_MODE, archive_entry_mode (entry));
 
-	return info;
-}
-
-
-static gboolean
-_g_file_set_attributes_from_info (GFile         *file,
-				  GFileInfo     *info,
-				  GCancellable  *cancellable,
-				  GError       **error)
-{
-	return g_file_set_attributes_from_info (file, info, G_FILE_QUERY_INFO_NONE, cancellable, error);
-}
-
-
-static void
-restore_original_file_attributes (GHashTable    *created_files,
-				  GCancellable  *cancellable)
-{
-	GHashTableIter iter;
-	gpointer       key, value;
-
-	g_hash_table_iter_init (&iter, created_files);
-	while (g_hash_table_iter_next (&iter, &key, &value)) {
-		GFile     *file = key;
-		GFileInfo *info = value;
-
-		_g_file_set_attributes_from_info (file, info, cancellable, NULL);
-	}
-}
-
-
-static gboolean
-_g_output_stream_add_padding (ExtractData    *extract_data,
-			      GOutputStream  *ostream,
-			      gssize          target_offset,
-			      gssize          actual_offset,
-			      GCancellable   *cancellable,
-			      GError        **error)
-{
-	gboolean success = TRUE;
-	gsize    count;
-	gsize    bytes_written;
-
-	if (extract_data->null_buffer == NULL)
-		extract_data->null_buffer = g_malloc0 (NULL_BUFFER_SIZE);
-
-	while (target_offset > actual_offset) {
-		count = NULL_BUFFER_SIZE;
-		if (target_offset < actual_offset + NULL_BUFFER_SIZE)
-			count = target_offset - actual_offset;
-
-		success = g_output_stream_write_all (ostream, extract_data->null_buffer, count, &bytes_written, cancellable, error);
-		if (! success)
-			break;
-
-		actual_offset += bytes_written;
+	if (! g_file_set_attributes_from_info (file, info, 0, cancellable, &error)) {
+		g_warning ("%s", error->message);
+		g_error_free (error);
 	}
 
-	return success;
+	g_object_unref (info);
 }
 
 
@@ -609,8 +495,6 @@ extract_archive_thread (GSimpleAsyncResult *result,
 	ExtractData          *extract_data;
 	LoadData             *load_data;
 	GHashTable           *checked_folders;
-	GHashTable           *created_files;
-	GHashTable           *folders_created_during_extraction;
 	struct archive       *a;
 	struct archive_entry *entry;
 	int                   r;
@@ -619,8 +503,6 @@ extract_archive_thread (GSimpleAsyncResult *result,
 	load_data = LOAD_DATA (extract_data);
 
 	checked_folders = g_hash_table_new_full (g_file_hash, (GEqualFunc) g_file_equal, g_object_unref, NULL);
-	created_files = g_hash_table_new_full (g_file_hash, (GEqualFunc) g_file_equal, g_object_unref, g_object_unref);
-	folders_created_during_extraction = g_hash_table_new_full (g_file_hash, (GEqualFunc) g_file_equal, g_object_unref, NULL);
 	fr_archive_progress_set_total_files (load_data->archive, extract_data->n_files_to_extract);
 
 	a = archive_read_new ();
@@ -636,7 +518,7 @@ extract_archive_thread (GSimpleAsyncResult *result,
 		GOutputStream *ostream;
 		const void    *buffer;
 		size_t         buffer_size;
-		int64_t        target_offset, actual_offset;
+		int64_t        offset;
 		GError        *local_error = NULL;
 		__LA_MODE_T    filetype;
 
@@ -655,14 +537,11 @@ extract_archive_thread (GSimpleAsyncResult *result,
 			archive_read_data_skip (a);
 			continue;
 		}
-
 		file = g_file_get_child (extract_data->destination, relative_path);
 
 		/* honor the skip_older and overwrite options */
 
-		if ((g_hash_table_lookup (folders_created_during_extraction, file) == NULL)
-		    && (extract_data->skip_older || ! extract_data->overwrite))
-		{
+		if (extract_data->skip_older || ! extract_data->overwrite) {
 			GFileInfo *info;
 
 			info = g_file_query_info (file,
@@ -706,7 +585,7 @@ extract_archive_thread (GSimpleAsyncResult *result,
 					g_object_unref (info);
 					break;
 				}
-				g_clear_error (&local_error);
+				g_error_free (local_error);
 			}
 		}
 
@@ -720,18 +599,7 @@ extract_archive_thread (GSimpleAsyncResult *result,
 		    && (g_hash_table_lookup (checked_folders, parent) == NULL)
 		    && ! g_file_query_exists (parent, cancellable))
 		{
-			if (! _g_file_make_directory_with_parents (parent,
-								   folders_created_during_extraction,
-								   cancellable,
-								   &local_error))
-			{
-				if (! g_error_matches (local_error, G_IO_ERROR, G_IO_ERROR_EXISTS))
-					load_data->error = local_error;
-				else
-					g_clear_error (&local_error);
-			}
-
-			if (load_data->error == NULL) {
+			if (g_file_make_directory_with_parents (parent, cancellable, &load_data->error)) {
 				GFile *grandparent;
 
 				grandparent = g_object_ref (parent);
@@ -813,10 +681,10 @@ extract_archive_thread (GSimpleAsyncResult *result,
 				if (! g_file_make_directory (file, cancellable, &local_error)) {
 					if (! g_error_matches (local_error, G_IO_ERROR, G_IO_ERROR_EXISTS))
 						load_data->error = g_error_copy (local_error);
-					g_clear_error (&local_error);
+					g_error_free (local_error);
 				}
-				if (load_data->error == NULL)
-					g_hash_table_insert (created_files, g_object_ref (file), _g_file_info_create_from_entry (entry, extract_data));
+				else
+					_g_file_set_attributes_from_entry (file, entry, extract_data, cancellable);
 				archive_read_data_skip (a);
 				break;
 
@@ -825,40 +693,24 @@ extract_archive_thread (GSimpleAsyncResult *result,
 				if (ostream == NULL)
 					break;
 
-				actual_offset = 0;
-				while ((r = archive_read_data_block (a, &buffer, &buffer_size, &target_offset)) == ARCHIVE_OK) {
-					gsize bytes_written;
-
-					if (target_offset > actual_offset) {
-						if (! _g_output_stream_add_padding (extract_data, ostream, target_offset, actual_offset, cancellable, &load_data->error))
-							break;
-						fr_archive_progress_inc_completed_bytes (load_data->archive, target_offset - actual_offset);
-						actual_offset = target_offset;
-					}
-
-					if (! g_output_stream_write_all (ostream, buffer, buffer_size, &bytes_written, cancellable, &load_data->error))
+				while ((r = archive_read_data_block (a, &buffer, &buffer_size, &offset)) == ARCHIVE_OK) {
+					if (g_output_stream_write (ostream, buffer, buffer_size, cancellable, &load_data->error) == -1)
 						break;
-
-					actual_offset += bytes_written;
-					fr_archive_progress_inc_completed_bytes (load_data->archive, bytes_written);
+					fr_archive_progress_inc_completed_bytes (load_data->archive, buffer_size);
 				}
-
-				if ((r == ARCHIVE_EOF) && (target_offset > actual_offset))
-					_g_output_stream_add_padding (extract_data, ostream, target_offset, actual_offset, cancellable, &load_data->error);
-
 				_g_object_unref (ostream);
 
 				if (r != ARCHIVE_EOF)
-					load_data->error = _g_error_new_from_archive_error (archive_error_string (a));
+					load_data->error = g_error_new_literal (FR_ERROR, FR_ERROR_COMMAND_ERROR, archive_error_string (a));
 				else
-					g_hash_table_insert (created_files, g_object_ref (file), _g_file_info_create_from_entry (entry, extract_data));
+					_g_file_set_attributes_from_entry (file, entry, extract_data, cancellable);
 				break;
 
 			case AE_IFLNK:
 				if (! g_file_make_symbolic_link (file, archive_entry_symlink (entry), cancellable, &local_error)) {
 					if (! g_error_matches (local_error, G_IO_ERROR, G_IO_ERROR_EXISTS))
 						load_data->error = g_error_copy (local_error);
-					g_clear_error (&local_error);
+					g_error_free (local_error);
 				}
 				archive_read_data_skip (a);
 				break;
@@ -881,18 +733,13 @@ extract_archive_thread (GSimpleAsyncResult *result,
 		}
 	}
 
-	if (load_data->error == NULL)
-		restore_original_file_attributes (created_files, cancellable);
-
 	if ((load_data->error == NULL) && (r != ARCHIVE_EOF))
-		load_data->error = _g_error_new_from_archive_error (archive_error_string (a));
+		load_data->error = g_error_new_literal (FR_ERROR, FR_ERROR_COMMAND_ERROR, archive_error_string (a));
 	if (load_data->error == NULL)
 		g_cancellable_set_error_if_cancelled (cancellable, &load_data->error);
 	if (load_data->error != NULL)
 		g_simple_async_result_set_from_error (result, load_data->error);
 
-	g_hash_table_unref (folders_created_during_extraction);
-	g_hash_table_unref (created_files);
 	g_hash_table_unref (checked_folders);
 	archive_read_free (a);
 	extract_data_free (extract_data);
@@ -1149,10 +996,6 @@ _archive_write_set_format_from_context (struct archive *a,
 		archive_write_set_format_pax_restricted (a);
 		archive_filter = ARCHIVE_FILTER_GZIP;
 	}
-	else if (_g_str_equal (mime_type, "application/x-lrzip-compressed-tar")) {
-		archive_write_set_format_pax_restricted (a);
-		archive_filter = ARCHIVE_FILTER_LRZIP;
-	}
 	else if (_g_str_equal (mime_type, "application/x-lzip-compressed-tar")) {
 		archive_write_set_format_pax_restricted (a);
 		archive_filter = ARCHIVE_FILTER_LZIP;
@@ -1160,10 +1003,6 @@ _archive_write_set_format_from_context (struct archive *a,
 	else if (_g_str_equal (mime_type, "application/x-lzma-compressed-tar")) {
 		archive_write_set_format_pax_restricted (a);
 		archive_filter = ARCHIVE_FILTER_LZMA;
-	}
-	else if (_g_str_equal (mime_type, "application/x-lzop-compressed-tar")) {
-		archive_write_set_format_pax_restricted (a);
-		archive_filter = ARCHIVE_FILTER_LZOP;
 	}
 	else if (_g_str_equal (mime_type, "application/x-xz-compressed-tar")) {
 		archive_write_set_format_pax_restricted (a);
@@ -1188,10 +1027,6 @@ _archive_write_set_format_from_context (struct archive *a,
 	else if (_g_str_equal (mime_type, "application/x-7z-compressed")) {
 		archive_write_set_format_7zip (a);
 	}
-	else if (_g_str_equal (mime_type, "application/zip")
-	    || _g_str_equal (mime_type, "application/x-cbz")) {
-		archive_write_set_format_zip (a);
-	}
 
 	/* set the filter */
 
@@ -1208,17 +1043,11 @@ _archive_write_set_format_from_context (struct archive *a,
 		case ARCHIVE_FILTER_GZIP:
 			archive_write_add_filter_gzip (a);
 			break;
-		case ARCHIVE_FILTER_LRZIP:
-			archive_write_add_filter_lrzip (a);
-			break;
 		case ARCHIVE_FILTER_LZIP:
 			archive_write_add_filter_lzip (a);
 			break;
 		case ARCHIVE_FILTER_LZMA:
 			archive_write_add_filter_lzma (a);
-			break;
-		case ARCHIVE_FILTER_LZOP:
-			archive_write_add_filter_lzop (a);
 			break;
 		case ARCHIVE_FILTER_XZ:
 			archive_write_add_filter_xz (a);
@@ -1405,7 +1234,7 @@ _archive_write_file (struct archive       *b,
 
 	rb = archive_write_finish_entry (b);
 
-	if ((load_data->error == NULL) && (rb <= ARCHIVE_FAILED))
+	if ((load_data->error == NULL) && (rb != ARCHIVE_OK))
 		load_data->error = g_error_new_literal (FR_ERROR, FR_ERROR_COMMAND_ERROR, archive_error_string (b));
 
 	archive_entry_free (w_entry);
@@ -1424,7 +1253,7 @@ save_archive_thread (GSimpleAsyncResult *result,
 	LoadData             *load_data;
 	struct archive       *a, *b;
 	struct archive_entry *r_entry;
-	int                   ra = ARCHIVE_OK, rb = ARCHIVE_OK;
+	int                   ra, rb;
 
 	save_data = g_simple_async_result_get_op_res_gpointer (result);
 	load_data = LOAD_DATA (save_data);
@@ -1460,10 +1289,8 @@ save_archive_thread (GSimpleAsyncResult *result,
 			__LA_INT64_T  offset;
 
 			rb = archive_write_header (b, w_entry);
-			if (rb <= ARCHIVE_FAILED) {
-				load_data->error = _g_error_new_from_archive_error (archive_error_string (b));
+			if (rb != ARCHIVE_OK)
 				break;
-			}
 
 			switch (archive_entry_filetype (r_entry)) {
 			case AE_IFREG:
@@ -1472,10 +1299,8 @@ save_archive_thread (GSimpleAsyncResult *result,
 					fr_archive_progress_inc_completed_bytes (load_data->archive, buffer_size);
 				}
 
-				if (ra <= ARCHIVE_FAILED) {
-					load_data->error = _g_error_new_from_archive_error (archive_error_string (a));
-					break;
-				}
+				if (ra != ARCHIVE_EOF)
+					load_data->error = g_error_new_literal (FR_ERROR, FR_ERROR_COMMAND_ERROR, archive_error_string (a));
 				break;
 
 			default:
@@ -1499,9 +1324,9 @@ save_archive_thread (GSimpleAsyncResult *result,
 	rb = archive_write_close (b);
 
 	if ((load_data->error == NULL) && (ra != ARCHIVE_EOF))
-		load_data->error = _g_error_new_from_archive_error (archive_error_string (a));
-	if ((load_data->error == NULL) && (rb <= ARCHIVE_FAILED))
-		load_data->error =  _g_error_new_from_archive_error (archive_error_string (b));
+		load_data->error = g_error_new_literal (FR_ERROR, FR_ERROR_COMMAND_ERROR, archive_error_string (a));
+	if ((load_data->error == NULL) && (rb != ARCHIVE_OK))
+		load_data->error = g_error_new_literal (FR_ERROR, FR_ERROR_COMMAND_ERROR, archive_error_string (b));
 	if (load_data->error == NULL)
 		g_cancellable_set_error_if_cancelled (cancellable, &load_data->error);
 	if (load_data->error != NULL)
@@ -1759,7 +1584,6 @@ fr_archive_libarchive_add_files (FrArchive           *archive,
 
 typedef struct {
 	GHashTable *files_to_remove;
-	gboolean    remove_all_files;
 	int         n_files_to_remove;
 } RemoveData;
 
@@ -1767,8 +1591,7 @@ typedef struct {
 static void
 remove_data_free (RemoveData *remove_data)
 {
-	if (remove_data->files_to_remove != NULL)
-		g_hash_table_unref (remove_data->files_to_remove);
+	g_hash_table_unref (remove_data->files_to_remove);
 	g_free (remove_data);
 }
 
@@ -1782,7 +1605,7 @@ _remove_files_begin (SaveData *save_data,
 
 	fr_archive_progress_set_total_files (load_data->archive, remove_data->n_files_to_remove);
 	fr_archive_progress_set_total_bytes (load_data->archive,
-					     FR_ARCHIVE_LIBARCHIVE (load_data->archive)->priv->uncompressed_size);
+				FR_ARCHIVE_LIBARCHIVE (load_data->archive)->priv->uncompressed_size);
 }
 
 
@@ -1796,12 +1619,9 @@ _remove_files_entry_action (SaveData             *save_data,
 	WriteAction  action;
 	const char  *pathname;
 
-	if (remove_data->remove_all_files)
-		return WRITE_ACTION_SKIP_ENTRY;
-
 	action = WRITE_ACTION_WRITE_ENTRY;
 	pathname = archive_entry_pathname (w_entry);
-	if (g_hash_table_lookup (remove_data->files_to_remove, pathname) != NULL) {
+	if (g_hash_table_lookup (remove_data->files_to_remove, pathname)) {
 		action = WRITE_ACTION_SKIP_ENTRY;
 		remove_data->n_files_to_remove--;
 		fr_archive_progress_inc_completed_files (load_data->archive, 1);
@@ -1824,17 +1644,12 @@ fr_archive_libarchive_remove_files (FrArchive           *archive,
 	GList      *scan;
 
 	remove_data = g_new0 (RemoveData, 1);
-	remove_data->remove_all_files = (file_list == NULL);
-	if (! remove_data->remove_all_files) {
-		remove_data->files_to_remove = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
-		remove_data->n_files_to_remove = 0;
-		for (scan = file_list; scan; scan = scan->next) {
-			g_hash_table_insert (remove_data->files_to_remove, g_strdup (scan->data), GINT_TO_POINTER (1));
-			remove_data->n_files_to_remove++;
-		}
+	remove_data->files_to_remove = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
+	remove_data->n_files_to_remove = 0;
+	for (scan = file_list; scan; scan = scan->next) {
+		g_hash_table_insert (remove_data->files_to_remove, g_strdup (scan->data), GINT_TO_POINTER (1));
+		remove_data->n_files_to_remove++;
 	}
-	else
-		remove_data->n_files_to_remove = archive->files->len;
 
 	_fr_archive_libarchive_save (archive,
 				     FALSE,

@@ -21,7 +21,6 @@
 
 #include <config.h>
 #define _XOPEN_SOURCE       /* See feature_test_macros(7) */
-#define _XOPEN_SOURCE_EXTENDED 1  /* for strptime */
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -39,7 +38,6 @@
 
 #define LSAR_SUPPORTED_FORMAT 2
 #define LSAR_DATE_FORMAT "%Y-%m-%d %H:%M:%S %z"
-#define UNARCHIVER_SPECIAL_CHARACTERS "["
 
 
 G_DEFINE_TYPE (FrCommandUnarchiver, fr_command_unarchiver, FR_TYPE_COMMAND)
@@ -91,8 +89,7 @@ list_command_completed (gpointer data)
 
 				entry = json_array_get_object_element (content, i);
 				fdata = file_data_new ();
-				if (json_object_has_member (entry, "XADFileSize"))
-					fdata->size = json_object_get_int_member (entry, "XADFileSize");
+				fdata->size = json_object_get_int_member (entry, "XADFileSize");
 				fdata->modified = mktime_from_string (json_object_get_string_member (entry, "XADLastModificationDate"));
 				if (json_object_has_member (entry, "XADIsEncrypted"))
 					fdata->encrypted = json_object_get_int_member (entry, "XADIsEncrypted") == 1;
@@ -207,13 +204,8 @@ fr_command_unarchiver_extract (FrCommand  *comm,
 
 	fr_process_add_arg (comm->process, comm->filename);
 
-	for (scan = file_list; scan; scan = scan->next) {
-		char *escaped;
-
-		escaped = _g_str_escape (scan->data, UNARCHIVER_SPECIAL_CHARACTERS);
-		fr_process_add_arg (comm->process, escaped);
-		g_free (escaped);
-	}
+	for (scan = file_list; scan; scan = scan->next)
+		fr_process_add_arg (comm->process, scan->data);
 
 	fr_process_end_command (comm->process);
 }

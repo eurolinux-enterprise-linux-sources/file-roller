@@ -42,9 +42,7 @@ struct _FrCommandRar
 	FrCommand  __parent;
 
 	gboolean  list_started;
-	gboolean  rar4_odd_line;
-	gboolean  rar5;
-	gboolean  rar5_30;
+	gboolean  odd_line;
 	FileData *fdata;
 };
 

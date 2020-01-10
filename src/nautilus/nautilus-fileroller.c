@@ -23,12 +23,11 @@
 
 #include <config.h>
 #include <string.h>
-#include <glib/gi18n.h>
+#include <glib/gi18n-lib.h>
 #include <gio/gio.h>
 #include <libnautilus-extension/nautilus-extension-types.h>
 #include <libnautilus-extension/nautilus-file-info.h>
 #include <libnautilus-extension/nautilus-menu-provider.h>
-#include <locale.h>
 #include "nautilus-fileroller.h"
 
 
@@ -83,7 +82,7 @@ extract_here_callback (NautilusMenuItem *item,
 	dir = nautilus_file_info_get_parent_uri (file);
 
 	cmd = g_string_new ("file-roller");
-	g_string_append_printf (cmd," --extract-here --notify");
+	g_string_append_printf (cmd," --extract-here");
 
 	g_free (dir);
 
@@ -105,26 +104,78 @@ extract_here_callback (NautilusMenuItem *item,
 	g_string_free (cmd, TRUE);
 }
 
+
+static void
+add_callback (NautilusMenuItem *item,
+	      gpointer          user_data)
+{
+	GList            *files, *scan;
+	NautilusFileInfo *file;
+	char             *uri, *dir;
+	GString          *cmd;
+
+	files = g_object_get_data (G_OBJECT (item), "files");
+	file = files->data;
+
+	uri = nautilus_file_info_get_uri (file);
+	dir = g_path_get_dirname (uri);
+
+	cmd = g_string_new ("file-roller");
+	g_string_append (cmd, " --notify");
+	g_string_append_printf (cmd," --default-dir=%s", g_shell_quote (dir));
+	g_string_append (cmd," --add");
+
+	g_free (dir);
+	g_free (uri);
+
+	for (scan = files; scan; scan = scan->next) {
+		NautilusFileInfo *file = scan->data;
+
+		uri = nautilus_file_info_get_uri (file);
+		g_string_append_printf (cmd, " %s", g_shell_quote (uri));
+		g_free (uri);
+	}
+
+	g_spawn_command_line_async (cmd->str, NULL);
+
+	g_string_free (cmd, TRUE);
+}
+
+
 static struct {
 	char     *mime_type;
 	gboolean  is_compressed;
 } archive_mime_types[] = {
+		{ "application/x-7z-compressed", TRUE },
+		{ "application/x-7z-compressed-tar", TRUE },
 		{ "application/x-ace", TRUE },
 		{ "application/x-alz", TRUE },
 		{ "application/x-ar", TRUE },
 		{ "application/x-arj", TRUE },
+		{ "application/x-bzip", TRUE },
+		{ "application/x-bzip-compressed-tar", TRUE },
+		{ "application/x-bzip1", TRUE },
+		{ "application/x-bzip1-compressed-tar", TRUE },
 		{ "application/vnd.ms-cab-compressed", TRUE },
 		{ "application/x-cbr", TRUE },
 		{ "application/x-cbz", TRUE },
 		{ "application/x-cd-image", FALSE },
+		{ "application/x-compress", TRUE },
+		{ "application/x-compressed-tar", TRUE },
+		{ "application/x-cpio", TRUE },
 		{ "application/x-deb", TRUE },
-		{ "application/vnd.debian.binary-package", TRUE },
 		{ "application/x-ear", TRUE },
 		{ "application/x-ms-dos-executable", FALSE },
 		{ "application/x-gtar", FALSE },
+		{ "application/x-gzip", TRUE },
 		{ "application/x-gzpostscript", TRUE },
 		{ "application/x-java-archive", TRUE },
+		{ "application/x-lha", TRUE },
 		{ "application/x-lhz", TRUE },
+		{ "application/x-lzip", TRUE },
+		{ "application/x-lzip-compressed-tar", TRUE },
+		{ "application/x-lzma", TRUE },
+		{ "application/x-lzma-compressed-tar", TRUE },
 		{ "application/x-lzop", TRUE },
 		{ "application/x-lzop-compressed-tar", TRUE },
 		{ "application/x-ms-wim", TRUE },
@@ -132,9 +183,16 @@ static struct {
 		{ "application/x-rar-compressed", TRUE },
 		{ "application/x-rpm", TRUE },
 		{ "application/x-rzip", TRUE },
+		{ "application/x-tar", FALSE },
+		{ "application/x-tarz", TRUE },
 		{ "application/x-stuffit", TRUE },
 		{ "application/x-war", TRUE },
+		{ "application/x-xz", TRUE },
+		{ "application/x-xz-compressed-tar", TRUE },
+		{ "application/x-zip", TRUE },
+		{ "application/x-zip-compressed", TRUE },
 		{ "application/x-zoo", TRUE },
+		{ "application/zip", TRUE },
 		{ "multipart/x-zip", TRUE },
 		{ NULL, FALSE }
 };
@@ -195,7 +253,7 @@ unsupported_scheme (NautilusFileInfo *file)
 	scheme = g_file_get_uri_scheme (location);
 
 	if (scheme != NULL) {
-		const char *unsupported[] = { "trash", "computer", "x-nautilus-desktop", NULL };
+		const char *unsupported[] = { "trash", "computer", NULL };
 		int         i;
 
 		for (i = 0; unsupported[i] != NULL; i++)
@@ -218,6 +276,10 @@ nautilus_fr_get_file_items (NautilusMenuProvider *provider,
 	GList    *items = NULL;
 	GList    *scan;
 	gboolean  can_write = TRUE;
+	gboolean  one_item;
+	gboolean  one_archive = FALSE;
+	gboolean  one_derived_archive = FALSE;
+	gboolean  one_compressed_archive = FALSE;
 	gboolean  all_archives = TRUE;
 	gboolean  all_archives_derived = TRUE;
 	gboolean  all_archives_compressed = TRUE;
@@ -225,12 +287,12 @@ nautilus_fr_get_file_items (NautilusMenuProvider *provider,
 	if (files == NULL)
 		return NULL;
 
+	if (unsupported_scheme ((NautilusFileInfo *) files->data))
+		return NULL;
+
 	for (scan = files; scan; scan = scan->next) {
 		NautilusFileInfo *file = scan->data;
 		FileMimeInfo      file_mime_info;
-
-		if (unsupported_scheme (file))
-			return NULL;
 
 		file_mime_info = get_file_mime_info (file);
 
@@ -248,19 +310,23 @@ nautilus_fr_get_file_items (NautilusMenuProvider *provider,
 
 			parent = nautilus_file_info_get_parent_info (file);
  			can_write = nautilus_file_info_can_write (parent);
-			g_object_unref (parent);
 		}
 	}
 
 	/**/
 
+	one_item = (files != NULL) && (files->next == NULL);
+	one_archive = one_item && all_archives;
+	one_derived_archive = one_archive && all_archives_derived;
+	one_compressed_archive = one_archive && all_archives_compressed;
+
 	if (all_archives && can_write) {
 		NautilusMenuItem *item;
 
 		item = nautilus_menu_item_new ("NautilusFr::extract_here",
-					       g_dcgettext ("file-roller", "Extract Here", LC_MESSAGES),
+					       _("Extract Here"),
 					       /* Translators: the current position is the current folder */
-					       g_dcgettext ("file-roller", "Extract the selected archive to the current position", LC_MESSAGES),
+					       _("Extract the selected archive to the current position"),
 					       "drive-harddisk");
 		g_signal_connect (item,
 				  "activate",
@@ -277,8 +343,8 @@ nautilus_fr_get_file_items (NautilusMenuProvider *provider,
 		NautilusMenuItem *item;
 
 		item = nautilus_menu_item_new ("NautilusFr::extract_to",
-					       g_dcgettext ("file-roller", "Extract To…", LC_MESSAGES),
-					       g_dcgettext ("file-roller", "Extract the selected archive", LC_MESSAGES),
+					       _("Extract To..."),
+					       _("Extract the selected archive"),
 					       "drive-harddisk");
 		g_signal_connect (item,
 				  "activate",
@@ -291,6 +357,25 @@ nautilus_fr_get_file_items (NautilusMenuProvider *provider,
 
 		items = g_list_append (items, item);
 
+	}
+
+	if (! one_compressed_archive || one_derived_archive) {
+		NautilusMenuItem *item;
+
+		item = nautilus_menu_item_new ("NautilusFr::add",
+					       _("Compress..."),
+					       _("Create a compressed archive with the selected objects"),
+					       "gnome-mime-application-x-archive");
+		g_signal_connect (item,
+				  "activate",
+				  G_CALLBACK (add_callback),
+				  provider);
+		g_object_set_data_full (G_OBJECT (item),
+					"files",
+					nautilus_file_info_list_copy (files),
+					(GDestroyNotify) nautilus_file_info_list_free);
+
+		items = g_list_append (items, item);
 	}
 
 	return items;

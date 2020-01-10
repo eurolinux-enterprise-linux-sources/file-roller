@@ -26,7 +26,6 @@
 #include "fr-new-archive-dialog.h"
 #include "fr-window.h"
 #include "glib-utils.h"
-#include "gtk-utils.h"
 
 
 static void
@@ -52,7 +51,7 @@ dialog_response_cb (GtkDialog *dialog,
 		g_object_unref (file);
 	}
 	else
-		fr_window_batch_stop (window);
+		fr_window_stop_batch (window);
 
 	gtk_widget_destroy (GTK_WIDGET (dialog));
 }
@@ -91,13 +90,10 @@ dlg_batch_add_files (FrWindow *window,
 					    parent,
 					    filename,
 					    NULL);
-	fr_new_archive_dialog_set_files_to_add (FR_NEW_ARCHIVE_DIALOG (dialog), file_list);
-
 	g_signal_connect (dialog,
 			  "response",
 			  G_CALLBACK (dialog_response_cb),
 			  window);
-
 	gtk_window_present (GTK_WINDOW (dialog));
 
 	g_object_unref (parent);

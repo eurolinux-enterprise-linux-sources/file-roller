@@ -415,7 +415,7 @@ fr_archive_class_init (FrArchiveClass *klass)
 			      G_SIGNAL_RUN_LAST,
 			      G_STRUCT_OFFSET (FrArchiveClass, stoppable),
 			      NULL, NULL,
-			      fr_marshal_VOID__BOOLEAN,
+			      fr_marshal_VOID__BOOL,
 			      G_TYPE_NONE,
 			      1, G_TYPE_BOOLEAN);
 	fr_archive_signals[WORKING_ARCHIVE] =
@@ -450,7 +450,6 @@ fr_archive_init (FrArchive *self)
         self->propAddCanReplace = FALSE;
         self->propAddCanStoreFolders = FALSE;
         self->propAddCanStoreLinks = FALSE;
-        self->propAddCanFollowDirectoryLinksWithoutDereferencing = TRUE;
         self->propExtractCanAvoidOverwrite = FALSE;
         self->propExtractCanSkipOlder = FALSE;
         self->propExtractCanJunkPaths = FALSE;
@@ -729,14 +728,7 @@ open_archive_buffer_ready_cb (GObject      *source_object,
 	uri = g_file_get_uri (open_data->file);
 	local_mime_type = g_content_type_guess (uri, (guchar *) open_data->buffer, open_data->buffer_size, &result_uncertain);
 	if (! result_uncertain) {
-		const char const *mime_type_from_filename;
-
-		/* for example: "application/x-lrzip" --> "application/x-lrzip-compressed-tar" */
-		mime_type_from_filename = _g_mime_type_get_from_filename (open_data->file);
-		if ((mime_type_from_filename != NULL) && g_str_has_prefix (mime_type_from_filename, local_mime_type) && g_str_has_suffix (mime_type_from_filename, "-compressed-tar"))
-			mime_type = _g_str_get_static (mime_type_from_filename);
-		else
-			mime_type = _g_str_get_static (local_mime_type);
+		mime_type = _g_str_get_static (local_mime_type);
 		archive = create_archive_to_load_archive (open_data->file, mime_type);
 	}
 	if (archive == NULL) {
@@ -1849,7 +1841,7 @@ fr_archive_add_dropped_items (FrArchive           *archive,
 	if (archive->read_only) {
 		GError *error;
 
-		error = g_error_new_literal (FR_ERROR, FR_ERROR_GENERIC, ! archive->priv->have_write_permissions ? _("You don’t have the right permissions.") : _("This archive type cannot be modified"));
+		error = g_error_new_literal (FR_ERROR, FR_ERROR_GENERIC, ! archive->priv->have_write_permissions ? _("You don't have the right permissions.") : _("This archive type cannot be modified"));
 		g_simple_async_result_set_from_error (result, error);
 		g_simple_async_result_complete_in_idle (result);
 
@@ -1863,7 +1855,7 @@ fr_archive_add_dropped_items (FrArchive           *archive,
 		if (_g_file_cmp_uris (G_FILE (scan->data), archive->priv->file) == 0) {
 			GError *error;
 
-			error = g_error_new_literal (FR_ERROR, FR_ERROR_GENERIC, _("You can’t add an archive to itself."));
+			error = g_error_new_literal (FR_ERROR, FR_ERROR_GENERIC, _("You can't add an archive to itself."));
 			g_simple_async_result_set_from_error (result, error);
 			g_simple_async_result_complete_in_idle (result);
 

@@ -74,17 +74,16 @@ ask_password__response_cb (GtkWidget  *dialog,
 		g_free (password);
 
 		if (fr_window_is_batch_mode (data->window))
-			fr_window_batch_resume (data->window);
+			fr_window_resume_batch (data->window);
 		else
-			fr_window_restart_current_action (data->window);
+			fr_window_restart_current_batch_action (data->window);
 		break;
 
 	default:
-		fr_window_dnd_extraction_finished (data->window, TRUE);
 		if (fr_window_is_batch_mode (data->window))
 			gtk_widget_destroy (GTK_WIDGET (data->window));
 		else
-			fr_window_reset_current_action (data->window);
+			fr_window_reset_current_batch_action (data->window);
 		break;
 	}
 
@@ -111,24 +110,9 @@ dlg_ask_password__common (FrWindow       *window,
 	data->window = window;
 	data->pwd_type = pwd_type;
 
-	/* Make the widgets. */
+	/* Get the widgets. */
 
-	data->dialog = g_object_new (GTK_TYPE_DIALOG,
-				     "transient-for", GTK_WINDOW (window),
-				     "modal", TRUE,
-				     "use-header-bar", _gtk_settings_get_dialogs_use_header (),
-				     NULL);
-	gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (data->dialog))),
-			   GET_WIDGET ("password_vbox"));
-	gtk_dialog_add_buttons (GTK_DIALOG (data->dialog),
-				_GTK_LABEL_CANCEL, GTK_RESPONSE_CANCEL,
-				_("_OK"), GTK_RESPONSE_OK,
-				NULL);
-	gtk_dialog_set_default_response (GTK_DIALOG (data->dialog),
-					 GTK_RESPONSE_OK);
-	gtk_style_context_add_class (gtk_widget_get_style_context (gtk_dialog_get_widget_for_response (GTK_DIALOG (data->dialog), GTK_RESPONSE_OK)),
-				     GTK_STYLE_CLASS_SUGGESTED_ACTION);
-
+	data->dialog = GET_WIDGET ("password_dialog");
 	data->password_entry = GET_WIDGET ("password_entry");
 
 	/* Set widgets data. */
@@ -140,15 +124,13 @@ dlg_ask_password__common (FrWindow       *window,
 	else if (data->pwd_type == FR_PASSWORD_TYPE_SECOND_ARCHIVE) {
 		file = fr_window_get_archive_file_for_paste (window);
 		old_password = fr_window_get_password_for_second_archive (window);
-	} else
-		g_assert_not_reached ();
+	}
 
 	filename = _g_file_get_display_basename (file);
 	/* Translators: %s is a filename */
-	message = g_strdup_printf (_("Password required for “%s”"), filename);
+	message = g_strdup_printf (_("Password required for \"%s\""), filename);
 	gtk_label_set_label (GTK_LABEL (GET_WIDGET ("title_label")), message);
 
-	_gtk_entry_use_as_password_entry (GTK_ENTRY (data->password_entry));
 	if (old_password != NULL) {
 		GtkWidget *info_bar;
 		GtkWidget *label;
@@ -185,7 +167,7 @@ dlg_ask_password__common (FrWindow       *window,
 	}
 	else
 		gtk_window_set_title (GTK_WINDOW (data->dialog),
-				      fr_window_batch_get_title (window));
+				      fr_window_get_batch_title (window));
 	gtk_widget_show (data->dialog);
 
 	g_free (message);
